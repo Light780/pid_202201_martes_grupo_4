@@ -1,24 +1,28 @@
-import logo from './logo.svg';
+import React from 'react'
 import './App.css';
-
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Grid, ThemeProvider } from '@material-ui/core';
+import theme from './theme/theme'
+import AppNavBar from './components/shared/AppNavbar'
+import Inicio from './components/Inicio';
+import Login from './components/security/Login';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <Router>
+        <ThemeProvider theme={theme}>
+          <AppNavBar/>
+          <Grid container>
+            <Routes>
+              <Route exact path='/auth/login' element= {<Login/>}/>
+              <Route exact path='/' element= {<Inicio/>}/>
+              <Route exact path='/mantenimiento/departamento' element= {<Inicio/>}/>
+              <Route exact path='/mantenimiento/propietario' element= {<Inicio/>}/>
+            </Routes>
+          </Grid>
+        </ThemeProvider>
+      </Router>
+    </React.Fragment>
   );
 }
 
