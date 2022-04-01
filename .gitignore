@@ -1,8 +1,6 @@
 .vs/
 .git
 packages/
-obj
-WebAPI/obj/
 /.git
 .DS_STORE
 node_modules
@@ -29,3 +27,10 @@ chrome-user-data
 .vscode
 *.swp
 *.swo
+*.suo
+*.sdf
+_ReSharper.*/
+bin/
+obj/
+Debug/
+Release/
