@@ -1,7 +1,6 @@
-.vs/
+.vs
+packages
 .git
-packages/
-/.git
 .DS_STORE
 node_modules
 scripts/flow/*/.flowconfig
@@ -30,7 +29,7 @@ chrome-user-data
 *.suo
 *.sdf
 _ReSharper.*/
-bin/
-obj/
-Debug/
-Release/
+bin
+obj
+Debug
+Release
