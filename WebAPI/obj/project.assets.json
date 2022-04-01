@@ -1447,21 +1447,6 @@
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "AppData.Infraestructura.Datos/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v5.0",
-        "dependencies": {
-          "AppDepa.Dominio": "1.0.0",
-          "Microsoft.EntityFrameworkCore": "5.0.10",
-          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.10"
-        },
-        "compile": {
-          "bin/placeholder/AppData.Infraestructura.Datos.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/AppData.Infraestructura.Datos.dll": {}
-        }
-      },
       "AppDepa.Aplicaciones/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
@@ -1483,6 +1468,21 @@
         },
         "runtime": {
           "bin/placeholder/AppDepa.Dominio.dll": {}
+        }
+      },
+      "AppDepa.Infraestructura.Datos/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "AppDepa.Dominio": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "5.0.10",
+          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.10"
+        },
+        "compile": {
+          "bin/placeholder/AppDepa.Infraestructura.Datos.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AppDepa.Infraestructura.Datos.dll": {}
         }
       }
     }
@@ -5486,11 +5486,6 @@
         "system.xml.xmlserializer.nuspec"
       ]
     },
-    "AppData.Infraestructura.Datos/1.0.0": {
-      "type": "project",
-      "path": "../AppData.Infraestructura.Datoss/AppData.Infraestructura.Datos.csproj",
-      "msbuildProject": "../AppData.Infraestructura.Datoss/AppData.Infraestructura.Datos.csproj"
-    },
     "AppDepa.Aplicaciones/1.0.0": {
       "type": "project",
       "path": "../AppVenta.Aplicaciones/AppDepa.Aplicaciones.csproj",
@@ -5500,13 +5495,18 @@
       "type": "project",
       "path": "../Departamento.Dominio/AppDepa.Dominio.csproj",
       "msbuildProject": "../Departamento.Dominio/AppDepa.Dominio.csproj"
+    },
+    "AppDepa.Infraestructura.Datos/1.0.0": {
+      "type": "project",
+      "path": "../AppData.Infraestructura.Datoss/AppDepa.Infraestructura.Datos.csproj",
+      "msbuildProject": "../AppData.Infraestructura.Datoss/AppDepa.Infraestructura.Datos.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "AppData.Infraestructura.Datos >= 1.0.0",
       "AppDepa.Aplicaciones >= 1.0.0",
       "AppDepa.Dominio >= 1.0.0",
+      "AppDepa.Infraestructura.Datos >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 5.0.15",
       "Swashbuckle.AspNetCore >= 5.6.3"
     ]
@@ -5538,8 +5538,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\i2019\\Desktop\\CICLO VI\\Proyecto Integrador\\Proyecto\\Folder_project\\AppData.Infraestructura.Datoss\\AppData.Infraestructura.Datos.csproj": {
-              "projectPath": "C:\\Users\\i2019\\Desktop\\CICLO VI\\Proyecto Integrador\\Proyecto\\Folder_project\\AppData.Infraestructura.Datoss\\AppData.Infraestructura.Datos.csproj"
+            "C:\\Users\\i2019\\Desktop\\CICLO VI\\Proyecto Integrador\\Proyecto\\Folder_project\\AppData.Infraestructura.Datoss\\AppDepa.Infraestructura.Datos.csproj": {
+              "projectPath": "C:\\Users\\i2019\\Desktop\\CICLO VI\\Proyecto Integrador\\Proyecto\\Folder_project\\AppData.Infraestructura.Datoss\\AppDepa.Infraestructura.Datos.csproj"
             },
             "C:\\Users\\i2019\\Desktop\\CICLO VI\\Proyecto Integrador\\Proyecto\\Folder_project\\AppVenta.Aplicaciones\\AppDepa.Aplicaciones.csproj": {
               "projectPath": "C:\\Users\\i2019\\Desktop\\CICLO VI\\Proyecto Integrador\\Proyecto\\Folder_project\\AppVenta.Aplicaciones\\AppDepa.Aplicaciones.csproj"

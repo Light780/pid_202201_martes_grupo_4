@@ -5723,9 +5723,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\i2019\\Desktop\\CICLO VI\\Proyecto Integrador\\Proyecto\\Folder_project\\AppData.Infraestructura.Datoss\\AppData.Infraestructura.Datos.csproj",
-      "projectName": "AppData.Infraestructura.Datos",
-      "projectPath": "C:\\Users\\i2019\\Desktop\\CICLO VI\\Proyecto Integrador\\Proyecto\\Folder_project\\AppData.Infraestructura.Datoss\\AppData.Infraestructura.Datos.csproj",
+      "projectUniqueName": "C:\\Users\\i2019\\Desktop\\CICLO VI\\Proyecto Integrador\\Proyecto\\Folder_project\\AppData.Infraestructura.Datoss\\AppDepa.Infraestructura.Datos.csproj",
+      "projectName": "AppDepa.Infraestructura.Datos",
+      "projectPath": "C:\\Users\\i2019\\Desktop\\CICLO VI\\Proyecto Integrador\\Proyecto\\Folder_project\\AppData.Infraestructura.Datoss\\AppDepa.Infraestructura.Datos.csproj",
       "packagesPath": "C:\\Users\\i2019\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\i2019\\Desktop\\CICLO VI\\Proyecto Integrador\\Proyecto\\Folder_project\\AppData.Infraestructura.Datoss\\obj\\",
       "projectStyle": "PackageReference",

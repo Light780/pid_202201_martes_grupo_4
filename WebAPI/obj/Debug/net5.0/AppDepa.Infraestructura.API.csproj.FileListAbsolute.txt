@@ -1,7 +1,3 @@
-C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\AppData.Infraestructura.Datos.deps.json
-C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\AppData.Infraestructura.Datos.runtimeconfig.json
-C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\AppData.Infraestructura.Datos.runtimeconfig.dev.json
-C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\AppData.Infraestructura.Datos.exe
 C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\appsettings.Development.json
 C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\appsettings.json
 C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\AppDepa.Infraestructura.API.exe
@@ -44,10 +40,8 @@ C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebA
 C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
 C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\AppData.Infraestructura.Datos.dll
 C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\AppDepa.Aplicaciones.dll
 C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\AppDepa.Dominio.dll
-C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\AppData.Infraestructura.Datos.pdb
 C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\AppDepa.Aplicaciones.pdb
 C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\AppDepa.Dominio.pdb
 C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\obj\Debug\net5.0\AppDepa.Infraestructura.API.csproj.AssemblyReference.cache
@@ -66,3 +60,9 @@ C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebA
 C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\obj\Debug\net5.0\AppDepa.Infraestructura.API.pdb
 C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\obj\Debug\net5.0\AppDepa.Infraestructura.API.genruntimeconfig.cache
 C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\obj\Debug\net5.0\ref\AppDepa.Infraestructura.API.dll
+C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\AppDepa.Infraestructura.Datos.deps.json
+C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\AppDepa.Infraestructura.Datos.runtimeconfig.json
+C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\AppDepa.Infraestructura.Datos.runtimeconfig.dev.json
+C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\AppDepa.Infraestructura.Datos.exe
+C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\AppDepa.Infraestructura.Datos.dll
+C:\Users\i2019\Desktop\CICLO VI\Proyecto Integrador\Proyecto\Folder_project\WebAPI\bin\Debug\net5.0\AppDepa.Infraestructura.Datos.pdb

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppDepa.Dominio", "Departam
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppDepa.Aplicaciones", "AppVenta.Aplicaciones\AppDepa.Aplicaciones.csproj", "{198C7066-C4A3-42D4-806C-D44026C8E589}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppData.Infraestructura.Datos", "AppData.Infraestructura.Datoss\AppData.Infraestructura.Datos.csproj", "{0997F19E-B7C6-4E80-9BE4-DE959A9EB810}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppDepa.Infraestructura.Datos", "AppData.Infraestructura.Datoss\AppDepa.Infraestructura.Datos.csproj", "{0997F19E-B7C6-4E80-9BE4-DE959A9EB810}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

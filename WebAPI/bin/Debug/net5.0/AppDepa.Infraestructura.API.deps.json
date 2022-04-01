@@ -33,9 +33,9 @@
     ".NETCoreApp,Version=v5.0": {
       "AppDepa.Infraestructura.API/1.0.0": {
         "dependencies": {
-          "AppData.Infraestructura.Datos": "1.0.0",
           "AppDepa.Aplicaciones": "1.0.0",
           "AppDepa.Dominio": "1.0.0",
+          "AppDepa.Infraestructura.Datos": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "5.0.15",
           "Swashbuckle.AspNetCore": "5.6.3",
           "Microsoft.AspNetCore.Antiforgery": "5.0.0.0",
@@ -1264,19 +1264,6 @@
           "System.Xml.XmlDocument": "4.3.0"
         }
       },
-      "AppData.Infraestructura.Datos/1.0.0": {
-        "dependencies": {
-          "AppDepa.Dominio": "1.0.0",
-          "Microsoft.EntityFrameworkCore": "5.0.10",
-          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.10"
-        },
-        "runtime": {
-          "AppData.Infraestructura.Datos.dll": {}
-        },
-        "compile": {
-          "AppData.Infraestructura.Datos.dll": {}
-        }
-      },
       "AppDepa.Aplicaciones/1.0.0": {
         "dependencies": {
           "AppDepa.Dominio": "1.0.0"
@@ -1294,6 +1281,19 @@
         },
         "compile": {
           "AppDepa.Dominio.dll": {}
+        }
+      },
+      "AppDepa.Infraestructura.Datos/1.0.0": {
+        "dependencies": {
+          "AppDepa.Dominio": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "5.0.10",
+          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.10"
+        },
+        "runtime": {
+          "AppDepa.Infraestructura.Datos.dll": {}
+        },
+        "compile": {
+          "AppDepa.Infraestructura.Datos.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/5.0.0.0": {
@@ -3662,17 +3662,17 @@
       "path": "system.xml.xmlserializer/4.3.0",
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
     },
-    "AppData.Infraestructura.Datos/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
     "AppDepa.Aplicaciones/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
     "AppDepa.Dominio/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AppDepa.Infraestructura.Datos/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

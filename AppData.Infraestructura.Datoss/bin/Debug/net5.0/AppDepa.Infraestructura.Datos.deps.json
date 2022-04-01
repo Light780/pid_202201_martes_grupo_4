@@ -6,14 +6,14 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v5.0": {
-      "AppData.Infraestructura.Datos/1.0.0": {
+      "AppDepa.Infraestructura.Datos/1.0.0": {
         "dependencies": {
           "AppDepa.Dominio": "1.0.0",
           "Microsoft.EntityFrameworkCore": "5.0.10",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.10"
         },
         "runtime": {
-          "AppData.Infraestructura.Datos.dll": {}
+          "AppDepa.Infraestructura.Datos.dll": {}
         }
       },
       "Microsoft.CSharp/4.5.0": {},
@@ -1049,7 +1049,7 @@
     }
   },
   "libraries": {
-    "AppData.Infraestructura.Datos/1.0.0": {
+    "AppDepa.Infraestructura.Datos/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
