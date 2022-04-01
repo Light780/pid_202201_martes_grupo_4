@@ -1,6 +1,7 @@
 /.vs
 .vs
 .git
+/.obj
 /.git
 .DS_STORE
 node_modules
