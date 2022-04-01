@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Cibertec\\Proyectos_Ciclo6\\GestionDepartamentos\\WebAPI\\WebAPI.csproj": {}
+    "C:\\Users\\i2019\\Desktop\\CICLO VI\\Proyecto Integrador\\Proyecto\\Folder_project\\WebAPI\\WebAPI.csproj": {}
   },
   "projects": {
-    "E:\\Cibertec\\Proyectos_Ciclo6\\GestionDepartamentos\\WebAPI\\WebAPI.csproj": {
+    "C:\\Users\\i2019\\Desktop\\CICLO VI\\Proyecto Integrador\\Proyecto\\Folder_project\\WebAPI\\WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Cibertec\\Proyectos_Ciclo6\\GestionDepartamentos\\WebAPI\\WebAPI.csproj",
+        "projectUniqueName": "C:\\Users\\i2019\\Desktop\\CICLO VI\\Proyecto Integrador\\Proyecto\\Folder_project\\WebAPI\\WebAPI.csproj",
         "projectName": "WebAPI",
-        "projectPath": "E:\\Cibertec\\Proyectos_Ciclo6\\GestionDepartamentos\\WebAPI\\WebAPI.csproj",
-        "packagesPath": "C:\\Users\\bruno\\.nuget\\packages\\",
-        "outputPath": "E:\\Cibertec\\Proyectos_Ciclo6\\GestionDepartamentos\\WebAPI\\obj\\",
+        "projectPath": "C:\\Users\\i2019\\Desktop\\CICLO VI\\Proyecto Integrador\\Proyecto\\Folder_project\\WebAPI\\WebAPI.csproj",
+        "packagesPath": "C:\\Users\\i2019\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\i2019\\Desktop\\CICLO VI\\Proyecto Integrador\\Proyecto\\Folder_project\\WebAPI\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\bruno\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\i2019\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -71,7 +67,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }
