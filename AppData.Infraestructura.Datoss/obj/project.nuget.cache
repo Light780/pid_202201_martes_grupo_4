@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zLAMuI6aPujaTxiDzuA8ziO/YOkcc6N8b8eiAI5f28cnynC3EPSajYV59zbd+FkSEwVaofx8hliMNMPA2FZtrA==",
+  "dgSpecHash": "Uzl2lfD7UysQjIgaf2Na+tSdWkogLyosUTCPlj9YADOElB9easY9GJ5xXQ0XtiAC/OEiiY4AttHBGiRwB+rfrg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\i2019\\Desktop\\CICLO VI\\Proyecto Integrador\\Proyecto\\Folder_project\\AppData.Infraestructura.Datoss\\AppData.Infraestructura.Datos.csproj",
+  "projectFilePath": "C:\\Users\\i2019\\Desktop\\CICLO VI\\Proyecto Integrador\\Proyecto\\Folder_project\\AppData.Infraestructura.Datoss\\AppDepa.Infraestructura.Datos.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\i2019\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\i2019\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",
