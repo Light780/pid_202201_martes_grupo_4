@@ -8,7 +8,7 @@ function Login(){
     const [usuario, setUsuario] = useState({
         Email:'',
         Password:''
-    })
+    })    
     const ingresarValores = e => {
         const {name, value} = e.target;
         setUsuario(anterior => ({
