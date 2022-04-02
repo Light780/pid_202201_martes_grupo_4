@@ -28,7 +28,7 @@ namespace AppDepa.Aplicaciones.User
             }
             public async Task<Usuario> Handle(UsuarioUnico request, CancellationToken cancellationToken)
             {
-                var usuario = await context.Usuario.Where(x => x.Id == request.Id).SingleOrDefaultAsync();
+                var usuario = await context.Usuario.Where(x => x.UsuarioId == request.Id).SingleOrDefaultAsync();
                 if (usuario == null)
                 {
                     throw new ExceptionHandler(HttpStatusCode.NotFound, new { mensaje = "El Usuario no existe" });
