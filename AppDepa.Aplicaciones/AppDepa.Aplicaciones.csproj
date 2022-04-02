@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="10.4.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AppDepa.Dominio\AppDepa.Dominio.csproj" />
+    <ProjectReference Include="..\AppDepa.Infraestructura.Datos\AppDepa.Infraestructura.Datos.csproj" />
   </ItemGroup>
 
 </Project>

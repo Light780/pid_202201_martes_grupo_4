@@ -1,3 +1,8 @@
+using AppDepa.Aplicaciones.User;
+using AppDepa.Infraestructura.API.Infraestructura;
+using AppDepa.Infraestructura.API.Middleware;
+using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,25 +32,20 @@ namespace AppDepa.Infraestructura.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Registrar>());            
+            services.AddInfraestructure(Configuration);
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
-            });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gestion Departamentos API", Version = "v1" });
+                c.CustomSchemaIds(c => c.FullName);
+            });            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
-            }
-
-            app.UseHttpsRedirection();
-
+            app.UseMiddleware<MiddlewareErrorHandler>();
+            //app.UseHttpsRedirection();            
             app.UseRouting();
 
             app.UseAuthorization();
@@ -54,6 +54,8 @@ namespace AppDepa.Infraestructura.API
             {
                 endpoints.MapControllers();
             });
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("./v1/swagger.json", "Gestion Departamentos API V1"));
         }
     }
 }
