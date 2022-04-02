@@ -49,17 +49,17 @@ namespace AppDepa.Aplicaciones.User
             }
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var usuario = await context.Usuario.Where(x => x.Id == request.Id).SingleOrDefaultAsync();
+                var usuario = await context.Usuario.Where(x => x.UsuarioId == request.Id).SingleOrDefaultAsync();
                 if (usuario == null)
                 {
                     throw new ExceptionHandler(HttpStatusCode.NotFound, new { mensaje = "El Usuario no existe" });
                 }
-                var existe = await context.Usuario.Where(x => x.UserName.Equals(request.UserName) && x.Id!=request.Id).AnyAsync();
+                var existe = await context.Usuario.Where(x => x.UserName.Equals(request.UserName) && x.UsuarioId!=request.Id).AnyAsync();
                 if (existe)
                 {
                     throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "El Username ya ha sido registrado por otro usuario" });
                 }
-                existe = await context.Usuario.Where(x => x.Email.Equals(request.Email) && x.Id != request.Id).AnyAsync();
+                existe = await context.Usuario.Where(x => x.Email.Equals(request.Email) && x.UsuarioId != request.Id).AnyAsync();
                 if (existe)
                 {
                     throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "El Email ya se encuentra registrado por otro usuario" });
