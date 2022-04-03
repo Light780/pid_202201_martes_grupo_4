@@ -33,7 +33,7 @@ namespace AppDepa.Infraestructura.API.Controllers
         {            
             return await mediator.Send(new Eliminar.Ejecuta { Id = id});
         }
-        [HttpGet("login")]
+        [HttpPost("login")]
         public async Task<ActionResult<Usuario>> Login(Login.Ejecuta data)
         {
             return await mediator.Send(data);

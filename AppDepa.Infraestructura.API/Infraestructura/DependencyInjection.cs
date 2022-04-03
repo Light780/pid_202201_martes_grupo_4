@@ -24,6 +24,10 @@ namespace AppDepa.Infraestructura.API.Infraestructura
             services.Configure<ConexionConfiguracion>(configuracion.GetSection("ConnectionStrings"));
             services.AddTransient<IFactoryConnection, FactoryConnection>();
             services.AddOptions();
+            services.AddCors(opt => opt.AddPolicy("corsApp", builder => {
+                builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+            }));
+
             return services;
         }
     }

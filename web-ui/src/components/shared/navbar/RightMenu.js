@@ -5,7 +5,7 @@ export const RightMenu = ({ classes, usuario, closeSession }) => (
     <div className={classes.list}>
         <List>
             <ListItem button>
-                <Avatar src={usuario.imagen || FotoUsuarioTemp} />
+                <Avatar src={usuario.fotoPerfil || FotoUsuarioTemp} />
                 <ListItemText classes={{ primary: classes.listItemText }} primary={usuario ? usuario.nombreCompleto : null} />
             </ListItem>
         </List>

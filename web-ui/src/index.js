@@ -3,11 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import {StateProvider} from './context/store'
+import { initialState } from './context/initialState';
+import {mainReducer} from './context/reducers'
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
 root.render(  
-    <App />    
+    <React.StrictMode>
+        <StateProvider initialState={initialState} reducer={mainReducer}>
+            <App />    
+        </StateProvider>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

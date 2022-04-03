@@ -47,7 +47,7 @@ namespace AppDepa.Infraestructura.API
             app.UseMiddleware<MiddlewareErrorHandler>();
             //app.UseHttpsRedirection();            
             app.UseRouting();
-
+            app.UseCors("corsApp");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -20,6 +20,14 @@ const style = {
     },
     icon:{
         fontSize: 40
+    },
+    modal: {
+        position: 'absolute',
+        width: 400,        
+        border: '2px solid #000',        
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)'
     }
 }
 export default style
