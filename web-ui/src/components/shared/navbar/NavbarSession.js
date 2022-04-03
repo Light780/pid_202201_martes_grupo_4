@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import FotoUsuarioTemp from "../../../logo.svg";
 import { LeftMenu } from './LeftMenu';
 import { RightMenu } from './RightMenu';
+import { useStateValue } from '../../../context/store';
 const useStyles = makeStyles((theme) => ({
     seccionDesktop: {
         display: 'none',
@@ -38,9 +39,7 @@ const useStyles = makeStyles((theme) => ({
 function NavbarSession() {
     const classes = useStyles()
     const navigate = useNavigate()
-    const usuario = {
-        nombreCompleto: "Bruno Ramos"
-    }
+    const [{sesionUsuario, openSnackBar}, dispatch] = useStateValue();
     const [openLeftMenu, setOpenLeftMenu] = useState(false)
     const [openRightMenu, setOpenRightMenu] = useState(false)
     const openCloseLeftMenu = () => {
@@ -50,6 +49,12 @@ function NavbarSession() {
         setOpenRightMenu(!openRightMenu)
     }
     const closeSession = () => {
+        window.localStorage.removeItem('token_seguridad');
+        dispatch({
+            type: "SALIR_SESION",
+            nuevoUsuario: null,
+            autenticado: false
+        })
         navigate('/auth/login')
     }
     return (
@@ -61,7 +66,7 @@ function NavbarSession() {
             </Drawer>
             <Drawer open={openRightMenu} onClose={openCloseRightMenu} anchor="right">
                 <div role="button" onKeyDown={openCloseRightMenu} onClick={openCloseRightMenu}>
-                    <RightMenu classes={classes} closeSession={closeSession} usuario={usuario} />
+                    <RightMenu classes={classes} closeSession={closeSession} usuario={sesionUsuario.usuario} />
                 </div>
             </Drawer>
             <Toolbar>
@@ -76,9 +81,9 @@ function NavbarSession() {
                         Salir Sesion
                     </Button>
                     <Button color="inherit" onClick={openCloseRightMenu}>
-                        {usuario ? usuario.nombreCompleto : "Prueba"}
+                        {sesionUsuario ? sesionUsuario.usuario.nombreCompleto : ""}
                     </Button>
-                    <Avatar src={FotoUsuarioTemp}></Avatar>
+                    <Avatar src={sesionUsuario.usuario.fotoPerfil || FotoUsuarioTemp}></Avatar>
                 </div>
                 <div className={classes.seccionMobil}>
                     <IconButton color="inherit" onClick={openCloseRightMenu}>

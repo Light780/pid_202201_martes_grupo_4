@@ -2,11 +2,14 @@ import { Avatar, Button, Container, TextField, Typography } from '@material-ui/c
 import { LockOutlined } from '@material-ui/icons/';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useStateValue } from '../../context/store';
 import style from '../tools/style'
+import { loginUsuario } from '../../actions/UsuarioAction';
 function Login(){
     const navigate = useNavigate()
+    const [{sesionUsuario, openSnackBar},dispatch] = useStateValue();    
     const [usuario, setUsuario] = useState({
-        Email:'',
+        Email:'',        
         Password:''
     })    
     const ingresarValores = e => {
@@ -15,11 +18,26 @@ function Login(){
             ...anterior,
             [name]:value
         }))
-    }
+    }    
     const loginClick = e => {
         e.preventDefault();
-        navigate('/');
+        loginUsuario(usuario,dispatch).then(response => {            
+            if(response.status===200){
+                window.localStorage.setItem('id',response.data.usuarioId)
+                navigate("/")
+            }else{
+                dispatch({
+                    type:'OPEN_SNACKBAR',
+                    openMensaje:{
+                        open:true,
+                        mensaje:'Las credenciales del usuario son incorrectas',
+                        severity:'error'
+                    }
+                })
+            }
+        })
     }
+    
     return (
         <Container maxWidth="xs">
             <div style={style.paper}>
