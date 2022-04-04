@@ -20,7 +20,7 @@ function Login(){
         }))
     }    
     const loginClick = e => {
-        e.preventDefault();
+        e.preventDefault();        
         loginUsuario(usuario,dispatch).then(response => {            
             if(response.status===200){
                 window.localStorage.setItem('id',response.data.usuarioId)
@@ -37,7 +37,6 @@ function Login(){
             }
         })
     }
-    
     return (
         <Container maxWidth="xs">
             <div style={style.paper}>
@@ -49,7 +48,7 @@ function Login(){
                 </Typography>
                 <form style={style.form}>
                     <TextField variant="outlined" value={usuario.Email} onChange={ingresarValores} label="Ingrese email" name="Email" fullWidth margin="normal"/>
-                    <TextField variant="outlined" value={usuario.Password} onChange={ingresarValores} label="Ingrese contraseña" name="Password" fullWidth margin="normal"/>
+                    <TextField type="password"variant="outlined" value={usuario.Password} onChange={ingresarValores} label="Ingrese contraseña" name="Password" fullWidth margin="normal"/>
                     <Button type="submit" fullWidth variant="contained" color="primary" style={style.submit} onClick={loginClick}>Iniciar Sesion</Button>
                 </form>
             </div>

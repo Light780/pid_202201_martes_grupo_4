@@ -35,6 +35,7 @@ export const actualizarUsuario = (id, usuario, dispatch) => {
                 sesion:response.data,
                 autenticado:true
             })
+            
             resolve(response)
         }).catch(error => {
             resolve(error,reject)
