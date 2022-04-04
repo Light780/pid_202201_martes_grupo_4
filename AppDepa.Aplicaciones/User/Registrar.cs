@@ -68,7 +68,8 @@ namespace AppDepa.Aplicaciones.User
                     NombreCompleto = string.Concat(request.Nombres, " ", request.Apellidos),
                     Email=request.Email,
                     Password = request.Password,
-                    FotoPerfil = null
+                    FotoPerfil = null,
+                    FechaRegistro = DateTime.UtcNow
                 };
                 context.Usuario.Add(usuario);
                 var result = await context.SaveChangesAsync();

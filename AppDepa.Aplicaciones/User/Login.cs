@@ -16,7 +16,7 @@ namespace AppDepa.Aplicaciones.User
 {
     public class Login
     {
-        public class Ejecuta : IRequest<Usuario>
+        public class Ejecuta : IRequest<UsuarioData>
         {
             public string Email { get; set; }
             public string Password { get; set; }
@@ -32,21 +32,28 @@ namespace AppDepa.Aplicaciones.User
                     .NotEmpty().WithMessage("Email no debe estar vacio");                  
             }
         }
-        public class Handler : IRequestHandler<Ejecuta, Usuario>
+        public class Handler : IRequestHandler<Ejecuta, UsuarioData>
         {
-            private readonly GestionDepartamentosContext context;
+            private readonly GestionDepartamentosContext context;                        
             public Handler(GestionDepartamentosContext _context)
             {
-                this.context=_context;
+                this.context = _context;                                
             }
-            public async Task<Usuario> Handle(Ejecuta request, CancellationToken cancellationToken)
+            public async Task<UsuarioData> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
                 var usuario = await context.Usuario.Where(x => x.Email.Equals(request.Email) && x.Password.Equals(request.Password)).SingleOrDefaultAsync();
                 if(usuario == null)
                 {
                     throw new ExceptionHandler(HttpStatusCode.BadRequest, "Credenciales incorrectas");
                 }
-                return usuario;
+                return new UsuarioData()
+                {
+                    UsuarioId = usuario.UsuarioId,
+                    UserName = usuario.UserName,
+                    NombreCompleto = usuario.NombreCompleto,
+                    Email = usuario.Email,
+                    FotoPerfil = usuario.FotoPerfil != null ? Convert.ToBase64String(usuario.FotoPerfil) : ""                    
+                };
             }
         }
     }

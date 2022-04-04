@@ -3,10 +3,8 @@ const initialState = {
         usuarioId: 0,
         userName: '',
         nombreCompleto: '',
-        email: '',
-        password: '',
-        fotoPerfil: '',
-        fechaRegistro: ''
+        email: '',        
+        fotoPerfil: '',        
     },
     autenticado:false
 }
