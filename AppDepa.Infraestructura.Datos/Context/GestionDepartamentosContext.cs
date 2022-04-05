@@ -20,7 +20,7 @@ namespace AppDepa.Infraestructura.Datos.Context
         }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Propietario> Propietario { get; set; }
-        public DbSet<Propietario_Deta> PropietarioDeta { get; set; }
+        public DbSet<Departamento> Departamento { get; set; }
         public DbSet<Parametros> Parametros { get; set; }
     }
 }

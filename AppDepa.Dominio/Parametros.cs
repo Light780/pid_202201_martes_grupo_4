@@ -10,13 +10,13 @@ namespace AppDepa.Dominio
     public class Parametros
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Param { get; set; }
+        public int ParametroId { get; set; }
         [Column(TypeName = "varchar(200)")]
-        public int codParametros { get; set; }
+        public string ParamId{ get; set; }
+        public int CodParam { get; set; }
+        [Column(TypeName = "varchar(300)")]
         public string Descripcion { get; set; }
-        [Column(TypeName = "varchar(200)")]
         public int Estado { get; set; }
-        [Column(TypeName = "char(1)")]
         public DateTime FechaRegistro { get; set; }
     }
 }
