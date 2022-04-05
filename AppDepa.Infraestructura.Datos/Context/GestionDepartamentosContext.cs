@@ -18,6 +18,8 @@ namespace AppDepa.Infraestructura.Datos.Context
         {
             base.OnModelCreating(modelBuilder);
         }
-        public DbSet<Usuario> Usuario { get; set; }        
+        public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Propietario> Propietario { get; set; }
+        public DbSet<Propietario_Deta> PropietarioDeta { get; set; }
     }
 }
