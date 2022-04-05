@@ -5,6 +5,7 @@ import FotoUsuarioTemp from "../../../logo.svg";
 import { LeftMenu } from './LeftMenu';
 import { RightMenu } from './RightMenu';
 import { useStateValue } from '../../../context/store';
+import { blobConverter } from '../../../services/Utils';
 const useStyles = makeStyles((theme) => ({
     seccionDesktop: {
         display: 'none',
@@ -41,7 +42,7 @@ function NavbarSession() {
     const navigate = useNavigate()
     const [{sesionUsuario, openSnackBar}, dispatch] = useStateValue();
     const [openLeftMenu, setOpenLeftMenu] = useState(false)
-    const [openRightMenu, setOpenRightMenu] = useState(false)
+    const [openRightMenu, setOpenRightMenu] = useState(false)        
     const openCloseLeftMenu = () => {
         setOpenLeftMenu(!openLeftMenu)
     }
@@ -83,7 +84,7 @@ function NavbarSession() {
                     <Button color="inherit" onClick={openCloseRightMenu}>
                         {sesionUsuario ? sesionUsuario.usuario.nombreCompleto : ""}
                     </Button>
-                    <Avatar src={sesionUsuario.usuario.fotoPerfil || FotoUsuarioTemp}></Avatar>
+                    <Avatar src={blobConverter(sesionUsuario.usuario.fotoPerfil) || FotoUsuarioTemp}></Avatar>
                 </div>
                 <div className={classes.seccionMobil}>
                     <IconButton color="inherit" onClick={openCloseRightMenu}>
