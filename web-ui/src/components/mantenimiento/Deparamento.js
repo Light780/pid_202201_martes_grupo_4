@@ -37,6 +37,12 @@ function Departamento() {
    const handleChange = e => {
 
    }
+   const abrirCerrarModalEditar=()=>{
+      setModalEditar (!modalEditar);
+   }
+   const abrirCerrarModalEliminar=()=>{
+      setModalEliminar(!modalEliminar);
+   }
    // useEffect(async () => {
    //    //await peticionGet();
    // }, [])
@@ -78,6 +84,57 @@ function Departamento() {
 
       </div>
    )
+   const bodyEditar=(
+      <div className={styles.modal}>
+         <Container component="main" maxWidth="md" justifyContent="center">
+         <Typography className={styles.modalTitle} component="h1" variant="h5">Editar Departamento</Typography>
+         <form className={styles.modalForm}>
+           <Grid container spacing={2} justifyContent="center">
+           <Grid item xs={12} md={12}>
+         <TextField name="Propietario" className={styles.inputMaterial} label="Propietario" onChange={handleChange} value={departamento && departamento.propietario}></TextField>
+             </Grid>
+             <Grid item xs={12} md={6}>
+         <TextField name="Habitaciones" className={styles.inputMaterial} label="Habitaciones" onChange={handleChange} value={departamento && departamento.Habitaciones}></TextField>
+               </Grid>
+              <Grid item xs={12} md={6}>
+         <TextField name="Area" className={styles.inputMaterial} label="Area" onChange={handleChange} value={departamento && departamento.Area}></TextField>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+         <TextField name="Estado" className={styles.inputMaterial} label="Estado" onChange={handleChange} value={departamento && departamento.Estado}></TextField>
+                </Grid>
+                  <Grid item xs={12} md={6}>
+            <TextField name="NroEdificio" className={styles.inputMaterial} label="Nro de Edificio" onChange={handleChange} value={departamento && departamento.NroEdificio}></TextField>
+              </Grid>                  
+             </Grid>
+             <Grid container spacing={2} justifyContent="center">
+             <Grid item xs={6} md={6}>
+           <Button color="primary" onClick={()=>PeticionPut()}>Editar</Button>
+           </Grid>
+           <Grid item xs={6} md={6}>
+           <Button onClick={()=>abriCerrarModalEditar()}>Cancelar</Button>
+           </Grid>
+           </Grid>
+          </form>
+          </Container>
+      </div>
+      
+   )
+
+   const bodyEliminar=(
+      <div className={styles.modal}>
+         <p>Estas seguro que deseas eliminar el departamento seleccionado<b>{departamento && departamento.DepartamentoId}</b></p>
+         <Grid container spacing={2} justifyContent="center">
+         <Grid item xs={6} md={6}>
+              <Button color="secondary" onClick={()=>peticionDelete()}>Si</Button>
+              </Grid>
+              <Grid item xs={6} md={6}>
+              <Button onClick={()=>abrirCerrarModalEliminar()}></Button>
+              </Grid>
+              </Grid>
+         </div>
+     
+   )
+
 
    return (
       <div className={styles.table}>
@@ -122,6 +179,18 @@ function Departamento() {
             open={modalInsertar}
             onClose={abrirCerrarModalInsertar}>
             {bodyInsertar}
+         </Modal>
+
+         <Modal
+         open={modalEditar}
+         onClose={abrirCerrarModalEditar}>
+            {bodyEditar}
+         </Modal>
+
+         <Modal
+         open={modalEliminar}
+         onClose={abrirCerrarModalEliminar}>
+          {bodyEliminar}
          </Modal>
       </div>
 
