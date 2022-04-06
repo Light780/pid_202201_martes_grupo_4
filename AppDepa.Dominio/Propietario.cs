@@ -9,7 +9,7 @@ namespace AppDepa.Dominio
 {
     public class Propietario
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]        
         public int PropietarioId { get; set; }
         [Column(TypeName = "varchar(200)")]
         public string Titular { get; set; }
@@ -21,10 +21,7 @@ namespace AppDepa.Dominio
         public int EstadoPropietarioId { get; set; }
         [Column(TypeName = "varchar(100)")]
         public string Correo { get; set; }
-
-        public int CantidadFamiliares { get; set; }
-        public int CantidadMascotas { get; set; }
-        public int CantidadPosibleVisita { get; set; }
+       
         public DateTime FechaRegistro { get; set; }
     }
 }

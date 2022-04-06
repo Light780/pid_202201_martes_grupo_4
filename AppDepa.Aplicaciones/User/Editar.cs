@@ -11,12 +11,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AppDepa.Dominio.Exceptions;
+using AppDepa.Aplicaciones.Dto;
 
 namespace AppDepa.Aplicaciones.User
 {
     public class Editar
     {
-        public class Ejecuta : IRequest<UsuarioData>
+        public class Ejecuta : IRequest<UsuarioDto>
         {
             public int UsuarioId { get; set; }
             public string UserName { get; set; }
@@ -40,14 +41,14 @@ namespace AppDepa.Aplicaciones.User
                     .MinimumLength(8).WithMessage("Debe tener almenos 8 caracteres");
             }
         }
-        public class Handler : IRequestHandler<Ejecuta, UsuarioData>
+        public class Handler : IRequestHandler<Ejecuta, UsuarioDto>
         {
             private readonly GestionDepartamentosContext context;                        
             public Handler(GestionDepartamentosContext _context)
             {
                 this.context = _context;                                
             }
-            public async Task<UsuarioData> Handle(Ejecuta request, CancellationToken cancellationToken)
+            public async Task<UsuarioDto> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
                 if (!request.Password.Equals(request.PasswordConfirm))
                     throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Las contraseñas no coinciden" });
@@ -76,7 +77,7 @@ namespace AppDepa.Aplicaciones.User
                 var result = await context.SaveChangesAsync();
                 if (result > 0)
                 {
-                    return new UsuarioData()
+                    return new UsuarioDto()
                     {
                         UsuarioId = usuario.UsuarioId,
                         UserName = usuario.UserName,

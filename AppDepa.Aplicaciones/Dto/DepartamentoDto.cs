@@ -17,9 +17,9 @@ namespace AppDepa.Aplicaciones.Dto
   
         public string Direccion { get; set; }
         // Primer parametro
-        public string TipoDepaParam { get; set; }
+        public string TipoDepa { get; set; }
         // Segundo parametro
-        public int EstadoDepaParam { get; set; }
+        public int EstadoDepa { get; set; }
 
         public int CantidadHabitaciones { get; set; }
 
