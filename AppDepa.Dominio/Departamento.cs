@@ -13,17 +13,13 @@ namespace AppDepa.Dominio
         public int DepartamentoId { get; set; }
         [Column(TypeName = "varchar(15)")]
         public string NroDepartamento { get; set; }        
-        public decimal Tamano { get; set; }
-        [Column(TypeName = "varchar(500)")]
-        public string Direccion { get; set; }
+        public decimal Tamano { get; set; }        
         public int TipoDepaId { get; set; }
         public int EstadoDepaId { get; set; }
 
         public int CantidadHabitaciones { get; set; }
         [Column(TypeName = "bit")]
-        public bool IndCocina { get; set; }
-        [Column(TypeName = "bit")]
-        public bool IndBano { get; set; }
+        public bool IndCocina { get; set; }        
         [Column(TypeName = "bit")]
         public bool IndBalcon { get; set; }
         [Column(TypeName = "bit")]
