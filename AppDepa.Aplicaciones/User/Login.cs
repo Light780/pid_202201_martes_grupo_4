@@ -1,6 +1,6 @@
 ﻿using AppDepa.Aplicaciones.Dto;
 using AppDepa.Dominio;
-using AppDepa.Dominio.Exceptions;
+using AppDepa.Aplicaciones.Exceptions;
 using AppDepa.Infraestructura.Datos.Context;
 using FluentValidation;
 using MediatR;

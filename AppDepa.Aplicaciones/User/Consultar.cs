@@ -9,8 +9,8 @@ using System.Threading;
 using AppDepa.Infraestructura.Datos.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
-using AppDepa.Dominio.Exceptions;
 using AppDepa.Aplicaciones.Dto;
+using AppDepa.Aplicaciones.Exceptions;
 
 namespace AppDepa.Aplicaciones.User
 {

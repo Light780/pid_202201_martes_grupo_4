@@ -18,12 +18,26 @@ function Propietario() {
 
    })
    const [modalInsertar, setModalInsertar] = useState(false);
+   const [modalEditar, setModalEditar] = useState(false);
+   const [modalEliminar, setModalEliminar] = useState(false);
 
-   const peticionGet = async () => {
+   const PeticionGet = async () => {
       
    }
    const PeticionPost = async () => {
       
+   }
+   const PeticionPut = async () => {
+      // await axios.get(baseUrl)
+      //    .then(response => {
+      //       setDepartamento(response.departamento);
+      //    })
+   }
+   const PeticionDelete = async () => {
+      // await axios.get(baseUrl)
+      //    .then(response => {
+      //       setDepartamento(response.departamento);
+      //    })
    }
    const abrirCerrarModalInsertar = () => {
       setModalInsertar(!modalInsertar);
@@ -109,7 +123,7 @@ function Propietario() {
            <Button color="primary" onClick={()=>PeticionPut()}>Editar</Button>
            </Grid>
            <Grid item xs={6} md={6}>
-           <Button onClick={()=>abriCerrarModalEditar()}>Cancelar</Button>
+           <Button onClick={abrirCerrarModalEditar}>Cancelar</Button>
            </Grid>
            </Grid>
           </form>
@@ -123,10 +137,10 @@ function Propietario() {
          <p>Estas seguro que deseas eliminar el propietario seleccionado<b>{propietario && propietario.propietario}</b></p>
          <Grid container spacing={2} justifyContent="center">
          <Grid item xs={6} md={6}>
-              <Button color="secondary" onClick={()=>peticionDelete()}>Si</Button>
+              <Button color="secondary" onClick={()=>PeticionDelete()}>Si</Button>
               </Grid>
               <Grid item xs={6} md={6}>
-              <Button onClick={()=>abrirCerrarModalEliminar()}></Button>
+              <Button onClick={abrirCerrarModalEliminar}></Button>
               </Grid>
               </Grid>
          </div>

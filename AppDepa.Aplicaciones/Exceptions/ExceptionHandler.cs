@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AppDepa.Dominio.Exceptions
+namespace AppDepa.Aplicaciones.Exceptions
 {
     public class ExceptionHandler : Exception
     {

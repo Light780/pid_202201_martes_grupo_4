@@ -10,8 +10,8 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using AppDepa.Dominio.Exceptions;
 using AppDepa.Aplicaciones.Dto;
+using AppDepa.Aplicaciones.Exceptions;
 
 namespace AppDepa.Aplicaciones.User
 {

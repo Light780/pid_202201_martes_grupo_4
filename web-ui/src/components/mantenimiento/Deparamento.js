@@ -18,14 +18,28 @@ function Departamento() {
 
    })
    const [modalInsertar, setModalInsertar] = useState(false);
+   const [modalEditar, setModalEditar] = useState(false);
+   const [modalEliminar, setModalEliminar] = useState(false);
 
-   const peticionGet = async () => {
+   const PeticionGet = async () => {
       // await axios.get(baseUrl)
       //    .then(response => {
       //       setDepartamento(response.departamento);
       //    })
    }
    const PeticionPost = async () => {
+      // await axios.get(baseUrl)
+      //    .then(response => {
+      //       setDepartamento(response.departamento);
+      //    })
+   }
+   const PeticionPut = async () => {
+      // await axios.get(baseUrl)
+      //    .then(response => {
+      //       setDepartamento(response.departamento);
+      //    })
+   }
+   const PeticionDelete = async () => {
       // await axios.get(baseUrl)
       //    .then(response => {
       //       setDepartamento(response.departamento);
@@ -38,7 +52,7 @@ function Departamento() {
 
    }
    const abrirCerrarModalEditar=()=>{
-      setModalEditar (!modalEditar);
+      setModalEditar(!modalEditar);
    }
    const abrirCerrarModalEliminar=()=>{
       setModalEliminar(!modalEliminar);
@@ -111,7 +125,7 @@ function Departamento() {
            <Button color="primary" onClick={()=>PeticionPut()}>Editar</Button>
            </Grid>
            <Grid item xs={6} md={6}>
-           <Button onClick={()=>abriCerrarModalEditar()}>Cancelar</Button>
+           <Button onClick={abrirCerrarModalEditar}>Cancelar</Button>
            </Grid>
            </Grid>
           </form>
@@ -125,10 +139,10 @@ function Departamento() {
          <p>Estas seguro que deseas eliminar el departamento seleccionado<b>{departamento && departamento.DepartamentoId}</b></p>
          <Grid container spacing={2} justifyContent="center">
          <Grid item xs={6} md={6}>
-              <Button color="secondary" onClick={()=>peticionDelete()}>Si</Button>
+              <Button color="secondary" onClick={()=>PeticionDelete()}>Si</Button>
               </Grid>
               <Grid item xs={6} md={6}>
-              <Button onClick={()=>abrirCerrarModalEliminar()}></Button>
+              <Button onClick={abrirCerrarModalEliminar}></Button>
               </Grid>
               </Grid>
          </div>
