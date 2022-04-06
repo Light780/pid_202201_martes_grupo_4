@@ -10,30 +10,31 @@ using AppDepa.Infraestructura.Datos.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 using AppDepa.Dominio.Exceptions;
+using AppDepa.Aplicaciones.Dto;
 
 namespace AppDepa.Aplicaciones.User
 {
     public class Consultar
     {
-        public class UsuarioUnico : IRequest<UsuarioData> {
+        public class UsuarioUnico : IRequest<UsuarioDto> {
             public int UsuarioId { get; set; }
         }
 
-        public class Handler : IRequestHandler<UsuarioUnico, UsuarioData>
+        public class Handler : IRequestHandler<UsuarioUnico, UsuarioDto>
         {
             private readonly GestionDepartamentosContext context;            
             public Handler(GestionDepartamentosContext _context)
             {
                 this.context = _context;                
             }
-            public async Task<UsuarioData> Handle(UsuarioUnico request, CancellationToken cancellationToken)
+            public async Task<UsuarioDto> Handle(UsuarioUnico request, CancellationToken cancellationToken)
             {
                 var usuario = await context.Usuario.Where(x => x.UsuarioId == request.UsuarioId).SingleOrDefaultAsync();
                 if (usuario == null)
                 {
                     throw new ExceptionHandler(HttpStatusCode.NotFound, new { mensaje = "El Usuario no existe" });
                 }
-                return new UsuarioData()
+                return new UsuarioDto()
                 {
                     UsuarioId = usuario.UsuarioId,
                     UserName = usuario.UserName,

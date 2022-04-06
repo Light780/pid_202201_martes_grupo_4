@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AppDepa.Dominio
+namespace AppDepa.Aplicaciones.Dto
 {
-    public class UsuarioData
+    public class UsuarioDto
     {
         public int UsuarioId { get; set; }
         public string UserName { get; set; }        

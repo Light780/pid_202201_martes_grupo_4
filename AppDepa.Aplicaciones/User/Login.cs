@@ -1,4 +1,5 @@
-﻿using AppDepa.Dominio;
+﻿using AppDepa.Aplicaciones.Dto;
+using AppDepa.Dominio;
 using AppDepa.Dominio.Exceptions;
 using AppDepa.Infraestructura.Datos.Context;
 using FluentValidation;
@@ -16,7 +17,7 @@ namespace AppDepa.Aplicaciones.User
 {
     public class Login
     {
-        public class Ejecuta : IRequest<UsuarioData>
+        public class Ejecuta : IRequest<UsuarioDto>
         {
             public string Email { get; set; }
             public string Password { get; set; }
@@ -32,21 +33,21 @@ namespace AppDepa.Aplicaciones.User
                     .NotEmpty().WithMessage("Email no debe estar vacio");                  
             }
         }
-        public class Handler : IRequestHandler<Ejecuta, UsuarioData>
+        public class Handler : IRequestHandler<Ejecuta, UsuarioDto>
         {
             private readonly GestionDepartamentosContext context;                        
             public Handler(GestionDepartamentosContext _context)
             {
                 this.context = _context;                                
             }
-            public async Task<UsuarioData> Handle(Ejecuta request, CancellationToken cancellationToken)
+            public async Task<UsuarioDto> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
                 var usuario = await context.Usuario.Where(x => x.Email.Equals(request.Email) && x.Password.Equals(request.Password)).SingleOrDefaultAsync();
                 if(usuario == null)
                 {
                     throw new ExceptionHandler(HttpStatusCode.BadRequest, "Credenciales incorrectas");
                 }
-                return new UsuarioData()
+                return new UsuarioDto()
                 {
                     UsuarioId = usuario.UsuarioId,
                     UserName = usuario.UserName,
