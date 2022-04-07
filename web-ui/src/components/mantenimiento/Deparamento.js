@@ -1,4 +1,4 @@
-import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TableCell, TableBody, TableRow, Paper } from '@material-ui/core';
+import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TableCell, TableBody, TableRow, Paper, Checkbox, FormControlLabel } from '@material-ui/core';
 import { Edit, Delete } from '@material-ui/icons/';
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,11 +10,17 @@ function Departamento() {
 
    const [departamento, setDepartamento] = useState({
       DepartamentoId: 0,
-      Habitaciones: 0,
-      propietario: '',
-      Area: 0,
-      Estado: '',
-      NroEdificio: 0
+      NroDepartamento: '',
+      Tamaño: 0,
+      TipoDepaId: 0,
+      EstadoDepaId: 0,
+      CantHabitaciones:0,
+      IndCocina:false,
+      IndBalcon:false,
+      IndLavanderia:false,
+      IndPiscina:false,
+      IndPatio:false,
+      FechaRegistro:''
 
    })
    const [modalInsertar, setModalInsertar] = useState(false);
@@ -68,20 +74,48 @@ function Departamento() {
             <form className={styles.modalForm}>
                <Grid container spacing={2} justifyContent="center">
                   <Grid item xs={12} md={12}>
-                     <TextField name="Propietario" className={styles.inputMaterial} label="Propietario" onChange={handleChange} />
+                     <TextField name="DepartamentoId" className={styles.inputMaterial} label="Departamento Id" onChange={handleChange} />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <TextField name="Habitaciones" className={styles.inputMaterial} label="Numero de Habitaciones" onChange={handleChange} />
+                     <TextField name="NroDepartamento" className={styles.inputMaterial} label="Nro de Departamento" onChange={handleChange} />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <TextField name="Area" className={styles.inputMaterial} label="Area" onChange={handleChange} />
+                     <TextField name="Tamaño" className={styles.inputMaterial} label="Tamaño" onChange={handleChange} />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <TextField name="Estado" className={styles.inputMaterial} label="Estado" onChange={handleChange} />
+                     <TextField name="TipoDepaId" className={styles.inputMaterial} label="Tipo de Departamento" onChange={handleChange} />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <TextField name="NroEdificio" className={styles.inputMaterial} label="Numero de Edificio" onChange={handleChange} />
-                  </Grid>                  
+                     <TextField name="EstadoDepaId" className={styles.inputMaterial} label="Estado Deparatamento" onChange={handleChange} />
+                  </Grid>       
+                  <Grid item xs={12} md={6}>
+                     <TextField name="CantHabitaciones" className={styles.inputMaterial} label="Cantidad de Habitaciones" onChange={handleChange} />
+                  </Grid>   
+                  <Grid item xs={12} md={6}>
+                     <FormControlLabel 
+                     control={<Checkbox checked={departamento.IndCocina} onChange={handleChange} color='primary' name="IndCocina"/>}
+                     label="Cocina"/>
+                     </Grid>   
+                     <Grid item xs={12} md={6}>
+                     <FormControlLabel 
+                     control={<Checkbox checked={departamento.IndBalcon} onChange={handleChange} color='primary' name="IndBalcon"/>}
+                     label="Balcon"/>
+                     </Grid>      
+                     <Grid item xs={12} md={6}>
+                     <FormControlLabel 
+                     control={<Checkbox checked={departamento.IndLavanderia} onChange={handleChange} color='primary' name="IndLavanderia"/>}
+                     label="Lavanderia"/>
+                     </Grid>
+                     <Grid item xs={12} md={6}>
+                     <FormControlLabel 
+                     control={<Checkbox checked={departamento.IndPiscina} onChange={handleChange} color='primary' name="IndPiscina"/>}
+                     label="Piscina"/>
+                     </Grid>
+                     <Grid item xs={12} md={6}>
+                     <FormControlLabel 
+                     control={<Checkbox checked={departamento.IndPatio} onChange={handleChange} color='primary' name="IndPatio"/>}
+                     label="Patio"/>
+                     </Grid>
                </Grid>
                <Grid container spacing={2} justifyContent="center">
                   <Grid item xs={6} md={6}>
@@ -105,20 +139,48 @@ function Departamento() {
          <form className={styles.modalForm}>
            <Grid container spacing={2} justifyContent="center">
            <Grid item xs={12} md={12}>
-         <TextField name="Propietario" className={styles.inputMaterial} label="Propietario" onChange={handleChange} value={departamento && departamento.propietario}></TextField>
+         <TextField name="DepartamentoId" className={styles.inputMaterial} label="DepartamentoId" onChange={handleChange} value={departamento && departamento.DepartamentoId}></TextField>
              </Grid>
              <Grid item xs={12} md={6}>
-         <TextField name="Habitaciones" className={styles.inputMaterial} label="Habitaciones" onChange={handleChange} value={departamento && departamento.Habitaciones}></TextField>
+         <TextField name="NroDepartamento" className={styles.inputMaterial} label="NroDepartamento" onChange={handleChange} value={departamento && departamento.NroDepartamento}></TextField>
                </Grid>
               <Grid item xs={12} md={6}>
-         <TextField name="Area" className={styles.inputMaterial} label="Area" onChange={handleChange} value={departamento && departamento.Area}></TextField>
+         <TextField name="Tamaño" className={styles.inputMaterial} label="Tamaño" onChange={handleChange} value={departamento && departamento.Tamaño}></TextField>
                   </Grid>
                   <Grid item xs={12} md={6}>
-         <TextField name="Estado" className={styles.inputMaterial} label="Estado" onChange={handleChange} value={departamento && departamento.Estado}></TextField>
+         <TextField name="TipoDepaId" className={styles.inputMaterial} label="TipoDepaId" onChange={handleChange} value={departamento && departamento.TipoDepaId}></TextField>
                 </Grid>
                   <Grid item xs={12} md={6}>
-            <TextField name="NroEdificio" className={styles.inputMaterial} label="Nro de Edificio" onChange={handleChange} value={departamento && departamento.NroEdificio}></TextField>
-              </Grid>                  
+            <TextField name="EstadoDepaId" className={styles.inputMaterial} label="EstadoDepaId" onChange={handleChange} value={departamento && departamento.EstadoDepaId}></TextField>
+              </Grid>    
+              <Grid item xs={12} md={6}>
+            <TextField name="CantHabitaciones" className={styles.inputMaterial} label="CantHabitaciones" onChange={handleChange} value={departamento && departamento.CantHabitaciones}></TextField>
+              </Grid>   
+              <Grid item xs={12} md={6}>
+                     <FormControlLabel 
+                     control={<Checkbox checked={departamento.IndCocina} onChange={handleChange} color='primary' name="IndCocina"/>}
+                     label="Cocina" value={departamento && departamento.IndCocina}/>
+                     </Grid>   
+                     <Grid item xs={12} md={6}>
+                     <FormControlLabel 
+                     control={<Checkbox checked={departamento.IndBalcon} onChange={handleChange} color='primary' name="IndBalcon"/>}
+                     label="Balcon" value={departamento && departamento.IndBalcon}/>
+                     </Grid>      
+                     <Grid item xs={12} md={6}>
+                     <FormControlLabel 
+                     control={<Checkbox checked={departamento.IndLavanderia} onChange={handleChange} color='primary' name="IndLavanderia"/>}
+                     label="Lavanderia" value={departamento && departamento.IndLavanderia}/>
+                     </Grid>
+                     <Grid item xs={12} md={6}>
+                     <FormControlLabel 
+                     control={<Checkbox checked={departamento.IndPiscina} onChange={handleChange} color='primary' name="IndPiscina"/>}
+                     label="Piscina" value={departamento && departamento.IndPiscina}/>
+                     </Grid>
+                     <Grid item xs={12} md={6}>
+                     <FormControlLabel 
+                     control={<Checkbox checked={departamento.IndPatio} onChange={handleChange} color='primary' name="IndPatio"/>}
+                     label="Patio"/>
+                     </Grid>           
              </Grid>
              <Grid container spacing={2} justifyContent="center">
              <Grid item xs={6} md={6}>
