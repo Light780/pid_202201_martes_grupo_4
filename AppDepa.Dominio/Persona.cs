@@ -5,23 +5,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace AppDepa.Dominio
 {
-    public class Propietario
+    public class Persona
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]        
-        public int PropietarioId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int PersonaId { get; set; }
         [Column(TypeName = "varchar(200)")]
-        public string Titular { get; set; }
+        public string NombreCompleto { get; set; }
         [Column(TypeName = "varchar(20)")]
         public string Documento { get; set; }
         public int TipoDocumentoId { get; set; }
         [Column(TypeName = "varchar(15)")]
         public string Telefono { get; set; }
-        public int EstadoPropietarioId { get; set; }
+        public int EstadoPersonaId { get; set; }
         [Column(TypeName = "varchar(100)")]
         public string Correo { get; set; }
-       
+        [Column(TypeName = "char(1)")]
+        public string Sexo { get; set; }
+        public int TipoPersonaId { get; set; }
         public DateTime FechaRegistro { get; set; }
+
+        // Relación con Departamentos
+        public int DepartamentoId { get; set; }
+        public Departamento Departamento { get; set; }
     }
+
 }
+
+}
+

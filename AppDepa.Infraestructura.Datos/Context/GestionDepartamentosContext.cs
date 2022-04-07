@@ -16,7 +16,8 @@ namespace AppDepa.Infraestructura.Datos.Context
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Propietario>().HasKey(c => c.PropietarioId);
+            modelBuilder.Entity<Persona>().HasKey(c => c.PersonaId);
+            modelBuilder.Entity<Mascota>().HasKey(c => c.MascotaId);
             modelBuilder.Entity<Usuario>().HasKey(c => c.UsuarioId);
             modelBuilder.Entity<Departamento>().HasKey(c => c.DepartamentoId);
             modelBuilder.Entity<Boleta>().HasKey(c => c.BoletaId);
@@ -26,11 +27,14 @@ namespace AppDepa.Infraestructura.Datos.Context
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<Usuario> Usuario { get; set; }
-        public DbSet<Propietario> Propietario { get; set; }
+        public DbSet<Persona> Persona { get; set; }
+        public DbSet<Mascota> Mascota { get; set; }
         public DbSet<Departamento> Departamento { get; set; }
         public DbSet<Boleta> Boleta { get; set; }
         public DbSet<Incidencia> Incidencia { get; set; }
         public DbSet<PagoServicio> PagoServicio { get; set; }
         public DbSet<Parametros> Parametros { get; set; }
+        public DbSet<Persona> Persona { get; set; }
+        public DbSet<Mascota> Mascota { get; set; }
     }
 }
