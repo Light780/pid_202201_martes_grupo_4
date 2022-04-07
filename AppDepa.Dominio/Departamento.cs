@@ -35,7 +35,10 @@ namespace AppDepa.Dominio
         public bool IndPiscina { get; set; }
         [Column(TypeName = "bit")]
         public bool IndPatio { get; set; }
-
         public DateTime FechaRegistro { get; set; }
+
+        // Relación con Mascota
+        public ICollection<Mascota> Mascotas { get; set; }
+        public ICollection<Persona> Personas { get; set; }
     }
 }
