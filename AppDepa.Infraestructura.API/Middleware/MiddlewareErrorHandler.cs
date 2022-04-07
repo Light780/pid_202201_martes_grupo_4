@@ -1,5 +1,4 @@
-﻿using AppDepa.Dominio;
-using AppDepa.Dominio.Exceptions;
+﻿using AppDepa.Aplicaciones.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;

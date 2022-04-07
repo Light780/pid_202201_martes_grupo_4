@@ -5,16 +5,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import { style, styleModal } from '../tools/style'
 import axios from 'axios';
 
-function Departamento() {
+function Propietario() {
    const styles = styleModal();
 
-   const [departamento, setDepartamento] = useState({
-      DepartamentoId: 0,
-      Habitaciones: 0,
+   const [propietario, setPropietario] = useState({
+      DNI: 0,
       propietario: '',
-      Area: 0,
-      Estado: '',
-      NroEdificio: 0
+      Apellido: '',
+      Familiares: 0,
+      Telefono: 0,
+      Correo: 0
 
    })
    const [modalInsertar, setModalInsertar] = useState(false);
@@ -22,16 +22,10 @@ function Departamento() {
    const [modalEliminar, setModalEliminar] = useState(false);
 
    const PeticionGet = async () => {
-      // await axios.get(baseUrl)
-      //    .then(response => {
-      //       setDepartamento(response.departamento);
-      //    })
+      
    }
    const PeticionPost = async () => {
-      // await axios.get(baseUrl)
-      //    .then(response => {
-      //       setDepartamento(response.departamento);
-      //    })
+      
    }
    const PeticionPut = async () => {
       // await axios.get(baseUrl)
@@ -52,36 +46,37 @@ function Departamento() {
 
    }
    const abrirCerrarModalEditar=()=>{
-      setModalEditar(!modalEditar);
+      setModalEditar (!modalEditar);
    }
    const abrirCerrarModalEliminar=()=>{
       setModalEliminar(!modalEliminar);
    }
-   // useEffect(async () => {
-   //    //await peticionGet();
-   // }, [])
+  
 
    const bodyInsertar = (
       <div className={styles.modal}>
          <Container component="main" maxWidth="md" justifyContent="center">
-            <Typography className={styles.modalTitle} component="h1" variant="h5">Registrar Departamento</Typography>
+            <Typography className={styles.modalTitle} component="h1" variant="h5">Registrar Propietario</Typography>
             <form className={styles.modalForm}>
                <Grid container spacing={2} justifyContent="center">
                   <Grid item xs={12} md={12}>
-                     <TextField name="Propietario" className={styles.inputMaterial} label="Propietario" onChange={handleChange} />
+                     <TextField name="DNI" className={styles.inputMaterial} label="DNI" onChange={handleChange} />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <TextField name="Habitaciones" className={styles.inputMaterial} label="Numero de Habitaciones" onChange={handleChange} />
+                     <TextField name="propietario" className={styles.inputMaterial} label="Propietario" onChange={handleChange} />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <TextField name="Area" className={styles.inputMaterial} label="Area" onChange={handleChange} />
+                     <TextField name="Apellido" className={styles.inputMaterial} label="Apellido" onChange={handleChange} />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <TextField name="Estado" className={styles.inputMaterial} label="Estado" onChange={handleChange} />
+                     <TextField name="Familiares" className={styles.inputMaterial} label="Familiares" onChange={handleChange} />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <TextField name="NroEdificio" className={styles.inputMaterial} label="Numero de Edificio" onChange={handleChange} />
-                  </Grid>                  
+                     <TextField name="Telefono" className={styles.inputMaterial} label="Telefono" onChange={handleChange} />
+                  </Grid>        
+                  <Grid item xs={12} md={6}>
+                     <TextField name="Correo" className={styles.inputMaterial} label="Correo" onChange={handleChange} />
+                  </Grid>          
                </Grid>
                <Grid container spacing={2} justifyContent="center">
                   <Grid item xs={6} md={6}>
@@ -101,25 +96,28 @@ function Departamento() {
    const bodyEditar=(
       <div className={styles.modal}>
          <Container component="main" maxWidth="md" justifyContent="center">
-         <Typography className={styles.modalTitle} component="h1" variant="h5">Editar Departamento</Typography>
+         <Typography className={styles.modalTitle} component="h1" variant="h5">Editar Propietario</Typography>
          <form className={styles.modalForm}>
            <Grid container spacing={2} justifyContent="center">
            <Grid item xs={12} md={12}>
-         <TextField name="Propietario" className={styles.inputMaterial} label="Propietario" onChange={handleChange} value={departamento && departamento.propietario}></TextField>
+         <TextField name="DNI" className={styles.inputMaterial} label="DNI " onChange={handleChange} value={propietario && propietario.DNI}></TextField>
              </Grid>
              <Grid item xs={12} md={6}>
-         <TextField name="Habitaciones" className={styles.inputMaterial} label="Habitaciones" onChange={handleChange} value={departamento && departamento.Habitaciones}></TextField>
+         <TextField name="Habitaciones" className={styles.inputMaterial} label="Habitaciones" onChange={handleChange} value={propietario && propietario.propietario}></TextField>
                </Grid>
               <Grid item xs={12} md={6}>
-         <TextField name="Area" className={styles.inputMaterial} label="Area" onChange={handleChange} value={departamento && departamento.Area}></TextField>
+         <TextField name="Apellido" className={styles.inputMaterial} label="Apellido" onChange={handleChange} value={propietario && propietario.Apellido}></TextField>
                   </Grid>
                   <Grid item xs={12} md={6}>
-         <TextField name="Estado" className={styles.inputMaterial} label="Estado" onChange={handleChange} value={departamento && departamento.Estado}></TextField>
+         <TextField name="Familiares" className={styles.inputMaterial} label="Familiares" onChange={handleChange} value={propietario && propietario.Familiares}></TextField>
                 </Grid>
                   <Grid item xs={12} md={6}>
-            <TextField name="NroEdificio" className={styles.inputMaterial} label="Nro de Edificio" onChange={handleChange} value={departamento && departamento.NroEdificio}></TextField>
-              </Grid>                  
-             </Grid>
+            <TextField name="Telefono" className={styles.inputMaterial} label="Telefono" onChange={handleChange} value={propietario && propietario.Telefono}></TextField>
+              </Grid>
+              <Grid item xs={12} md={6}>
+            <TextField name="Correo" className={styles.inputMaterial} label="Correo" onChange={handleChange} value={propietario && propietario.Correo}></TextField>
+              </Grid>
+              </Grid>
              <Grid container spacing={2} justifyContent="center">
              <Grid item xs={6} md={6}>
            <Button color="primary" onClick={()=>PeticionPut()}>Editar</Button>
@@ -136,7 +134,7 @@ function Departamento() {
 
    const bodyEliminar=(
       <div className={styles.modal}>
-         <p>Estas seguro que deseas eliminar el departamento seleccionado<b>{departamento && departamento.DepartamentoId}</b></p>
+         <p>Estas seguro que deseas eliminar el propietario seleccionado<b>{propietario && propietario.propietario}</b></p>
          <Grid container spacing={2} justifyContent="center">
          <Grid item xs={6} md={6}>
               <Button color="secondary" onClick={()=>PeticionDelete()}>Si</Button>
@@ -161,12 +159,12 @@ function Departamento() {
             <Table>
                <TableHead>
                   <TableRow>
-                     <TableCell>Id Departamento</TableCell>
-                     <TableCell>Numero de Habitaciones</TableCell>
+                     <TableCell>DNI</TableCell>
                      <TableCell>Propietario</TableCell>
-                     <TableCell>Area</TableCell>
-                     <TableCell>Estado</TableCell>
-                     <TableCell>Numero de Edificio</TableCell>
+                     <TableCell>Apellido</TableCell>
+                     <TableCell>Familiares</TableCell>
+                     <TableCell>Telefono</TableCell>
+                     <TableCell>Correo</TableCell>
                      <TableCell>Acciones</TableCell>
                   </TableRow>
                </TableHead>
@@ -211,5 +209,5 @@ function Departamento() {
 
    );
 }
-export default Departamento;
+export default Propietario;
 
