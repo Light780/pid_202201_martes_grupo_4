@@ -18,6 +18,7 @@ namespace AppDepa.Dominio
         public string Periodo { get; set; }
         [Column(TypeName = "varchar(8)")]
         public string CodigoPago { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Monto { get; set; }
         
     }
