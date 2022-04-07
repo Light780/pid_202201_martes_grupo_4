@@ -34,5 +34,7 @@ namespace AppDepa.Infraestructura.Datos.Context
         public DbSet<Incidencia> Incidencia { get; set; }
         public DbSet<PagoServicio> PagoServicio { get; set; }
         public DbSet<Parametros> Parametros { get; set; }
+        public DbSet<Persona> Persona { get; set; }
+        public DbSet<Mascota> Mascota { get; set; }
     }
 }
