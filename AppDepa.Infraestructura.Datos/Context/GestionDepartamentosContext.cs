@@ -19,8 +19,9 @@ namespace AppDepa.Infraestructura.Datos.Context
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<Usuario> Usuario { get; set; }
-        public DbSet<Propietario> Propietario { get; set; }
         public DbSet<Departamento> Departamento { get; set; }
         public DbSet<Parametros> Parametros { get; set; }
+        public DbSet<Persona> Persona { get; set; }
+        public DbSet<Mascota> Mascota { get; set; }
     }
 }
