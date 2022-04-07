@@ -31,4 +31,8 @@ namespace AppDepa.Dominio
         public int DepartamentoId { get; set; }
         public Departamento Departamento { get; set; }
     }
+
 }
+
+}
+

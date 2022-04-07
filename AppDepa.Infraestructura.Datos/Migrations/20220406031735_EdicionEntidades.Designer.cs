@@ -4,14 +4,16 @@ using AppDepa.Infraestructura.Datos.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppDepa.Infraestructura.Datos.Migrations
 {
     [DbContext(typeof(GestionDepartamentosContext))]
-    partial class GestionDepartamentosContextModelSnapshot : ModelSnapshot
+    [Migration("20220406031735_EdicionEntidades")]
+    partial class EdicionEntidades
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,6 +60,9 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Property<int>("CantidadHabitaciones")
                         .HasColumnType("int");
 
+                    b.Property<string>("Direccion")
+                        .HasColumnType("varchar(500)");
+
                     b.Property<int>("EstadoDepaId")
                         .HasColumnType("int");
 
@@ -65,6 +70,9 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IndBalcon")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IndBano")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IndCocina")
@@ -119,35 +127,6 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.ToTable("Incidencia");
                 });
 
-            modelBuilder.Entity("AppDepa.Dominio.Mascota", b =>
-                {
-                    b.Property<int>("MascotaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DepartamentoId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("FechaRegistro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("NombreMascota")
-                        .HasColumnType("varchar(45)");
-
-                    b.Property<string>("Raza")
-                        .HasColumnType("varchar(45)");
-
-                    b.Property<string>("Sexo")
-                        .HasColumnType("char(1)");
-
-                    b.HasKey("MascotaId");
-
-                    b.HasIndex("DepartamentoId");
-
-                    b.ToTable("Mascota");
-                });
-
             modelBuilder.Entity("AppDepa.Dominio.PagoServicio", b =>
                 {
                     b.Property<int>("PagoServicioId")
@@ -193,9 +172,9 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.ToTable("Parametros");
                 });
 
-            modelBuilder.Entity("AppDepa.Dominio.Persona", b =>
+            modelBuilder.Entity("AppDepa.Dominio.Propietario", b =>
                 {
-                    b.Property<int>("PersonaId")
+                    b.Property<int>("PropietarioId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -203,23 +182,14 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Property<string>("Correo")
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("DepartamentoId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Documento")
                         .HasColumnType("varchar(20)");
 
-                    b.Property<int>("EstadoPersonaId")
+                    b.Property<int>("EstadoPropietarioId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaRegistro")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("NombreCompleto")
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<string>("Sexo")
-                        .HasColumnType("char(1)");
 
                     b.Property<string>("Telefono")
                         .HasColumnType("varchar(15)");
@@ -227,14 +197,12 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Property<int>("TipoDocumentoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TipoPersonaId")
-                        .HasColumnType("int");
+                    b.Property<string>("Titular")
+                        .HasColumnType("varchar(200)");
 
-                    b.HasKey("PersonaId");
+                    b.HasKey("PropietarioId");
 
-                    b.HasIndex("DepartamentoId");
-
-                    b.ToTable("Persona");
+                    b.ToTable("Propietario");
                 });
 
             modelBuilder.Entity("AppDepa.Dominio.Usuario", b =>
@@ -289,17 +257,6 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Navigation("Departamento");
                 });
 
-            modelBuilder.Entity("AppDepa.Dominio.Mascota", b =>
-                {
-                    b.HasOne("AppDepa.Dominio.Departamento", "Departamento")
-                        .WithMany("Mascotas")
-                        .HasForeignKey("DepartamentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Departamento");
-                });
-
             modelBuilder.Entity("AppDepa.Dominio.PagoServicio", b =>
                 {
                     b.HasOne("AppDepa.Dominio.Boleta", "Boleta")
@@ -311,26 +268,11 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Navigation("Boleta");
                 });
 
-            modelBuilder.Entity("AppDepa.Dominio.Persona", b =>
-                {
-                    b.HasOne("AppDepa.Dominio.Departamento", "Departamento")
-                        .WithMany("Personas")
-                        .HasForeignKey("DepartamentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Departamento");
-                });
-
             modelBuilder.Entity("AppDepa.Dominio.Departamento", b =>
                 {
                     b.Navigation("Boletas");
 
                     b.Navigation("Incidencias");
-
-                    b.Navigation("Mascotas");
-
-                    b.Navigation("Personas");
                 });
 #pragma warning restore 612, 618
         }

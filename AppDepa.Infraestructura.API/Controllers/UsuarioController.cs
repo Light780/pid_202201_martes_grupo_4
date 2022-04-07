@@ -1,4 +1,5 @@
-﻿using AppDepa.Aplicaciones.User;
+﻿using AppDepa.Aplicaciones.Dto;
+using AppDepa.Aplicaciones.User;
 using AppDepa.Dominio;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -20,12 +21,12 @@ namespace AppDepa.Infraestructura.API.Controllers
             return await mediator.Send(data);
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<UsuarioData>> GetUsuario(int id)
+        public async Task<ActionResult<UsuarioDto>> GetUsuario(int id)
         {
             return await mediator.Send(new Consultar.UsuarioUnico() { UsuarioId = id});
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult<UsuarioData>> EditarUsuario(Editar.Ejecuta data, int id)
+        public async Task<ActionResult<UsuarioDto>> EditarUsuario(Editar.Ejecuta data, int id)
         {
             data.UsuarioId = id;
             return await mediator.Send(data);
@@ -36,7 +37,7 @@ namespace AppDepa.Infraestructura.API.Controllers
             return await mediator.Send(new Eliminar.Ejecuta { Id = id});
         }
         [HttpPost("login")]
-        public async Task<ActionResult<UsuarioData>> Login(Login.Ejecuta data)
+        public async Task<ActionResult<UsuarioDto>> Login(Login.Ejecuta data)
         {
             return await mediator.Send(data);
         }

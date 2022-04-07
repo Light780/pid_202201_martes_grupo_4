@@ -24,3 +24,4 @@ namespace AppDepa.Dominio
         public Departamento Departamento { get; set; }
     }
 }
+

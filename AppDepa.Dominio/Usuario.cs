@@ -9,7 +9,7 @@ namespace AppDepa.Dominio
 {
     public class Usuario
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]        
         public int UsuarioId { get; set; }
         [Column(TypeName ="varchar(35)")]
         public string UserName { get; set; }
