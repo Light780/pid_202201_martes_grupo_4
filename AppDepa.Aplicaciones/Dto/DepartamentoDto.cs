@@ -10,22 +10,18 @@ namespace AppDepa.Aplicaciones.Dto
     {
         public int DepartamentoId { get; set; }
 
-        public string CodigoDepartamentoId { get; set; }
-        public string Descripcion { get; set; }
-
-        public string Tamano { get; set; }
+        public string NroDepartamento { get; set; }
+ 
+        public decimal Tamano { get; set; }
   
-        public string Direccion { get; set; }
         // Primer parametro
         public string TipoDepa { get; set; }
         // Segundo parametro
-        public int EstadoDepa { get; set; }
+        public string EstadoDepa { get; set; }
 
         public int CantidadHabitaciones { get; set; }
 
         public bool IndCocina { get; set; }
-
-        public bool IndBano { get; set; }
  
         public bool IndBalcon { get; set; }
  

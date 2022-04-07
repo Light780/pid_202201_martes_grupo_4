@@ -20,14 +20,7 @@ namespace AppDepa.Dominio
         [Column(TypeName = "varchar(35)")]
         public string Password { get; set; }
         public byte[] FotoPerfil { get; set; }
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         public DateTime FechaRegistro { get; set; }   
-=======
-        public DateTime FechaRegistro { get; set; }
->>>>>>> origin/master
-=======
-        public DateTime FechaRegistro { get; set; }   
->>>>>>> 5558805ee5404d9bfe7cccb5fd05f525c27292be
     }
 }

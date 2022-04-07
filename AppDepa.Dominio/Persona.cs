@@ -10,18 +10,8 @@ namespace AppDepa.Dominio
 {
     public class Persona
     {
-<<<<<<< HEAD
-<<<<<<< HEAD:AppDepa.Dominio/Persona.cs
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PersonaId { get; set; }
-=======
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]        
-        public int PropietarioId { get; set; }
->>>>>>> origin/master:AppDepa.Dominio/Propietario.cs
-=======
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int PersonaId { get; set; }
->>>>>>> 5558805ee5404d9bfe7cccb5fd05f525c27292be
         [Column(TypeName = "varchar(200)")]
         public string NombreCompleto { get; set; }
         [Column(TypeName = "varchar(20)")]
@@ -32,27 +22,14 @@ namespace AppDepa.Dominio
         public int EstadoPersonaId { get; set; }
         [Column(TypeName = "varchar(100)")]
         public string Correo { get; set; }
-<<<<<<< HEAD
-<<<<<<< HEAD:AppDepa.Dominio/Persona.cs
         [Column(TypeName = "char(1)")]
         public string Sexo { get; set; }
         public int TipoPersonaId { get; set; }
-=======
-       
->>>>>>> origin/master:AppDepa.Dominio/Propietario.cs
-=======
-        [Column(TypeName = "char(1)")]
-        public string Sexo { get; set; }
-        public int TipoPersonaId { get; set; }
->>>>>>> 5558805ee5404d9bfe7cccb5fd05f525c27292be
         public DateTime FechaRegistro { get; set; }
 
         // Relación con Departamentos
         public int DepartamentoId { get; set; }
         public Departamento Departamento { get; set; }
     }
-
-}
-
 }
 
