@@ -15,7 +15,10 @@ export const actualizarDepartamento = (departamento) => {
     return new Promise((resolve, reject) => {
         HttpClient.put('Departamento',departamento).then(response => {
             resolve(response)
-        }).catch(e => resolve(e,reject))
+        }).catch(e => {
+            console.log(e)
+            resolve(e,reject)
+        })
     })
 }
 
@@ -30,6 +33,14 @@ export const listarDepartamento = () => {
 export const borrarDepartamento = (id) => {
     return new Promise((resolve,reject) => {
         HttpClient.delete(`Departamento/${id}`).then(response => {
+            resolve(response)
+        }).catch(e => resolve(e,reject))
+    })
+}
+
+export const consultarUnico = (id) => {
+    return new Promise((resolve,reject) => {
+        HttpClient.get(`Departamento/${id}`).then(response => {
             resolve(response)
         }).catch(e => resolve(e,reject))
     })
