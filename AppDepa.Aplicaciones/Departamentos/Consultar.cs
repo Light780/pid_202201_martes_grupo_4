@@ -28,13 +28,9 @@ namespace AppDepa.Aplicaciones.Departamentos
 
             private readonly IFactoryConnection connection;
 
-            public Handler(GestionDepartamentosContext _context)
+            public Handler(GestionDepartamentosContext _context, IFactoryConnection _connection)
             {
                 this.context = _context;
-            }
-
-            public Handler(IFactoryConnection _connection)
-            {
                 this.connection = _connection;
             }
 
