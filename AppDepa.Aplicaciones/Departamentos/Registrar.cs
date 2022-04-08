@@ -17,7 +17,7 @@ namespace AppDepa.Aplicaciones.Departamentos
     public class Registrar
     {
         public class Ejecuta : IRequest
-        {
+        {            
             public string NroDepartamento { get; set; }
             public decimal Tamano { get; set; }                        
             public int TipoDepaId { get; set; }
@@ -70,7 +70,8 @@ namespace AppDepa.Aplicaciones.Departamentos
                     IndBalcon = request.IndBalcon,
                     IndLavanderia = request.IndLavanderia,
                     IndPiscina = request.IndPiscina,
-                    IndPatio = request.IndPatio
+                    IndPatio = request.IndPatio,
+                    FechaRegistro = DateTime.UtcNow
                 };
                 context.Departamento.Add(dep);
                 var result = await context.SaveChangesAsync();

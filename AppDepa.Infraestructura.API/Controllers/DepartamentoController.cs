@@ -17,11 +17,16 @@ namespace AppDepa.Infraestructura.API.Controllers
         {
             return await mediator.Send(data);
         }
+        [HttpPut]
+        public async Task<ActionResult<Unit>> ActualizarDepartamento(Editar.Ejecuta data)
+        {
+            return await mediator.Send(data);
+        }
 
-        //[HttpGet]
-        //public async Task<ActionResult<List<Departamento>>> ListarDepartamento(){
+        [HttpGet]
+        public async Task<ActionResult<List<Departamento>>> ListarDepartamento(){
 
-        //    //return await mediator.Send(new Consultar.ListaDepartamento());
-        //}
+            return await mediator.Send(new Consultar.ListaDepartamento());
+        }
     }
 }

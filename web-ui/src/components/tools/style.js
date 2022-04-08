@@ -23,6 +23,9 @@ export const style = {
     },
     icon: {
         fontSize: 40
+    },
+    detail:{                
+        marginTop:20        
     }  
 }
 export const styleModal = makeStyles((theme) => ({
@@ -30,7 +33,10 @@ export const styleModal = makeStyles((theme) => ({
         position: 'absolute',
         width: 700,
         [theme.breakpoints.down("md")]: {
-            width: 400,
+            width: 500,
+        },
+        [theme.breakpoints.down("xs")]: {
+            width: 300,
         },
         backgroundColor: theme.palette.background.paper,
         border: '2px solid #000',
