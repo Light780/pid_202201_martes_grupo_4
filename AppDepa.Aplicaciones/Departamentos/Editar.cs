@@ -36,7 +36,8 @@ namespace AppDepa.Aplicaciones.Departamentos
             public EjecutaValidator()
             {
                 RuleFor(x => x.NroDepartamento)
-                    .Must(x => int.TryParse(x, out var val)).WithMessage("El Nro del Departamento debe ser numérico");
+                    .Must(x => int.TryParse(x, out var val)).WithMessage("El Nro del Departamento debe ser numérico")
+                    .MaximumLength(3).WithMessage("El Nro del Departamento debe tener maximo 3 caracteres");
                 RuleFor(x => x.Tamano)
                     .GreaterThan(0).WithMessage("El tamaño del Departamento debe ser mayor a 0");
                 RuleFor(x => x.TipoDepaId)
@@ -78,7 +79,7 @@ namespace AppDepa.Aplicaciones.Departamentos
                 departamento.IndLavanderia = request.IndLavanderia;
                 departamento.IndPiscina = request.IndPiscina;
                 departamento.IndPatio = request.IndPatio;
-
+                context.Departamento.Update(departamento);
                 var result = await context.SaveChangesAsync();
                 if (result > 0)
                 {
