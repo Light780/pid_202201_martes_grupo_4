@@ -1,4 +1,5 @@
 ﻿using AppDepa.Aplicaciones.Departamentos;
+using AppDepa.Aplicaciones.Dto;
 using AppDepa.Dominio;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -24,15 +25,9 @@ namespace AppDepa.Infraestructura.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Departamento>>> ListarDepartamento(){
-
-            return await mediator.Send(new Consultar.ListaDepartamento());
-        }
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Departamento>> ObtenerDepartamento(int id)
+        public async Task<ActionResult<List<DepartamentoDto>>> ListarDepartamento()
         {
-
-            return await mediator.Send(new ConsultarUnico.Ejecuta() { DepartamentoId = id });
+            return await mediator.Send(new Consultar.ListaDepartamento());
         }
     }
 }

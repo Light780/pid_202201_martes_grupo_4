@@ -17,33 +17,72 @@ namespace AppDepa.Aplicaciones.Departamentos
 {
     public class Consultar
     {
-        public class ListaDepartamento: IRequest<List<Departamento>>
+        public class ListaDepartamento: IRequest<List<DepartamentoDto>>
         {
 
         }
 
-        public class Handler : IRequestHandler<ListaDepartamento, List<Departamento>>
+        public class Handler : IRequestHandler<ListaDepartamento, List<DepartamentoDto>>
         {
             private readonly GestionDepartamentosContext context;
 
-            private readonly IFactoryConnection connection;
+            //private readonly IFactoryConnection connection;
 
             public Handler(GestionDepartamentosContext _context, IFactoryConnection _connection)
             {
                 this.context = _context;
+            }
+
+            //public Handler(IFactoryConnection _connection)
+            //{
+            //    this.connection = _connection;
+            //}
+
+
+            private string BuscaParametro(int param, string reporte)
+            {
+                return context.Parametros.ToList().Where(p => p.ParametroId == reporte.ToString().Trim() && param == p.ParamId).SingleOrDefault().Descripcion;
                 this.connection = _connection;
             }
-
-            public async Task<List<Departamento>> Handle(ListaDepartamento request, CancellationToken cancellationToken)
+            public async Task<List<DepartamentoDto>> Handle(ListaDepartamento request, CancellationToken cancellationToken)
             {
-                // Hacer query con Linq
-                //var query = from d in context.Departamento 
-                //            join p in context.Parametros on d.TipoDepaId equals p.
+                //var query1 = (from p in context.Parametros where p.ParametroId == "TIPO_DEPA_ID"
+                //             select new
+                //             {
+                //                 Descripcion = p.Descripcion
+                //             };)
 
-                var lista = await context.Departamento.ToListAsync();
+                // Hacer query con Linq
+                var query = from d in context.Departamento
+                            join p in context.Parametros on d.TipoDepaId equals p.ParamId
+                            where p.ParametroId == "TIPO_DEPA_ID"
+
+                            select new DepartamentoDto
+                            {
+                                DepartamentoId = d.DepartamentoId,
+                                NroDepartamento = d.NroDepartamento,
+                                Tamano = d.Tamano,
+                                //TipoDepa = p.ParametroId,
+                                TipoDepa = context.Parametros.ToList().Where(p => p.ParametroId == "TIPO_DEPA_ID" && d.TipoDepaId == p.ParamId).SingleOrDefault().Descripcion,
+                                //EstadoDepa = BuscaParametro(d.EstadoDepaId, "ESTADO_DEPA_ID"),
+                                EstadoDepa = d.EstadoDepaId.ToString(),
+                                CantidadHabitaciones = d.CantidadHabitaciones,
+                                IndCocina = d.IndCocina,
+                                IndBalcon = d.IndBalcon,
+                                IndLavanderia = d.IndLavanderia,
+                                IndPiscina = d.IndPiscina,
+                                IndPatio = d.IndPatio
+
+                            };
+
+                var lista = await query.ToListAsync();
                 return lista;
             }
+
+            
         }
+
+        
 
     }
 

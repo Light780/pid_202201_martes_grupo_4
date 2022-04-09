@@ -10,9 +10,9 @@ namespace AppDepa.Dominio
 {
     public class Parametros
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]        
-        public int ParametroId { get; set; }        
-        public string ParamId { get; set; }
+        [Column(TypeName = "varchar(30)")]
+        public string ParametroId { get; set; }
+        public int ParamId { get; set; }
         [Column(TypeName = "varchar(300)")]
         public string Descripcion { get; set; }
         public int Estado { get; set; }
