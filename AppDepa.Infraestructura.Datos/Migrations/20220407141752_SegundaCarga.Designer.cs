@@ -4,14 +4,16 @@ using AppDepa.Infraestructura.Datos.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppDepa.Infraestructura.Datos.Migrations
 {
     [DbContext(typeof(GestionDepartamentosContext))]
-    partial class GestionDepartamentosContextModelSnapshot : ModelSnapshot
+    [Migration("20220407141752_SegundaCarga")]
+    partial class SegundaCarga
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,11 +184,13 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Property<DateTime>("FechaRegistro")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ParamId")
-                        .HasColumnType("int");
+                    b.Property<string>("ParamId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ParametroId")
-                        .HasColumnType("varchar(30)");
+                    b.Property<int>("ParametroId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.ToTable("Parametros");
                 });

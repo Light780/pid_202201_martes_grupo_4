@@ -32,22 +32,22 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     table.PrimaryKey("PK_Departamento", x => x.DepartamentoId);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Parametros",
-                columns: table => new
-                {
-                    ParametroId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ParamId = table.Column<string>(type: "varchar(200)", nullable: true),
-                    Nombre = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Descripcion = table.Column<string>(type: "varchar(300)", nullable: true),
-                    Estado = table.Column<int>(type: "int", nullable: false),
-                    FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Parametros", x => x.ParametroId);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "Parametros",
+            //    columns: table => new
+            //    {
+            //        ParametroId = table.Column<int>(type: "int", nullable: false)
+            //            .Annotation("SqlServer:Identity", "1, 1"),
+            //        ParamId = table.Column<string>(type: "varchar(200)", nullable: true),
+            //        Nombre = table.Column<string>(type: "varchar(100)", nullable: false),
+            //        Descripcion = table.Column<string>(type: "varchar(300)", nullable: true),
+            //        Estado = table.Column<int>(type: "int", nullable: false),
+            //        FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: false)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_Parametros", x => x.ParametroId);
+            //    });
 
             migrationBuilder.CreateTable(
                 name: "Propietario",
@@ -158,8 +158,8 @@ namespace AppDepa.Infraestructura.Datos.Migrations
             migrationBuilder.DropTable(
                 name: "PagoServicio");
 
-            migrationBuilder.DropTable(
-                name: "Parametros");
+            //migrationBuilder.DropTable(
+            //    name: "Parametros");
 
             migrationBuilder.DropTable(
                 name: "Propietario");
