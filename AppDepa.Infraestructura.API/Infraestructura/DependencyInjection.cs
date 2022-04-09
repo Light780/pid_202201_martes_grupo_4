@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using AppDepa.Aplicaciones.Utils;
 
 namespace AppDepa.Infraestructura.API.Infraestructura
 {
@@ -26,7 +27,8 @@ namespace AppDepa.Infraestructura.API.Infraestructura
                 options.UseSqlServer(configuracion.GetConnectionString("DefaultConnection"))
             );            
             services.Configure<ConexionConfiguracion>(configuracion.GetSection("ConnectionStrings"));
-            services.AddTransient<IFactoryConnection, FactoryConnection>();            
+            services.AddTransient<IFactoryConnection, FactoryConnection>();
+            services.AddScoped<IUtils, Utils>();
             services.AddOptions();
             services.AddCors(opt => opt.AddPolicy("corsApp", builder => {
                 builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();

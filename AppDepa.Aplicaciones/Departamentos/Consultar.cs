@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
 using System.Data;
+using AppDepa.Aplicaciones.Utils;
 
 namespace AppDepa.Aplicaciones.Departamentos
 {
@@ -25,47 +26,26 @@ namespace AppDepa.Aplicaciones.Departamentos
         public class Handler : IRequestHandler<ListaDepartamento, List<DepartamentoDto>>
         {
             private readonly GestionDepartamentosContext context;
+            private readonly IUtils utils;
 
-            //private readonly IFactoryConnection connection;
 
-            public Handler(GestionDepartamentosContext _context, IFactoryConnection _connection)
+            public Handler(GestionDepartamentosContext _context, IUtils _utils)
             {
                 this.context = _context;
+                this.utils = _utils;
             }
-
-            //public Handler(IFactoryConnection _connection)
-            //{
-            //    this.connection = _connection;
-            //}
-
-
-            private string BuscaParametro(int param, string reporte)
-            {
-                return context.Parametros.ToList().Where(p => p.ParametroId == reporte.ToString().Trim() && param == p.ParamId).SingleOrDefault().Descripcion;
-                this.connection = _connection;
-            }
+            
             public async Task<List<DepartamentoDto>> Handle(ListaDepartamento request, CancellationToken cancellationToken)
-            {
-                //var query1 = (from p in context.Parametros where p.ParametroId == "TIPO_DEPA_ID"
-                //             select new
-                //             {
-                //                 Descripcion = p.Descripcion
-                //             };)
-
+            {                
                 // Hacer query con Linq
-                var query = from d in context.Departamento
-                            join p in context.Parametros on d.TipoDepaId equals p.ParamId
-                            where p.ParametroId == "TIPO_DEPA_ID"
-
+                var query = from d in context.Departamento                            
                             select new DepartamentoDto
                             {
                                 DepartamentoId = d.DepartamentoId,
                                 NroDepartamento = d.NroDepartamento,
-                                Tamano = d.Tamano,
-                                //TipoDepa = p.ParametroId,
-                                TipoDepa = context.Parametros.ToList().Where(p => p.ParametroId == "TIPO_DEPA_ID" && d.TipoDepaId == p.ParamId).SingleOrDefault().Descripcion,
-                                //EstadoDepa = BuscaParametro(d.EstadoDepaId, "ESTADO_DEPA_ID"),
-                                EstadoDepa = d.EstadoDepaId.ToString(),
+                                Tamano = d.Tamano,                                
+                                TipoDepa = utils.BuscarParamaetro(d.TipoDepaId, "TIPO_DEPA_ID"),
+                                EstadoDepa = utils.BuscarParamaetro(d.EstadoDepaId, "ESTADO_DEPA_ID"),
                                 CantidadHabitaciones = d.CantidadHabitaciones,
                                 IndCocina = d.IndCocina,
                                 IndBalcon = d.IndBalcon,
@@ -77,14 +57,7 @@ namespace AppDepa.Aplicaciones.Departamentos
 
                 var lista = await query.ToListAsync();
                 return lista;
-            }
-
-            
-        }
-
-        
-
+            }            
+        }        
     }
-
-
 }
