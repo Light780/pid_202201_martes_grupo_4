@@ -239,4 +239,4 @@ function Usuario() {
 
  );
 }
-export default Departamento;
+export default Usuario;
