@@ -12,7 +12,7 @@ import { obtenerUsuario } from './actions/UsuarioAction';
 import { Alert } from '@material-ui/lab';
 import Prueba from './components/mantenimientos/Prueba';
 import PerfilUsuario from './components/security/PerfilUsuario';
-import Departamento from './components/mantenimiento/Deparamento';
+import Departamento from './components/mantenimiento/Departamento';
 import Propietario from './components/mantenimiento/Propietario';
 function App() {
   const [{sesionUsuario, openSnackBar}, dispatch] = useStateValue()

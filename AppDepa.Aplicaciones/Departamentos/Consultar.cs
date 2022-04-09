@@ -28,7 +28,7 @@ namespace AppDepa.Aplicaciones.Departamentos
 
             //private readonly IFactoryConnection connection;
 
-            public Handler(GestionDepartamentosContext _context)
+            public Handler(GestionDepartamentosContext _context, IFactoryConnection _connection)
             {
                 this.context = _context;
             }
@@ -42,6 +42,7 @@ namespace AppDepa.Aplicaciones.Departamentos
             private string BuscaParametro(int param, string reporte)
             {
                 return context.Parametros.ToList().Where(p => p.ParametroId == reporte.ToString().Trim() && param == p.ParamId).SingleOrDefault().Descripcion;
+                this.connection = _connection;
             }
             public async Task<List<DepartamentoDto>> Handle(ListaDepartamento request, CancellationToken cancellationToken)
             {

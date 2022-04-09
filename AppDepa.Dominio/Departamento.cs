@@ -11,7 +11,7 @@ namespace AppDepa.Dominio
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]        
         public int DepartamentoId { get; set; }
-        [Column(TypeName = "varchar(15)")]
+        [Column(TypeName = "varchar(3)")]
         public string NroDepartamento { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal Tamano { get; set; }        

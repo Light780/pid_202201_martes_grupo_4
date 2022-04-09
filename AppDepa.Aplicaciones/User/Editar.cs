@@ -73,7 +73,7 @@ namespace AppDepa.Aplicaciones.User
                 usuario.Email = request.Email;
                 usuario.Password = request.Password;                
                 usuario.FotoPerfil = request.FotoPerfil != null ? Convert.FromBase64String(request.FotoPerfil.Split(',')[1]) : usuario.FotoPerfil;
-                
+                context.Usuario.Update(usuario);
                 var result = await context.SaveChangesAsync();
                 if (result > 0)
                 {

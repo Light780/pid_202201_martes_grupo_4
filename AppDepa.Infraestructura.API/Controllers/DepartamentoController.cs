@@ -18,6 +18,11 @@ namespace AppDepa.Infraestructura.API.Controllers
         {
             return await mediator.Send(data);
         }
+        [HttpPut]
+        public async Task<ActionResult<Unit>> ActualizarDepartamento(Editar.Ejecuta data)
+        {
+            return await mediator.Send(data);
+        }
 
         [HttpGet]
         public async Task<ActionResult<List<DepartamentoDto>>> ListarDepartamento()
