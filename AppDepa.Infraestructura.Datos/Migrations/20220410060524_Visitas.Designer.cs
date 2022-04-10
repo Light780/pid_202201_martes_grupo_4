@@ -4,14 +4,16 @@ using AppDepa.Infraestructura.Datos.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppDepa.Infraestructura.Datos.Migrations
 {
     [DbContext(typeof(GestionDepartamentosContext))]
-    partial class GestionDepartamentosContextModelSnapshot : ModelSnapshot
+    [Migration("20220410060524_Visitas")]
+    partial class Visitas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,7 +60,7 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Property<int>("CantidadHabitaciones")
                         .HasColumnType("int");
 
-                    b.Property<int>("EstadoId")
+                    b.Property<int>("EstadoDepaId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaRegistro")
@@ -207,7 +209,7 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Property<string>("Documento")
                         .HasColumnType("varchar(20)");
 
-                    b.Property<int>("EstadoId")
+                    b.Property<int>("EstadoPersonaId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaRegistro")
