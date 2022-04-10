@@ -590,7 +590,7 @@ function Departamento() {
                open={modalInsertar}
                onClose={abrirCerrarModalInsertar} disableBackdropClick >
                {bodyInsertar}
-            </Modal>
+            </Modal> 
 
             <Modal
                open={modalEditar}
