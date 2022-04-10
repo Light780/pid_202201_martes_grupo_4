@@ -58,7 +58,7 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Property<int>("CantidadHabitaciones")
                         .HasColumnType("int");
 
-                    b.Property<int>("EstadoId")
+                    b.Property<int>("EstadoDepaId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaRegistro")
@@ -80,7 +80,7 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("NroDepartamento")
-                        .HasColumnType("varchar(3)");
+                        .HasColumnType("varchar(15)");
 
                     b.Property<decimal>("Tamano")
                         .HasColumnType("decimal(18,2)");
@@ -171,7 +171,7 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.ToTable("PagoServicio");
                 });
 
-            modelBuilder.Entity("AppDepa.Dominio.Parametro", b =>
+            modelBuilder.Entity("AppDepa.Dominio.Parametros", b =>
                 {
                     b.Property<string>("Descripcion")
                         .HasColumnType("varchar(300)");
@@ -188,7 +188,7 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Property<string>("ParametroId")
                         .HasColumnType("varchar(30)");
 
-                    b.ToTable("Parametro");
+                    b.ToTable("Parametros");
                 });
 
             modelBuilder.Entity("AppDepa.Dominio.Persona", b =>
@@ -207,7 +207,7 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Property<string>("Documento")
                         .HasColumnType("varchar(20)");
 
-                    b.Property<int>("EstadoId")
+                    b.Property<int>("EstadoPersonaId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaRegistro")
@@ -265,29 +265,6 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.ToTable("Usuario");
                 });
 
-            modelBuilder.Entity("AppDepa.Dominio.Visita", b =>
-                {
-                    b.Property<int>("VisitaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("FechaEntrada")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("FechaSalida")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("PersonaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("VisitaId");
-
-                    b.HasIndex("PersonaId");
-
-                    b.ToTable("Visita");
-                });
-
             modelBuilder.Entity("AppDepa.Dominio.Boleta", b =>
                 {
                     b.HasOne("AppDepa.Dominio.Departamento", "Departamento")
@@ -343,17 +320,6 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Navigation("Departamento");
                 });
 
-            modelBuilder.Entity("AppDepa.Dominio.Visita", b =>
-                {
-                    b.HasOne("AppDepa.Dominio.Persona", "Persona")
-                        .WithMany("Visitas")
-                        .HasForeignKey("PersonaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Persona");
-                });
-
             modelBuilder.Entity("AppDepa.Dominio.Departamento", b =>
                 {
                     b.Navigation("Boletas");
@@ -363,11 +329,6 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Navigation("Mascotas");
 
                     b.Navigation("Personas");
-                });
-
-            modelBuilder.Entity("AppDepa.Dominio.Persona", b =>
-                {
-                    b.Navigation("Visitas");
                 });
 #pragma warning restore 612, 618
         }
