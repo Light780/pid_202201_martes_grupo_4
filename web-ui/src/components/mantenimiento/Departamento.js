@@ -1,22 +1,19 @@
-import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, FormControlLabel, Hidden, IconButton } from '@material-ui/core';
+import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TableCell, TableBody, TableRow, Paper, Checkbox, FormControlLabel, Hidden, IconButton } from '@material-ui/core';
 import { Edit, Delete, Info } from '@material-ui/icons/';
 import React, { useState, useEffect } from 'react';
-import { useStyles, style } from '../tools/style'
+import { style, styleModal } from '../tools/style'
 import { listarDepartamento, registrarDepartamento, actualizarDepartamento, borrarDepartamento, consultarUnico } from '../../actions/DepartamentoAction';
 import { useStateValue } from '../../context/store';
-import SelectParametro from '../utils/SelectParametro';
 function Departamento() {
-   const styles = useStyles();
+   const styles = styleModal();
    const [{ sesionUsuario }, dispatch] = useStateValue()
-   const [page, setPage] = React.useState(0);
-   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-   const [listaDepa, setListaDepa] = useState([])   
+   const [listaDepa, setListaDepa] = useState([])
    const [departamento, setDepartamento] = useState({
       departamentoId: 0,
       nroDepartamento: '',
       tamano: 0.00,
       tipoDepaId: 0,
-      estadoId: 0,
+      estadoDepaId: 0,
       cantidadHabitaciones: 0,
       indCocina: false,
       indBalcon: false,
@@ -31,14 +28,6 @@ function Departamento() {
    const [modalEliminar, setModalEliminar] = useState(false);
    const [modalDetalle, setModalDetalle] = useState(false);
 
-   const handleChangePage = (event, newPage) => {
-      setPage(newPage);
-   };
-   const handleChangeRowsPerPage = event => {
-      setRowsPerPage(parseInt(event.target.value, 10));
-      setPage(0);
-   };
-   const emptyRows = rowsPerPage - Math.min(rowsPerPage, listaDepa.length - page * rowsPerPage);
    const peticionGet = () => {
       listarDepartamento().then(respuesta => {
          if (respuesta.status === 200) {
@@ -61,7 +50,7 @@ function Departamento() {
          nroDepartamento: '',
          tamano: 0.00,
          tipoDepaId: 0,
-         estadoId: 0,
+         estadoDepaId: 0,
          cantidadHabitaciones: 0,
          indCocina: false,
          indBalcon: false,
@@ -72,9 +61,8 @@ function Departamento() {
       setErrores({})
    }
    const peticionPost = e => {
-      e.preventDefault()
-      validarForm(departamento)
-      if (Object.keys(errores).length === 0) {
+      if (Object.keys(errores).length === 0) {         
+         e.preventDefault()
          registrarDepartamento(departamento).then(respuesta => {
             if (respuesta.status === 200) {
                dispatch({
@@ -104,34 +92,30 @@ function Departamento() {
    }
    const peticionPut = e => {
       e.preventDefault()
-      validarForm(departamento)
-      if (Object.keys(errores).length === 0) {
-         actualizarDepartamento(departamento).then(respuesta => {
-            if (respuesta.status === 200) {
-               dispatch({
-                  type: 'OPEN_SNACKBAR',
-                  openMensaje: {
-                     open: true,
-                     mensaje: "Departamento actualizado correctamente",
-                     severity: 'success'
-                  }
-               })
-               abrirCerrarModalEditar()
-               limpiarForm()
-               peticionGet()
-            } else {
-               dispatch({
-                  type: 'OPEN_SNACKBAR',
-                  openMensaje: {
-                     open: true,
-                     mensaje: "Error al actualizar el Departamento, Detalles del error : " + Object.values(respuesta.response.data.errores),
-                     severity: 'error'
-                  }
-               })
-            }
-         })
-      }
-
+      actualizarDepartamento(departamento).then(respuesta => {
+         if (respuesta.status === 200) {
+            dispatch({
+               type: 'OPEN_SNACKBAR',
+               openMensaje: {
+                  open: true,
+                  mensaje: "Departamento actualizado correctamente",
+                  severity: 'success'
+               }
+            })
+            abrirCerrarModalEditar()
+            limpiarForm()
+            peticionGet()
+         } else {
+            dispatch({
+               type: 'OPEN_SNACKBAR',
+               openMensaje: {
+                  open: true,
+                  mensaje: "Error al actualizar el Departamento, Detalles del error : " + Object.values(respuesta.response.data.errores),
+                  severity: 'error'
+               }
+            })
+         }
+      })
    }
    const peticionDelete = e => {
       e.preventDefault()
@@ -159,8 +143,8 @@ function Departamento() {
          }
       })
    }
-   const peticionUnico = async (departamento) => {
-      await consultarUnico(departamento.departamentoId).then(respuesta => {
+   const peticionUnico = (departamento) => {
+      consultarUnico(departamento.departamentoId).then(respuesta => {
          if (respuesta.status === 200) {
             setDepartamento(respuesta.data)
          } else {
@@ -175,76 +159,79 @@ function Departamento() {
          }
       })
    }
-   const validarForm = (departamento) => {
-
-      if (departamento.nroDepartamento === '') {
-         setErrores(anterior => ({
-            ...anterior,
-            nroDepartamento: 'El campo es obligatorio'
-         }))
+   const validarForm = (control) => {
+      const { name, value } = control
+      switch (name) {
+         case "nroDepartamento":
+            if (value === '') {
+               setErrores(anterior => ({
+                  ...anterior,
+                  [name]: 'El campo es obligatorio'
+               }))
+            }
+            else if (!/^[0-9]+$/.test(value)) {
+               setErrores(anterior => ({
+                  ...anterior,
+                  [name]: 'Debe ser numérico'
+               }))
+            }
+            else if (value.trim().length !== 3) {
+               setErrores(anterior => ({
+                  ...anterior,
+                  [name]: 'Debe tener 3 caracteres'
+               }))
+            }
+            else delete errores.nroDepartamento
+            break;
+         case "tamano":
+            if (value === '') {
+               setErrores(anterior => ({
+                  ...anterior,
+                  [name]: 'El campo es obligatorio'
+               }))
+            }
+            else if (!/^[0-9.]+$/.test(value)) {
+               setErrores(anterior => ({
+                  ...anterior,
+                  [name]: 'Debe ser numérico'
+               }))
+            }
+            else if (value <= 0) {
+               setErrores(anterior => ({
+                  ...anterior,
+                  [name]: 'Debe ser mayor a 0'
+               }))
+            }
+            else delete errores.tamano
+            break;
+         case "tipoDepaId":
+            if (value <= 0) {
+               setErrores(anterior => ({
+                  ...anterior,
+                  [name]: 'Seleccione una opcion'
+               }))
+            }
+            else delete errores.tipoDepaId
+            break;
+         case "estadoDepaId":
+            if (value <= 0) {
+               setErrores(anterior => ({
+                  ...anterior,
+                  [name]: 'Seleccione una opcion'
+               }))
+            }
+            else delete errores.tipoDepaId
+            break;
+         case "cantidadHabitaciones":
+            if (value <= 0) {
+               setErrores(anterior => ({
+                  ...anterior,
+                  [name]: 'Debe ser mayor a 0'
+               }))
+            }
+            else delete errores.tipoDepaId
+            break;
       }
-      else if (!/^[0-9]+$/.test(departamento.nroDepartamento)) {
-         setErrores(anterior => ({
-            ...anterior,
-            nroDepartamento: 'Debe ser numérico'
-         }))
-      }
-      else if (departamento.nroDepartamento.trim().length !== 3) {
-         setErrores(anterior => ({
-            ...anterior,
-            nroDepartamento: 'Debe tener 3 caracteres'
-         }))
-      }
-      else delete errores.nroDepartamento
-
-
-      if (departamento.tamano === '') {
-         setErrores(anterior => ({
-            ...anterior,
-            tamano: 'El campo es obligatorio'
-         }))
-      }
-      else if (!/^[0-9.]+$/.test(departamento.tamano)) {
-         setErrores(anterior => ({
-            ...anterior,
-            tamano: 'Debe ser numérico'
-         }))
-      }
-      else if (departamento.tamano <= 0) {
-         setErrores(anterior => ({
-            ...anterior,
-            tamano: 'Debe ser mayor a 0'
-         }))
-      }
-      else delete errores.tamano
-
-
-      if (departamento.tipoDepaId <= 0) {
-         setErrores(anterior => ({
-            ...anterior,
-            tipoDepaId: 'Debe seleccionar un tipo'
-         }))
-      }
-      else delete errores.tipoDepaId
-
-
-      if (departamento.estadoId <= 0) {
-         setErrores(anterior => ({
-            ...anterior,
-            estadoId: 'Debe seleccionar un estado'
-         }))
-      }
-      else delete errores.estadoId
-
-
-      if (departamento.cantidadHabitaciones <= 0) {
-         setErrores(anterior => ({
-            ...anterior,
-            cantidadHabitaciones: 'Debe ser mayor a 0'
-         }))
-      }
-      else delete errores.cantidadHabitaciones
-
    }
    const handleChange = e => {
       const { name, value } = e.target
@@ -252,6 +239,7 @@ function Departamento() {
          ...anterior,
          [name]: value
       }))
+      validarForm(e.target)
    }
    const handleCheck = e => {
       const { name, value } = e.target
@@ -274,35 +262,29 @@ function Departamento() {
       setModalDetalle(!modalDetalle);
    }
    useEffect(() => {
-      peticionGet()      
+      peticionGet()
    }, [])
 
    const bodyInsertar = (
       <div className={styles.modal}>
          <Container component="main" maxWidth="md" justifyContent="center">
             <Typography className={styles.modalTitle} component="h1" variant="h5">Registrar Departamento</Typography>
-            <form className={styles.modalForm} >
+            <form className={styles.modalForm}>
                <Grid container spacing={2} justifyContent="center">
                   <Grid item xs={12} md={12}>
-                     <TextField value={departamento.nroDepartamento} error={Boolean(errores?.nroDepartamento)} helperText={(errores?.nroDepartamento)} required name="nroDepartamento" className={styles.inputMaterial} label="Nro de Departamento" onChange={handleChange} />
+                     <TextField error={Boolean(errores?.nroDepartamento)} helperText={(errores?.nroDepartamento)} required name="nroDepartamento" className={styles.inputMaterial} label="Nro de Departamento" onChange={handleChange} />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <TextField value={departamento.tamano} error={Boolean(errores?.tamano)} helperText={(errores?.tamano)} required name="tamano" type="number" className={styles.inputMaterial} label="Area m2" onChange={handleChange} />
+                     <TextField error={Boolean(errores?.tamano)} helperText={(errores?.tamano)} required name="tamano" type="number" className={styles.inputMaterial} label="Area" onChange={handleChange} />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <SelectParametro concepto="TIPO_DEPA_ID" error={Boolean(errores?.tipoDepaId)}
-                        errorMessage={(errores?.tipoDepaId)} name="tipoDepaId"
-                        className={styles.inputMaterial} value={departamento.tipoDepaId}
-                        label="Tipo Departamento" onChange={handleChange} />
+                     <TextField error={Boolean(errores?.tipoDepaId)} helperText={(errores?.tipoDepaId)} required name="tipoDepaId" type="number" className={styles.inputMaterial} label="Tipo de Departamento" onChange={handleChange} />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <SelectParametro concepto="ESTADO_ID" error={Boolean(errores?.estadoId)}
-                        errorMessage={(errores?.estadoId)} name="estadoId"
-                        className={styles.inputMaterial} value={departamento.estadoId}
-                        label="Estado" onChange={handleChange} />
+                     <TextField error={Boolean(errores?.estadoDepaId)} helperText={(errores?.estadoDepaId)} required name="estadoDepaId" type="number" className={styles.inputMaterial} label="Estado Deparatamento" onChange={handleChange} />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <TextField value={departamento.cantidadHabitaciones} error={Boolean(errores?.cantidadHabitaciones)} helperText={(errores?.cantidadHabitaciones)} required name="cantidadHabitaciones" type="number" className={styles.inputMaterial} label="Cantidad de Habitaciones" onChange={handleChange} />
+                     <TextField error={Boolean(errores?.cantidadHabitaciones)} helperText={(errores?.cantidadHabitaciones)} required name="cantidadHabitaciones" type="number" className={styles.inputMaterial} label="Cantidad de Habitaciones" onChange={handleChange} />
                   </Grid>
                   <Grid item xs={12} md={2}>
                      <FormControlLabel
@@ -347,7 +329,7 @@ function Departamento() {
    )
    const bodyEditar = (
       <div className={styles.modal}>
-         <Container component="main" maxWidth="md" justifyContentContent="center">
+         <Container component="main" maxWidth="md" justifyContent="center">
             <Typography className={styles.modalTitle} component="h1" variant="h5">Editar Departamento</Typography>
             <form className={styles.modalForm}>
                <Grid container spacing={2} justifyContent="center">
@@ -355,19 +337,13 @@ function Departamento() {
                      <TextField error={Boolean(errores?.nroDepartamento)} helperText={(errores?.nroDepartamento)} name="nroDepartamento" className={styles.inputMaterial} label="NroDepartamento" onChange={handleChange} value={departamento && departamento.nroDepartamento}></TextField>
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <TextField error={Boolean(errores?.tamano)} helperText={(errores?.tamano)} name="tamano" className={styles.inputMaterial} label="Area m2" onChange={handleChange} value={departamento && departamento.tamano}></TextField>
+                     <TextField error={Boolean(errores?.tamano)} helperText={(errores?.tamano)} name="tamano" className={styles.inputMaterial} label="Area" onChange={handleChange} value={departamento && departamento.tamano}></TextField>
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <SelectParametro concepto="TIPO_DEPA_ID" error={Boolean(errores?.tipoDepaId)}
-                        errorMessage={(errores?.tipoDepaId)} name="tipoDepaId"
-                        className={styles.inputMaterial} value={departamento.tipoDepaId}
-                        label="Tipo Departamento" onChange={handleChange} />
+                     <TextField error={Boolean(errores?.tipoDepaId)} helperText={(errores?.tipoDepaId)} name="tipoDepaId" className={styles.inputMaterial} label="TipoDepaId" onChange={handleChange} value={departamento && departamento.tipoDepaId}></TextField>
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <SelectParametro concepto="ESTADO_ID" error={Boolean(errores?.estadoId)}
-                        errorMessage={(errores?.estadoId)} name="estadoId"
-                        className={styles.inputMaterial} value={departamento.estadoId}
-                        label="Estado" onChange={handleChange} />
+                     <TextField error={Boolean(errores?.estadoDepaId)} helperText={(errores?.estadoDepaId)} name="estadoDepaId" className={styles.inputMaterial} label="EstadoDepaId" onChange={handleChange} value={departamento && departamento.estadoDepaId}></TextField>
                   </Grid>
                   <Grid item xs={12} md={6}>
                      <TextField error={Boolean(errores?.cantidadHabitaciones)} helperText={(errores?.cantidadHabitaciones)} name="cantidadHabitaciones" className={styles.inputMaterial} label="CantHabitaciones" onChange={handleChange} value={departamento && departamento.cantidadHabitaciones}></TextField>
@@ -416,7 +392,7 @@ function Departamento() {
 
    const bodyEliminar = (
       <div className={styles.modal}>
-         <p>Estas seguro que deseas eliminar el departamento seleccionado<b>{departamento && departamento.nroDepartamento}</b></p>
+         <p>Estas seguro que deseas eliminar el departamento seleccionado<b>{departamento && departamento.departamentoId}</b></p>
          <Grid container spacing={2} justifyContent="center">
             <Grid item xs={6} md={6}>
                <Button color="secondary" onClick={peticionDelete}>Si</Button>
@@ -445,7 +421,7 @@ function Departamento() {
                      <Typography align="center" variant='h6' component='h2'>Tipo Depart.</Typography>
                   </Grid>
                   <Grid item xs={6} md={6}>
-                     <Typography align="center" variant='h6' component='h2'>{departamento.tipoDepa}</Typography>
+                     <Typography align="center" variant='h6' component='h2'>{departamento.tipoDepaId}</Typography>
                   </Grid>
                   <Grid item xs={6} md={6}>
                      <Typography align="center" variant='h6' component='h2'>Area</Typography>
@@ -494,7 +470,7 @@ function Departamento() {
                      <Typography align="center" variant='h6' component='h2'>Estado</Typography>
                   </Grid>
                   <Grid item xs={6} md={6}>
-                     <Typography align="center" variant='h6' component='h2'>{departamento.estado}</Typography>
+                     <Typography align="center" variant='h6' component='h2'>{departamento.estadoDepaId}</Typography>
                   </Grid>
                </Grid>
                <Grid container spacing={2} justifyContent="center">
@@ -508,108 +484,80 @@ function Departamento() {
    )
 
    return (
-      <React.Fragment>
-         <div className={styles.crud}>
-            <Paper>
-               <Paper className={styles.paperTitle}>
-                  <Grid container justifyContent="flex-start">
-                     <Typography component="h5" variant="h5" style={style.crudTitle}>
-                        Departamento
-                     </Typography>
-                  </Grid>
-               </Paper>
-               <Paper className={styles.paperBody}>
-                  <Grid container justifyContent="flex-start">
-                     <Button type="button" variant="contained" size="large" color="primary" style={style.submit} onClick={abrirCerrarModalInsertar}>
-                        Registrar
-                     </Button>
-                  </Grid>
-                  <TableContainer className={styles.table}>
-                     <Table stickyHeader>
-                        <TableHead>
-                           <TableRow>
-                              <TableCell className={styles.tableHead} align='center'>N° Depart.</TableCell>
-                              <TableCell className={styles.tableHead} align='center'>Tipo Depart.</TableCell>
-                              <Hidden mdDown>
-                                 <TableCell className={styles.tableHead} align='center'>N° de Habitaciones</TableCell>
-                                 <TableCell className={styles.tableHead} align='center'>Area</TableCell>
-                              </Hidden>
-                              <TableCell className={styles.tableHead} align='center'>Estado</TableCell>
-                              <TableCell className={styles.tableHead} align='center'>Acciones</TableCell>
-                           </TableRow>
-                        </TableHead>
+      <div className={styles.table}>
+         <Grid container justify="flex-end">
+            <Button type="button" variant="contained" size="large" color="primary" style={style.submit} onClick={abrirCerrarModalInsertar}>
+               Registrar
+            </Button>
+         </Grid>
+         <TableContainer component={Paper}>
+            <Table>
+               <TableHead>
+                  <TableRow>
+                     <TableCell align='center'>N° Depart.</TableCell>
+                     <TableCell align='center'>Tipo Depart.</TableCell>
+                     <Hidden mdDown>
+                        <TableCell align='center'>N° de Habitaciones</TableCell>
+                        <TableCell align='center'>Area</TableCell>
+                     </Hidden>
+                     <TableCell align='center'>Estado</TableCell>
+                     <TableCell align='center'>Acciones</TableCell>
+                  </TableRow>
+               </TableHead>
 
-                        <TableBody>
-                           {listaDepa.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map( (departamento, index) => (
-                              <TableRow key={departamento.departamentoId} className={styles.tableRow} style ={ index % 2? { background : "#f5f5f5" }:{ background : "white" }}>
-                                 <TableCell size="small" className={styles.tableRow}align='center'>{departamento.nroDepartamento}</TableCell>
-                                 <TableCell size="small" className={styles.tableRow} align='center'>{departamento.tipoDepa}</TableCell>
-                                 <Hidden mdDown>
-                                    <TableCell size="small" className={styles.tableRow} align='center'>{departamento.cantidadHabitaciones}</TableCell>
-                                    <TableCell size="small" className={styles.tableRow} align='center'>{departamento.tamano}m2</TableCell>
-                                 </Hidden>
-                                 <TableCell size="small" className={styles.tableRow} align='center'>{departamento.estado}</TableCell>
-                                 <TableCell size="small" className={styles.tableRow} align='center'>
-                                    <IconButton color="primary" component="span" size="medium" onClick={async () => {
-                                       limpiarForm();
-                                       await peticionUnico(departamento);
-                                       abrirCerrarModalEditar();
-                                    }}>
-                                       <Edit />
-                                    </IconButton>
-                                    <IconButton color="default" component="span" size="medium" onClick={() => {
-                                       limpiarForm(); setDepartamento(departamento); abrirCerrarModalDetalle()
-                                    }}>
-                                       <Info />
-                                    </IconButton>
-                                    <IconButton color="secondary" component="span" size="medium" onClick={abrirCerrarModalEliminar}>
-                                       <Delete />
-                                    </IconButton>
-                                 </TableCell>
-                              </TableRow>
-                           ))}
-                           {emptyRows > 0 && (
-                              <TableRow style={{ height: 53 * emptyRows }}>
-                                 <TableCell colSpan={6} />
-                              </TableRow>)}
-                        </TableBody>
-                     </Table>
-                  </TableContainer>
-                  <TablePagination
-                     rowsPerPageOptions={[5, 10, 25]}
-                     component="div"
-                     count={listaDepa.length}
-                     rowsPerPage={rowsPerPage}
-                     page={page}
-                     onChangePage={handleChangePage}
-                     onChangeRowsPerPage={handleChangeRowsPerPage}
-                  />
-               </Paper>
-            </Paper>
-            <Modal
-               open={modalInsertar}
-               onClose={abrirCerrarModalInsertar} disableBackdropClick >
-               {bodyInsertar}
-            </Modal>
+               <TableBody>
+                  {listaDepa.map(departamento => (
+                     <TableRow key={departamento.departamentoId}>
+                        <TableCell align='center'>{departamento.nroDepartamento}</TableCell>
+                        <TableCell align='center'>{departamento.tipoDepaId}</TableCell>
+                        <Hidden mdDown>
+                           <TableCell align='center'>{departamento.cantidadHabitaciones}</TableCell>
+                           <TableCell align='center'>{departamento.tamano}</TableCell>
+                        </Hidden>
+                        <TableCell align='center'>{departamento.estadoDepaId}</TableCell>
+                        <TableCell align='center'>
+                           <IconButton color="primary" component="span" size="medium" onClick={() => { peticionUnico(departamento); abrirCerrarModalEditar() }}>
+                              <Edit />
+                           </IconButton>
+                           <IconButton color="default" component="span" size="medium" onClick={() => { peticionUnico(departamento); abrirCerrarModalDetalle() }}>
+                              <Info />
+                           </IconButton>
+                           <IconButton color="secondary" component="span" size="medium" onClick={abrirCerrarModalEliminar}>
+                              <Delete />
+                           </IconButton>
+                        </TableCell>
+                     </TableRow>
+                  ))}
 
-            <Modal
-               open={modalEditar}
-               onClose={abrirCerrarModalEditar} disableBackdropClick >
-               {bodyEditar}
-            </Modal>
+               </TableBody>
+            </Table>
+         </TableContainer>
 
-            <Modal
-               open={modalEliminar}
-               onClose={abrirCerrarModalEliminar} disableBackdropClick >
-               {bodyEliminar}
-            </Modal>
-            <Modal
-               open={modalDetalle}
-               onClose={abrirCerrarModalDetalle} disableBackdropClick >
-               {bodyDetalle}
-            </Modal>
-         </div>
-      </React.Fragment >
+         <Modal
+            open={modalInsertar}
+            onClose={abrirCerrarModalInsertar} disableBackdropClick >
+            {bodyInsertar}
+         </Modal>
+
+         <Modal
+            open={modalEditar}
+            onClose={abrirCerrarModalEditar} disableBackdropClick >
+            {bodyEditar}
+         </Modal>
+
+         <Modal
+            open={modalEliminar}
+            onClose={abrirCerrarModalEliminar} disableBackdropClick >
+            {bodyEliminar}
+         </Modal>
+         <Modal
+            open={modalDetalle}
+            onClose={abrirCerrarModalDetalle} disableBackdropClick >
+            {bodyDetalle}
+         </Modal>
+      </div>
+
+
    );
 }
 export default Departamento;

@@ -23,8 +23,7 @@ namespace AppDepa.Infraestructura.Datos.Context
             modelBuilder.Entity<Boleta>().HasKey(c => c.BoletaId);
             modelBuilder.Entity<Incidencia>().HasKey(c => c.IncidenciaId);
             modelBuilder.Entity<PagoServicio>().HasKey(c => c.PagoServicioId);
-            modelBuilder.Entity<Parametro>().HasNoKey();
-            modelBuilder.Entity<Visita>().HasKey(c => c.VisitaId);
+            modelBuilder.Entity<Parametros>().HasNoKey();
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<Usuario> Usuario { get; set; }
@@ -34,7 +33,6 @@ namespace AppDepa.Infraestructura.Datos.Context
         public DbSet<Boleta> Boleta { get; set; }
         public DbSet<Incidencia> Incidencia { get; set; }
         public DbSet<PagoServicio> PagoServicio { get; set; }
-        public DbSet<Parametro> Parametro { get; set; }
-        public DbSet<Visita> Visita { get; set; }
+        public DbSet<Parametros> Parametros { get; set; }
     }
 }

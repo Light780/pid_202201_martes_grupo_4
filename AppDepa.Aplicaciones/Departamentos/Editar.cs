@@ -22,7 +22,7 @@ namespace AppDepa.Aplicaciones.Departamentos
             public string NroDepartamento { get; set; }
             public decimal Tamano { get; set; }
             public int TipoDepaId { get; set; }
-            public int EstadoId { get; set; }
+            public int EstadoDepaId { get; set; }
             public int CantidadHabitaciones { get; set; }
             public bool IndCocina { get; set; }
             public bool IndBalcon { get; set; }
@@ -42,7 +42,7 @@ namespace AppDepa.Aplicaciones.Departamentos
                     .GreaterThan(0).WithMessage("El tamaño del Departamento debe ser mayor a 0");
                 RuleFor(x => x.TipoDepaId)
                     .GreaterThan(0).WithMessage("El Tipo de Departamento es obligatorio");
-                RuleFor(x => x.EstadoId)
+                RuleFor(x => x.EstadoDepaId)
                     .GreaterThan(0).WithMessage("El Estado del Departamento es obligatorio");
                 RuleFor(x => x.CantidadHabitaciones)
                    .GreaterThan(0).WithMessage("La Cantidad de Habitaciones debe ser mayor a 0");
@@ -72,7 +72,7 @@ namespace AppDepa.Aplicaciones.Departamentos
                 departamento.NroDepartamento = request.NroDepartamento;
                 departamento.Tamano = request.Tamano;
                 departamento.TipoDepaId = request.TipoDepaId;
-                departamento.EstadoId = request.EstadoId;
+                departamento.EstadoDepaId = request.EstadoDepaId;
                 departamento.CantidadHabitaciones = request.CantidadHabitaciones;
                 departamento.IndCocina = request.IndCocina;
                 departamento.IndBalcon = request.IndBalcon;
