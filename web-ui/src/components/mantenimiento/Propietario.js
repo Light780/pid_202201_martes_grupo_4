@@ -2,11 +2,11 @@ import { Grid, Table, Button, Container, TextField, Typography, Modal, TableCont
 import { Edit, Delete } from '@material-ui/icons/';
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { style, useStyles } from '../tools/style'
+import { style, styleModal } from '../tools/style'
 import axios from 'axios';
 
 function Propietario() {
-   const styles = useStyles();
+   const styles = styleModal();
 
    const [propietario, setPropietario] = useState({
       DNI: 0,
