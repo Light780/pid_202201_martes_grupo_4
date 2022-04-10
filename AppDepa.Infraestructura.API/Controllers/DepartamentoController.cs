@@ -29,5 +29,10 @@ namespace AppDepa.Infraestructura.API.Controllers
         {
             return await mediator.Send(new Consultar.ListaDepartamento());
         }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Departamento>> ObtenerDepartamento(int id)
+        {
+            return await mediator.Send(new ConsultarUnico.Ejecuta() { DepartamentoId = id});
+        }
     }
 }

@@ -15,6 +15,12 @@ export const style = {
         marginTop: 15,
         marginBottom:10
     },
+    crudTitle:{
+        margin: 5,        
+    },
+    backgroundTitle:{
+        backgroundColor:'lightgray'
+    },
     avatar: {
         margin: 5,
         backgroundColor: "#1976d2",
@@ -28,7 +34,7 @@ export const style = {
         marginTop:20        
     }  
 }
-export const styleModal = makeStyles((theme) => ({
+export const useStyles = makeStyles((theme) => ({
     modal: {
         position: 'absolute',
         width: 700,
@@ -53,12 +59,37 @@ export const styleModal = makeStyles((theme) => ({
     inputMaterial:{
        width: '100%'
     },
-    table:{
+    crud:{
         padding: 10, 
-        width: "100%"
+        width: "100%"        
+    },    
+    paperTitle:{
+        backgroundColor: theme.palette.primary.main,
+        color:theme.palette.primary.contrastText,
+    },
+    paperBody:{
+        paddingLeft:5, 
+        paddingRight:5
+    },
+    table:{
+        maxHeight: 650,
+        [theme.breakpoints.down("xs")]: {
+            maxHeight: 500,
+        },
+        [theme.breakpoints.down("md")]: {
+            maxHeight: 500,
+        }                
+    },
+    tableHead:{
+        backgroundColor: theme.palette.primary.main,
+        color:theme.palette.primary.contrastText,
+        fontSize:13
+    },
+    tableRow:{
+        fontSize:13        
     },
     modalTitle: {
         marginTop:5        
     }    
  }));
-export default style
+export default useStyles
