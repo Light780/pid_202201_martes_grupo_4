@@ -16,7 +16,7 @@ namespace AppDepa.Dominio
         [Column(TypeName = "decimal(18,2)")]
         public decimal Tamano { get; set; }        
         public int TipoDepaId { get; set; }
-        public int EstadoDepaId { get; set; }
+        public int EstadoId { get; set; }
 
         public int CantidadHabitaciones { get; set; }
         [Column(TypeName = "bit")]
