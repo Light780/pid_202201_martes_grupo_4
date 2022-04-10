@@ -10,6 +10,7 @@ import SecurePath from './components/shared/SecurePath'
 import { useStateValue } from './context/store';
 import { obtenerUsuario } from './actions/UsuarioAction';
 import { Alert } from '@material-ui/lab';
+import Prueba from './components/mantenimientos/Prueba';
 import PerfilUsuario from './components/security/PerfilUsuario';
 import Departamento from './components/mantenimiento/Departamento';
 import Propietario from './components/mantenimiento/Propietario';
@@ -44,7 +45,8 @@ function App() {
           <Grid container>
             <Routes>
               <Route exact path='/auth/login' element= {<Login/>}/>
-              <Route exact path='/' element= {<SecurePath><Inicio/></SecurePath>}/>              
+              <Route exact path='/' element= {<SecurePath><Inicio/></SecurePath>}/>
+              <Route exact path='/mantenimiento/prueba' element= {<SecurePath><Prueba/></SecurePath>}/>
               <Route exact path='/auth/perfil' element= {<SecurePath><PerfilUsuario/></SecurePath>}/>
               <Route exact path='/mantenimiento/departamento' element= {<SecurePath><Departamento/></SecurePath>}/>
               <Route exact path='/mantenimiento/propietario' element= {<SecurePath><Propietario/></SecurePath>}/>              

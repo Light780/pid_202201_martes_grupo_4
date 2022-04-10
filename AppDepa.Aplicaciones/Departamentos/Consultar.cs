@@ -38,15 +38,14 @@ namespace AppDepa.Aplicaciones.Departamentos
             public async Task<List<DepartamentoDto>> Handle(ListaDepartamento request, CancellationToken cancellationToken)
             {                
                 // Hacer query con Linq
-                var query = from d in context.Departamento
-                            orderby d.NroDepartamento
+                var query = from d in context.Departamento                            
                             select new DepartamentoDto
                             {
                                 DepartamentoId = d.DepartamentoId,
                                 NroDepartamento = d.NroDepartamento,
                                 Tamano = d.Tamano,                                
                                 TipoDepa = utils.BuscarParamaetro(d.TipoDepaId, "TIPO_DEPA_ID"),
-                                Estado = utils.BuscarParamaetro(d.EstadoId, "ESTADO_ID"),
+                                EstadoDepa = utils.BuscarParamaetro(d.EstadoDepaId, "ESTADO_DEPA_ID"),
                                 CantidadHabitaciones = d.CantidadHabitaciones,
                                 IndCocina = d.IndCocina,
                                 IndBalcon = d.IndBalcon,
@@ -55,7 +54,6 @@ namespace AppDepa.Aplicaciones.Departamentos
                                 IndPatio = d.IndPatio
 
                             };
-                
 
                 var lista = await query.ToListAsync();
                 return lista;

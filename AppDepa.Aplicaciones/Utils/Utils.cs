@@ -10,7 +10,7 @@ namespace AppDepa.Aplicaciones.Utils
 {
     public class Utils : IUtils
     {
-        private List<Parametro> ListaParametros;
+        private List<Parametros> ListaParametros;
         private readonly GestionDepartamentosContext context;
 
         public Utils(GestionDepartamentosContext _context)
@@ -20,7 +20,7 @@ namespace AppDepa.Aplicaciones.Utils
         }
         private void InicializarVariables()
         {
-            ListaParametros = context.Parametro.ToList();
+            ListaParametros = context.Parametros.ToList();
         }
 
         public string BuscarParamaetro(int param, string reporte)

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AppDepa.Dominio
 {
-    public class Parametro
+    public class Parametros
     {
         [Column(TypeName = "varchar(30)")]
         public string ParametroId { get; set; }
