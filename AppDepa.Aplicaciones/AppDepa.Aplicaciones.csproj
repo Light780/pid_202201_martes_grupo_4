@@ -14,4 +14,11 @@
     <ProjectReference Include="..\AppDepa.Infraestructura.Datos\AppDepa.Infraestructura.Datos.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Boleta\" />
+    <Folder Include="Incidencias\" />
+    <Folder Include="PagoServicios\" />
+    <Folder Include="Visitas\" />
+  </ItemGroup>
+
 </Project>
