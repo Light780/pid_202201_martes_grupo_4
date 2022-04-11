@@ -32,7 +32,13 @@ namespace AppDepa.Infraestructura.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Departamento>> ObtenerDepartamento(int id)
         {
-            return await mediator.Send(new ConsultarUnico.Ejecuta() { DepartamentoId = id});
+            return await mediator.Send(new ConsultarUnico.Ejecuta() { DepartamentoId = id });
         }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Unit>> EliminarDepartamento(int id)
+        {
+            return await mediator.Send(new Eliminar.Ejecuta() { DepartamentoId = id });
+        }
+
     }
 }
