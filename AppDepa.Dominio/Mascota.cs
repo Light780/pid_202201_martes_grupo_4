@@ -14,9 +14,8 @@ namespace AppDepa.Dominio
         [Column(TypeName = "varchar(45)")]
         public string NombreMascota { get; set; }
         [Column(TypeName = "char(1)")]
-        public string Sexo { get; set; }
-        [Column(TypeName = "varchar(45)")]
-        public string Raza { get; set; }
+        public string Sexo { get; set; }        
+        public int RazaId { get; set; }
         public DateTime FechaRegistro { get; set; }
 
         // Relación con Departamentos
