@@ -71,7 +71,7 @@ export const useStyles = makeStyles((theme) => ({
         paddingLeft:5, 
         paddingRight:5
     },
-    table:{
+    table:{        
         maxHeight: 650,
         [theme.breakpoints.down("xs")]: {
             maxHeight: 500,
@@ -79,15 +79,7 @@ export const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down("md")]: {
             maxHeight: 500,
         }                
-    },
-    tableHead:{
-        backgroundColor: theme.palette.primary.main,
-        color:theme.palette.primary.contrastText,
-        fontSize:13
-    },
-    tableRow:{
-        fontSize:13        
-    },
+    },    
     modalTitle: {
         marginTop:5        
     }    

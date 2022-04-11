@@ -10,7 +10,7 @@ function Departamento() {
    const [{ sesionUsuario }, dispatch] = useStateValue()
    const [page, setPage] = React.useState(0);
    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-   const [listaDepa, setListaDepa] = useState([])   
+   const [listaDepa, setListaDepa] = useState([])
    const [departamento, setDepartamento] = useState({
       departamentoId: 0,
       nroDepartamento: '',
@@ -147,6 +147,7 @@ function Departamento() {
             })
             abrirCerrarModalEliminar()
             limpiarForm()
+            peticionGet()
          } else {
             dispatch({
                type: 'OPEN_SNACKBAR',
@@ -274,7 +275,7 @@ function Departamento() {
       setModalDetalle(!modalDetalle);
    }
    useEffect(() => {
-      peticionGet()      
+      peticionGet()
    }, [])
 
    const bodyInsertar = (
@@ -416,15 +417,18 @@ function Departamento() {
 
    const bodyEliminar = (
       <div className={styles.modal}>
-         <p>Estas seguro que deseas eliminar el departamento seleccionado<b>{departamento && departamento.nroDepartamento}</b></p>
-         <Grid container spacing={2} justifyContent="center">
-            <Grid item xs={6} md={6}>
-               <Button color="secondary" onClick={peticionDelete}>Si</Button>
+         <Container component="main" maxWidth="md" justifyContent="center">
+            <Typography className={styles.modalTitle} component="h1" variant="h5" align="center">Estás seguro de eliminar el departamento</Typography>            
+            <Typography className={styles.modalTitle} component="h1" variant="h5" align="center"><b>{departamento.nroDepartamento}</b></Typography>
+            <Grid container spacing={2} justifyContent="center">
+               <Grid item xs={6} md={6}>
+                  <Button fullWidth variant="contained" size="large" style={style.submit} color="secondary" onClick={peticionDelete}>Si</Button>
+               </Grid>
+               <Grid item xs={6} md={6}>
+                  <Button fullWidth variant="contained" size="large" style={style.submit} onClick={abrirCerrarModalEliminar}>No</Button>
+               </Grid>
             </Grid>
-            <Grid item xs={6} md={6}>
-               <Button onClick={abrirCerrarModalEliminar}></Button>
-            </Grid>
-         </Grid>
+         </Container>
       </div>
 
    )
@@ -528,28 +532,28 @@ function Departamento() {
                      <Table stickyHeader>
                         <TableHead>
                            <TableRow>
-                              <TableCell className={styles.tableHead} align='center'>N° Depart.</TableCell>
-                              <TableCell className={styles.tableHead} align='center'>Tipo Depart.</TableCell>
+                              <TableCell align='center'>N° Depart.</TableCell>
+                              <TableCell align='center'>Tipo Depart.</TableCell>
                               <Hidden mdDown>
-                                 <TableCell className={styles.tableHead} align='center'>N° de Habitaciones</TableCell>
-                                 <TableCell className={styles.tableHead} align='center'>Area</TableCell>
+                                 <TableCell align='center'>N° de Habitaciones</TableCell>
+                                 <TableCell align='center'>Area</TableCell>
                               </Hidden>
-                              <TableCell className={styles.tableHead} align='center'>Estado</TableCell>
-                              <TableCell className={styles.tableHead} align='center'>Acciones</TableCell>
+                              <TableCell align='center'>Estado</TableCell>
+                              <TableCell align='center'>Acciones</TableCell>
                            </TableRow>
                         </TableHead>
 
                         <TableBody>
-                           {listaDepa.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map( (departamento, index) => (
-                              <TableRow key={departamento.departamentoId} className={styles.tableRow} style ={ index % 2? { background : "#f5f5f5" }:{ background : "white" }}>
-                                 <TableCell size="small" className={styles.tableRow}align='center'>{departamento.nroDepartamento}</TableCell>
-                                 <TableCell size="small" className={styles.tableRow} align='center'>{departamento.tipoDepa}</TableCell>
+                           {listaDepa.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((departamento, index) => (
+                              <TableRow key={departamento.departamentoId} style={index % 2 ? { background: "#f5f5f5" } : { background: "white" }}>
+                                 <TableCell size="small" align='center'>{departamento.nroDepartamento}</TableCell>
+                                 <TableCell size="small" align='center'>{departamento.tipoDepa}</TableCell>
                                  <Hidden mdDown>
-                                    <TableCell size="small" className={styles.tableRow} align='center'>{departamento.cantidadHabitaciones}</TableCell>
-                                    <TableCell size="small" className={styles.tableRow} align='center'>{departamento.tamano}m2</TableCell>
+                                    <TableCell size="small" align='center'>{departamento.cantidadHabitaciones}</TableCell>
+                                    <TableCell size="small" align='center'>{departamento.tamano}m2</TableCell>
                                  </Hidden>
-                                 <TableCell size="small" className={styles.tableRow} align='center'>{departamento.estado}</TableCell>
-                                 <TableCell size="small" className={styles.tableRow} align='center'>
+                                 <TableCell size="small" align='center'>{departamento.estado}</TableCell>
+                                 <TableCell size="small" align='center'>
                                     <IconButton color="primary" component="span" size="medium" onClick={async () => {
                                        limpiarForm();
                                        await peticionUnico(departamento);
@@ -562,7 +566,12 @@ function Departamento() {
                                     }}>
                                        <Info />
                                     </IconButton>
-                                    <IconButton color="secondary" component="span" size="medium" onClick={abrirCerrarModalEliminar}>
+                                    <IconButton color="secondary" component="span" size="medium" onClick={() => {
+                                       limpiarForm();
+                                       setDepartamento(departamento);
+                                       abrirCerrarModalEliminar()
+                                    }}
+                                    >
                                        <Delete />
                                     </IconButton>
                                  </TableCell>

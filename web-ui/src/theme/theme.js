@@ -7,6 +7,16 @@ const theme = createTheme({
             dark:"#004ba0",
             contrastText:"#ecfad8"
         }
-    }    
+    },
+    overrides:{    
+        MuiTableCell:{
+            root:{
+                fontSize:'13px'
+            },
+            stickyHeader:{
+                fontWeight:"bold"
+            }
+        }        
+    }
 })
 export default theme;
