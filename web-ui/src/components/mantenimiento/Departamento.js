@@ -8,8 +8,8 @@ import SelectParametro from '../utils/SelectParametro';
 function Departamento() {
    const styles = useStyles();
    const [{ sesionUsuario }, dispatch] = useStateValue()
-   const [page, setPage] = React.useState(0);
-   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+   const [page, setPage] = useState(0);
+   const [rowsPerPage, setRowsPerPage] = useState(10);
    const [listaDepa, setListaDepa] = useState([])
    const [departamento, setDepartamento] = useState({
       departamentoId: 0,
@@ -24,7 +24,7 @@ function Departamento() {
       indPiscina: false,
       indPatio: false
 
-   })
+   })   
    const [errores, setErrores] = useState({})
    const [modalInsertar, setModalInsertar] = useState(false);
    const [modalEditar, setModalEditar] = useState(false);
@@ -287,6 +287,7 @@ function Departamento() {
                   <Grid item xs={12} md={12}>
                      <TextField value={departamento.nroDepartamento} error={Boolean(errores?.nroDepartamento)} helperText={(errores?.nroDepartamento)} required name="nroDepartamento" className={styles.inputMaterial} label="Nro de Departamento" onChange={handleChange} />
                   </Grid>
+                  
                   <Grid item xs={12} md={6}>
                      <TextField value={departamento.tamano} error={Boolean(errores?.tamano)} helperText={(errores?.tamano)} required name="tamano" type="number" className={styles.inputMaterial} label="Area m2" onChange={handleChange} />
                   </Grid>
@@ -338,7 +339,9 @@ function Departamento() {
                      </Button>
                   </Grid>
                   <Grid item xs={6} md={6}>
-                     <Button type="button" fullWidth variant="contained" size="large" color="secondary" style={style.submit} onClick={abrirCerrarModalInsertar}>Cancelar</Button>
+                     <Button type="button" fullWidth variant="contained" size="large" color="secondary" style={style.submit} onClick={abrirCerrarModalInsertar}>
+                        Cancelar
+                     </Button>
                   </Grid>
                </Grid>
             </form>

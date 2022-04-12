@@ -12,7 +12,11 @@ export const LeftMenu = ({classes}) => (
             <ListItem component={Link} button to='/mantenimiento/propietario'>
                 <i className='material-icons'>person</i>
                 <ListItemText classes={{ primary: classes.listItemText }} primary="Propietarios" />
-            </ListItem>                        
+            </ListItem>
+            <ListItem component={Link} button to='/mantenimiento/mascota'>
+                <i className='material-icons'>pets</i>
+                <ListItemText classes={{ primary: classes.listItemText }} primary="Mascota" />
+            </ListItem>                              
         </List>        
     </div>
 )

@@ -23,7 +23,7 @@ namespace AppDepa.Aplicaciones.Utils
             ListaParametros = context.Parametro.ToList();
         }
 
-        public string BuscarParamaetro(int param, string reporte)
+        public string BuscarParametro(int param, string reporte)
         {
             return ListaParametros.Where(x => x.ParametroId.Equals(reporte) && x.ParamId==param).FirstOrDefault().Descripcion ?? "";
         }
