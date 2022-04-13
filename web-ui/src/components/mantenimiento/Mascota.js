@@ -13,7 +13,7 @@ function Mascota() {
     const [listaMascota, setListaMascota] = useState([])
     const [mascota, setMascota] = useState({
        mascotaId: 0,
-       nombre: '',
+       nombreMascota: '',
        sexo: '',
        especieId: 0,
        departamentoId: 0
@@ -37,7 +37,7 @@ function Mascota() {
     const limpiarForm = () => {
        setMascota({
           mascotaId: 0,
-          nombre: '',
+          nombreMascota: '',
           sexo: '',
           especieId: 0,
           departamentoId: 0
@@ -61,25 +61,25 @@ function Mascota() {
 
     const validarForm = (mascota) => {
  
-       if (mascota.nombre === '') {
+       if (mascota.nombreMascota === '') {
           setErrores(anterior => ({
              ...anterior,
-             nombre: 'El campo es obligatorio'
+             nombreMascota: 'El campo es obligatorio'
           }))
        }
-       else if (mascota.nombre.trim().length !== 3) {
+       else if (mascota.nombreMascota.trim().length !== 3) {
           setErrores(anterior => ({
              ...anterior,
-             nombre: 'Debe tener 3 caracteres'
+             nombreMascota: 'Debe tener 3 caracteres'
           }))
        }
-       else if (!/^[A-Za-z ]+$/.test(mascota.nombre)) {
+       else if (!/^[A-Za-z ]+$/.test(mascota.nombreMascota)) {
         setErrores(anterior => ({
            ...anterior,
-           nombre: 'Debe contener letras'
+           nombreMascota: 'Debe contener letras'
         }))
      }
-       else delete errores.nombre
+       else delete errores.nombreMascota
  
  
        if (mascota.sexo === '') {
@@ -141,52 +141,18 @@ function Mascota() {
              <Typography className={styles.modalTitle} component="h1" variant="h5">Registrar Mascota</Typography>
              <form className={styles.modalForm} >
                 <Grid container spacing={2} justifyContent="center">
-                   <Grid item xs={12} md={12}>
-                      <TextField value={departamento.nroDepartamento} error={Boolean(errores?.nroDepartamento)} helperText={(errores?.nroDepartamento)} required name="nroDepartamento" className={styles.inputMaterial} label="Nro de Departamento" onChange={handleChange} />
+                   <Grid item xs={12} md={6}>
+                      <TextField value={mascota.nombreMascota} error={Boolean(errores?.nombreMascota)} helperText={(errores?.nombreMascota)} required name="nombreMascota" className={styles.inputMaterial} label="Nombre" onChange={handleChange} />
                    </Grid>
                    
                    <Grid item xs={12} md={6}>
-                      <TextField value={departamento.tamano} error={Boolean(errores?.tamano)} helperText={(errores?.tamano)} required name="tamano" type="number" className={styles.inputMaterial} label="Area m2" onChange={handleChange} />
+                      <TextField value={mascota.sexo} error={Boolean(errores?.sexo)} helperText={(errores?.sexo)} required name="sexo" className={styles.inputMaterial} label="Sexo" onChange={handleChange} />
                    </Grid>
                    <Grid item xs={12} md={6}>
-                      <SelectParametro concepto="TIPO_DEPA_ID" error={Boolean(errores?.tipoDepaId)}
-                         errorMessage={(errores?.tipoDepaId)} name="tipoDepaId"
-                         className={styles.inputMaterial} value={departamento.tipoDepaId}
-                         label="Tipo Departamento" onChange={handleChange} />
+                      <TextField value={mascota.especieId} error={Boolean(errores?.especieId)} helperText={(errores?.especieId)} required name="especieId" className={styles.inputMaterial} label="Especie" onChange={handleChange} />
                    </Grid>
                    <Grid item xs={12} md={6}>
-                      <SelectParametro concepto="ESTADO_ID" error={Boolean(errores?.estadoId)}
-                         errorMessage={(errores?.estadoId)} name="estadoId"
-                         className={styles.inputMaterial} value={departamento.estadoId}
-                         label="Estado" onChange={handleChange} />
-                   </Grid>
-                   <Grid item xs={12} md={6}>
-                      <TextField value={departamento.cantidadHabitaciones} error={Boolean(errores?.cantidadHabitaciones)} helperText={(errores?.cantidadHabitaciones)} required name="cantidadHabitaciones" type="number" className={styles.inputMaterial} label="Cantidad de Habitaciones" onChange={handleChange} />
-                   </Grid>
-                   <Grid item xs={12} md={2}>
-                      <FormControlLabel
-                         control={<Checkbox checked={departamento.indCocina} value={departamento.indCocina} onChange={handleCheck} color='primary' name="indCocina" />}
-                         label="Cocina" />
-                   </Grid>
-                   <Grid item xs={12} md={2}>
-                      <FormControlLabel
-                         control={<Checkbox checked={departamento.indBalcon} value={departamento.indBalcon} onChange={handleCheck} color='primary' name="indBalcon" />}
-                         label="Balcon" />
-                   </Grid>
-                   <Grid item xs={12} md={2}>
-                      <FormControlLabel
-                         control={<Checkbox checked={departamento.indLavanderia} value={departamento.indLavanderia} onChange={handleCheck} color='primary' name="indLavanderia" />}
-                         label="Lavanderia" />
-                   </Grid>
-                   <Grid item xs={12} md={2}>
-                      <FormControlLabel
-                         control={<Checkbox checked={departamento.indPiscina} value={departamento.indPiscina} onChange={handleCheck} color='primary' name="indPiscina" />}
-                         label="Piscina" />
-                   </Grid>
-                   <Grid item xs={12} md={2}>
-                      <FormControlLabel
-                         control={<Checkbox checked={departamento.indPatio} value={departamento.indPatio} onChange={handleCheck} color='primary' name="indPatio" />}
-                         label="Patio" />
+                   <TextField value={mascota.departamentoId} error={Boolean(errores?.departamentoId)} helperText={(errores?.departamentoId)} required name="departamentoId" className={styles.inputMaterial} label="Departamento" onChange={handleChange} />
                    </Grid>
                 </Grid>
                 <Grid container spacing={2} justifyContent="center">
@@ -209,54 +175,20 @@ function Mascota() {
     const bodyEditar = (
        <div className={styles.modal}>
           <Container component="main" maxWidth="md" justifyContentContent="center">
-             <Typography className={styles.modalTitle} component="h1" variant="h5">Editar Departamento</Typography>
+             <Typography className={styles.modalTitle} component="h1" variant="h5">Editar Mascota</Typography>
              <form className={styles.modalForm}>
                 <Grid container spacing={2} justifyContent="center">
-                   <Grid item xs={12} md={12}>
-                      <TextField error={Boolean(errores?.nroDepartamento)} helperText={(errores?.nroDepartamento)} name="nroDepartamento" className={styles.inputMaterial} label="NroDepartamento" onChange={handleChange} value={departamento && departamento.nroDepartamento}></TextField>
+                   <Grid item xs={12} md={6}>
+                      <TextField error={Boolean(errores?.nombreMascota)} helperText={(errores?.nombreMascota)} name="nombreMascota" className={styles.inputMaterial} label="Nombre" onChange={handleChange} value={mascota && mascota.nombreMascota}></TextField>
                    </Grid>
                    <Grid item xs={12} md={6}>
-                      <TextField error={Boolean(errores?.tamano)} helperText={(errores?.tamano)} name="tamano" className={styles.inputMaterial} label="Area m2" onChange={handleChange} value={departamento && departamento.tamano}></TextField>
+                      <TextField error={Boolean(errores?.sexo)} helperText={(errores?.sexo)} name="sexo" className={styles.inputMaterial} label="Sexo" onChange={handleChange} value={mascota && mascota.sexo}></TextField>
                    </Grid>
                    <Grid item xs={12} md={6}>
-                      <SelectParametro concepto="TIPO_DEPA_ID" error={Boolean(errores?.tipoDepaId)}
-                         errorMessage={(errores?.tipoDepaId)} name="tipoDepaId"
-                         className={styles.inputMaterial} value={departamento.tipoDepaId}
-                         label="Tipo Departamento" onChange={handleChange} />
+                   <TextField error={Boolean(errores?.especieId)} helperText={(errores?.especieId)} name="especieId" className={styles.inputMaterial} label="Especie" onChange={handleChange} value={mascota && mascota.especieId}></TextField>
                    </Grid>
                    <Grid item xs={12} md={6}>
-                      <SelectParametro concepto="ESTADO_ID" error={Boolean(errores?.estadoId)}
-                         errorMessage={(errores?.estadoId)} name="estadoId"
-                         className={styles.inputMaterial} value={departamento.estadoId}
-                         label="Estado" onChange={handleChange} />
-                   </Grid>
-                   <Grid item xs={12} md={6}>
-                      <TextField error={Boolean(errores?.cantidadHabitaciones)} helperText={(errores?.cantidadHabitaciones)} name="cantidadHabitaciones" className={styles.inputMaterial} label="CantHabitaciones" onChange={handleChange} value={departamento && departamento.cantidadHabitaciones}></TextField>
-                   </Grid>
-                   <Grid item xs={12} md={2}>
-                      <FormControlLabel
-                         control={<Checkbox checked={departamento.indCocina} onChange={handleCheck} value={departamento.indCocina} color='primary' name="indCocina" />}
-                         label="Cocina" />
-                   </Grid>
-                   <Grid item xs={12} md={2}>
-                      <FormControlLabel
-                         control={<Checkbox checked={departamento.indBalcon} onChange={handleCheck} value={departamento.indBalcon} color='primary' name="indBalcon" />}
-                         label="Balcon" />
-                   </Grid>
-                   <Grid item xs={12} md={2}>
-                      <FormControlLabel
-                         control={<Checkbox checked={departamento.indLavanderia} onChange={handleCheck} value={departamento.indLavanderia} color='primary' name="indLavanderia" />}
-                         label="Lavanderia" />
-                   </Grid>
-                   <Grid item xs={12} md={2}>
-                      <FormControlLabel
-                         control={<Checkbox checked={departamento.indPiscina} onChange={handleCheck} value={departamento.indPiscina} color='primary' name="indPiscina" />}
-                         label="Piscina" />
-                   </Grid>
-                   <Grid item xs={12} md={2}>
-                      <FormControlLabel
-                         control={<Checkbox checked={departamento.indPatio} onChange={handleCheck} value={departamento.indPatio} color='primary' name="indPatio" />}
-                         label="Patio" />
+                   <TextField error={Boolean(errores?.departamentoId)} helperText={(errores?.departamentoId)} name="departamentoId" className={styles.inputMaterial} label="Departamento" onChange={handleChange} value={mascota && mascota.departamentoId}></TextField>
                    </Grid>
                 </Grid>
                 <Grid container spacing={2} justifyContent="center">
@@ -278,8 +210,8 @@ function Mascota() {
     const bodyEliminar = (
        <div className={styles.modal}>
           <Container component="main" maxWidth="md" justifyContent="center">
-             <Typography className={styles.modalTitle} component="h1" variant="h5" align="center">Estás seguro de eliminar el departamento</Typography>            
-             <Typography className={styles.modalTitle} component="h1" variant="h5" align="center"><b>{departamento.nroDepartamento}</b></Typography>
+             <Typography className={styles.modalTitle} component="h1" variant="h5" align="center">Estás seguro de eliminar la mascota</Typography>            
+             <Typography className={styles.modalTitle} component="h1" variant="h5" align="center"><b>{mascota.nombreMascota}</b></Typography>
              <Grid container spacing={2} justifyContent="center">
                 <Grid item xs={6} md={6}>
                    <Button fullWidth variant="contained" size="large" style={style.submit} color="secondary" onClick={peticionDelete}>Si</Button>
@@ -291,84 +223,6 @@ function Mascota() {
           </Container>
        </div>
  
-    )
- 
-    const bodyDetalle = (
-       <div className={styles.modal}>
-          <Container component="main" maxWidth="md" justifyContent="center">
-             <Typography className={styles.modalTitle} component="h1" variant="h5">Detalle Departamento</Typography>
-             <div style={style.detail}>
-                <Grid container spacing={2} justifyContent="center">
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>N° Depart.</Typography>
-                   </Grid>
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>{departamento.nroDepartamento}</Typography>
-                   </Grid>
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>Tipo Depart.</Typography>
-                   </Grid>
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>{departamento.tipoDepa}</Typography>
-                   </Grid>
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>Area</Typography>
-                   </Grid>
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>{departamento.tamano}m2</Typography>
-                   </Grid>
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>N° Habitaciones</Typography>
-                   </Grid>
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>{departamento.cantidadHabitaciones}</Typography>
-                   </Grid>
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>Cocina</Typography>
-                   </Grid>
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>{departamento.indCocina ? 'Si' : 'No'}</Typography>
-                   </Grid>
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>Balcon</Typography>
-                   </Grid>
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>{departamento.indBalcon ? 'Si' : 'No'}</Typography>
-                   </Grid>
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>Piscina</Typography>
-                   </Grid>
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>{departamento.indPiscina ? 'Si' : 'No'}</Typography>
-                   </Grid>
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>Patio</Typography>
-                   </Grid>
- 
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>{departamento.indPatio ? 'Si' : 'No'}</Typography>
-                   </Grid>
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>Lavanderia</Typography>
-                   </Grid>
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>{departamento.indLavanderia ? 'Si' : 'No'}</Typography>
-                   </Grid>
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>Estado</Typography>
-                   </Grid>
-                   <Grid item xs={6} md={6}>
-                      <Typography align="center" variant='h6' component='h2'>{departamento.estado}</Typography>
-                   </Grid>
-                </Grid>
-                <Grid container spacing={2} justifyContent="center">
-                   <Grid item xs={12} md={12}>
-                      <Button type="button" fullWidth variant="contained" size="large" color="secondary" style={style.submit} onClick={abrirCerrarModalDetalle}>Cerrar</Button>
-                   </Grid>
-                </Grid>
-             </div>
-          </Container>
-       </div>
     )
  
     return (
