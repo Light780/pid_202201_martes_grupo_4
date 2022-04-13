@@ -20,7 +20,9 @@ namespace AppDepa.Dominio
         [Column(TypeName = "varchar(35)")]
         public string Password { get; set; }
         public byte[] FotoPerfil { get; set; }
-
-        public DateTime FechaRegistro { get; set; }   
+        public DateTime FechaRegistro { get; set; }
+        public ICollection<Visita> Visitas { get; set; }
+        public ICollection<Incidencia> Incidencias { get; set; }
+        public ICollection<HistorialIncidencia> HistorialIncidencias { get; set; }
     }
 }

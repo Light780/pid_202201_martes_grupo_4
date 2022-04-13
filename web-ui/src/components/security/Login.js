@@ -3,7 +3,7 @@ import { LockOutlined } from '@material-ui/icons/';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStateValue } from '../../context/store';
-import style from '../tools/style'
+import {style} from '../tools/style'
 import { loginUsuario } from '../../actions/UsuarioAction';
 function Login(){
     const navigate = useNavigate()

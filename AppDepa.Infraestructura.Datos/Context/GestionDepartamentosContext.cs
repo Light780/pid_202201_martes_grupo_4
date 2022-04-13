@@ -25,6 +25,8 @@ namespace AppDepa.Infraestructura.Datos.Context
             modelBuilder.Entity<PagoServicio>().HasKey(c => c.PagoServicioId);
             modelBuilder.Entity<Parametro>().HasNoKey();
             modelBuilder.Entity<Visita>().HasKey(c => c.VisitaId);
+            modelBuilder.Entity<HistorialIncidencia>().HasKey(c => c.HistorialIncidenciaId);
+            modelBuilder.Entity<HistorialIncidencia>().HasKey(c => c.HistorialIncidenciaId);            
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<Usuario> Usuario { get; set; }
@@ -36,5 +38,6 @@ namespace AppDepa.Infraestructura.Datos.Context
         public DbSet<PagoServicio> PagoServicio { get; set; }
         public DbSet<Parametro> Parametro { get; set; }
         public DbSet<Visita> Visita { get; set; }
+        public DbSet<HistorialIncidencia> HistorialIncidencia { get; set; }
     }
 }

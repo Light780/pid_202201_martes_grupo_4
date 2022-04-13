@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace AppDepa.Dominio
 {
-    public class Incidencia
+    public class HistorialIncidencia
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int HistorialIncidenciaId { get; set; }
         public int IncidenciaId { get; set; }
+        public Incidencia Incidencia { get; set; }
         public int DepartamentoId { get; set; }
         public Departamento Departamento { get; set; }
         public int TipoIncidenciaId { get; set; }
@@ -24,6 +26,5 @@ namespace AppDepa.Dominio
         public DateTime FechaRegistro { get; set; }
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
-        public ICollection<HistorialIncidencia> HistorialIncidencias { get; set; }
     }
 }
