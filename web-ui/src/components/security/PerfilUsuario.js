@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import reactFoto from '../../logo.svg'
 import ImageUploader from 'react-images-upload';
 import { useStateValue } from '../../context/store';
-import style from '../tools/style';
+import {style} from '../tools/style';
 import { actualizarUsuario } from '../../actions/UsuarioAction';
 import { blobConverter} from '../../services/Utils';
 function PerfilUsuario() {

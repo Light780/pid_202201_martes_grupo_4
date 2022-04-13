@@ -18,5 +18,9 @@ namespace AppDepa.Dominio
         public DateTime FechaEntrada { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime FechaSalida { get; set; }
+        [DataType(DataType.DateTime)]
+        public DateTime FechaRegistro { get; set; }
+        public int UsuarioId { get; set; }
+        public Usuario Usuario { get; set; }
     }
 }

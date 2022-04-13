@@ -20,7 +20,7 @@ namespace AppDepa.Aplicaciones.Mascotas
             public int MascotaId { get; set; }
             public string NombreMascota { get; set; }
             public string Sexo { get; set; }
-            public int RazaId { get; set; }
+            public int EspecieId { get; set; }
             public int DepartamentoId { get; set; }
         }
         public class EjecutaValidatior : AbstractValidator<Ejecuta>
@@ -29,7 +29,7 @@ namespace AppDepa.Aplicaciones.Mascotas
             {
                 RuleFor(x => x.NombreMascota).NotEmpty().WithMessage("El Nombre es obligatorio");
                 RuleFor(x => x.Sexo).NotEmpty().WithMessage("El Sexo es obligatorio");
-                RuleFor(x => x.RazaId).GreaterThan(0).WithMessage("La Raza es obligatoria");
+                RuleFor(x => x.EspecieId).GreaterThan(0).WithMessage("La Especie es obligatoria");
                 RuleFor(x => x.DepartamentoId).GreaterThan(0).WithMessage("El Departamento es obligatoria");
             }
         }
@@ -50,7 +50,7 @@ namespace AppDepa.Aplicaciones.Mascotas
                 }
                 mascota.NombreMascota = request.NombreMascota;
                 mascota.Sexo = request.Sexo;
-                mascota.RazaId = request.RazaId;
+                mascota.EspecieId = request.EspecieId;
                 mascota.DepartamentoId = request.DepartamentoId;
                 context.Mascota.Update(mascota);
                 var result = await context.SaveChangesAsync();
