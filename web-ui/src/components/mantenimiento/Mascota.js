@@ -2,14 +2,12 @@ import { Grid, Table, Button, Container, TextField, Typography, Modal, TableCont
 import { Edit, Delete, Info } from '@material-ui/icons/';
 import React, { useState, useEffect } from 'react';
 import { useStyles, style } from '../tools/style'
-import { listarDepartamento, registrarDepartamento, actualizarDepartamento, borrarDepartamento, consultarUnico } from '../../actions/DepartamentoAction';
 import { useStateValue } from '../../context/store';
-import SelectParametro from '../utils/SelectParametro';
+
 function Mascota() {
     const styles = useStyles();
-    const [{ sesionUsuario }, dispatch] = useStateValue()
     const [page, setPage] = useState(0);
-    //const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [listaMascota, setListaMascota] = useState([])
     const [mascota, setMascota] = useState({
        mascotaId: 0,
@@ -58,7 +56,9 @@ function Mascota() {
        //e.preventDefault()
        
     }
-
+    /*const peticionUnico = async (departamento) => {
+        
+     }*/
     const validarForm = (mascota) => {
  
        if (mascota.nombreMascota === '') {
@@ -116,7 +116,7 @@ function Mascota() {
     }
     const handleChange = e => {
        const { name, value } = e.target
-       setDepartamento(anterior => ({
+       setMascota(anterior => ({
           ...anterior,
           [name]: value
        }))
@@ -232,7 +232,7 @@ function Mascota() {
                 <Paper className={styles.paperTitle}>
                    <Grid container justifyContent="flex-start">
                       <Typography component="h5" variant="h5" style={style.crudTitle}>
-                         Departamento
+                         Mascota
                       </Typography>
                    </Grid>
                 </Paper>
@@ -246,43 +246,32 @@ function Mascota() {
                       <Table stickyHeader>
                          <TableHead>
                             <TableRow>
-                               <TableCell align='center'>N° Depart.</TableCell>
-                               <TableCell align='center'>Tipo Depart.</TableCell>
-                               <Hidden mdDown>
-                                  <TableCell align='center'>N° de Habitaciones</TableCell>
-                                  <TableCell align='center'>Area</TableCell>
-                               </Hidden>
-                               <TableCell align='center'>Estado</TableCell>
+                               <TableCell align='center'>Nombre</TableCell>
+                               <TableCell align='center'>Sexo</TableCell>
+                               <TableCell align='center'>Especie</TableCell>
+                               <TableCell align='center'>Departamento</TableCell>
                                <TableCell align='center'>Acciones</TableCell>
                             </TableRow>
                          </TableHead>
  
                          <TableBody>
-                            {listaDepa.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((departamento, index) => (
-                               <TableRow key={departamento.departamentoId} style={index % 2 ? { background: "#f5f5f5" } : { background: "white" }}>
-                                  <TableCell size="small" align='center'>{departamento.nroDepartamento}</TableCell>
-                                  <TableCell size="small" align='center'>{departamento.tipoDepa}</TableCell>
-                                  <Hidden mdDown>
-                                     <TableCell size="small" align='center'>{departamento.cantidadHabitaciones}</TableCell>
-                                     <TableCell size="small" align='center'>{departamento.tamano}m2</TableCell>
-                                  </Hidden>
-                                  <TableCell size="small" align='center'>{departamento.estado}</TableCell>
+                            {listaMascota.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((mascota, index) => (
+                               <TableRow key={mascota.mascotaId} style={index % 2 ? { background: "#f5f5f5" } : { background: "white" }}>
+                                  <TableCell size="small" align='center'>{mascota.nombreMascota}</TableCell>
+                                  <TableCell size="small" align='center'>{mascota.sexo}</TableCell>                                
+                                  <TableCell size="small" align='center'>{mascota.especieId}</TableCell>
+                                  <TableCell size="small" align='center'>{mascota.departamentoId}</TableCell>
                                   <TableCell size="small" align='center'>
                                      <IconButton color="primary" component="span" size="medium" onClick={async () => {
                                         limpiarForm();
-                                        await peticionUnico(departamento);
+                                        //await peticionUnico(mascota);
                                         abrirCerrarModalEditar();
                                      }}>
                                         <Edit />
                                      </IconButton>
-                                     <IconButton color="default" component="span" size="medium" onClick={() => {
-                                        limpiarForm(); setDepartamento(departamento); abrirCerrarModalDetalle()
-                                     }}>
-                                        <Info />
-                                     </IconButton>
                                      <IconButton color="secondary" component="span" size="medium" onClick={() => {
                                         limpiarForm();
-                                        setDepartamento(departamento);
+                                        setMascota(mascota);
                                         abrirCerrarModalEliminar()
                                      }}
                                      >
@@ -291,10 +280,6 @@ function Mascota() {
                                   </TableCell>
                                </TableRow>
                             ))}
-                            {emptyRows > 0 && (
-                               <TableRow style={{ height: 53 * emptyRows }}>
-                                  <TableCell colSpan={6} />
-                               </TableRow>)}
                          </TableBody>
                       </Table>
                    </TableContainer>
