@@ -34,7 +34,9 @@ namespace AppDepa.Aplicaciones.Departamentos
             public EjecutaValidator()
             {
                 RuleFor(x => x.NroDepartamento)
-                    .Must(x => int.TryParse(x, out var val)).WithMessage("El Nro del Departamento debe ser numérico");
+                    .Must(x => int.TryParse(x, out var val)).WithMessage("El Nro del Departamento debe ser numérico")
+                    .NotEmpty().WithMessage("El Nro del Departamento es obligatorio")
+                    .Length(3).WithMessage("El Nro del Departamento debe tener solo 3 caracteres");
                 RuleFor(x => x.Tamano)
                     .GreaterThan(0).WithMessage("El tamaño del Departamento debe ser mayor a 0");
                 RuleFor(x => x.TipoDepaId)

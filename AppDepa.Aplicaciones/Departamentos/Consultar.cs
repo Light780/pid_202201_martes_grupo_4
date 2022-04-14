@@ -54,9 +54,8 @@ namespace AppDepa.Aplicaciones.Departamentos
                                 IndPiscina = d.IndPiscina,
                                 IndPatio = d.IndPatio
 
-                            };                
-                var lista = await query.ToListAsync();
-                return lista;
+                            };                                
+                return await query.ToListAsync();
             }            
         }        
     }
