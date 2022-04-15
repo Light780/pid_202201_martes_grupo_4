@@ -57,11 +57,7 @@ namespace AppDepa.Aplicaciones.Departamentos
 
                 var lista = await query.ToListAsync();
                 return lista;
-            }
-
-                            };                                
-                return await query.ToListAsync();
-            }            
+            }           
         }        
     }
 }
