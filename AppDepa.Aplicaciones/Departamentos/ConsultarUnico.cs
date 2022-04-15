@@ -23,10 +23,12 @@ namespace AppDepa.Aplicaciones.Departamentos
         public class Handler : IRequestHandler<Ejecuta,Departamento>
         {
             private readonly GestionDepartamentosContext context;
+
             public Handler(GestionDepartamentosContext _context)
             {
                 this.context = _context;
             }
+
             public async Task<Departamento> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
                 var departamento = await context.Departamento.Where(x => x.DepartamentoId == request.DepartamentoId).SingleOrDefaultAsync();

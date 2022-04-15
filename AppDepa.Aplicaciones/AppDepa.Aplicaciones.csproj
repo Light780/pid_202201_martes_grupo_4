@@ -14,4 +14,8 @@
     <ProjectReference Include="..\AppDepa.Infraestructura.Datos\AppDepa.Infraestructura.Datos.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mascotas\" />
+  </ItemGroup>
+
 </Project>
