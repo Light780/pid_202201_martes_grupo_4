@@ -28,7 +28,6 @@ namespace AppDepa.Aplicaciones.Departamentos
             private readonly GestionDepartamentosContext context;
             private readonly IUtils utils;
 
-
             public Handler(GestionDepartamentosContext _context, IUtils _utils)
             {
                 this.context = _context;
@@ -53,6 +52,12 @@ namespace AppDepa.Aplicaciones.Departamentos
                                 IndLavanderia = d.IndLavanderia,
                                 IndPiscina = d.IndPiscina,
                                 IndPatio = d.IndPatio
+                            };
+                
+
+                var lista = await query.ToListAsync();
+                return lista;
+            }
 
                             };                                
                 return await query.ToListAsync();
