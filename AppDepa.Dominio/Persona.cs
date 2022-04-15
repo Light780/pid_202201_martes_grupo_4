@@ -19,7 +19,7 @@ namespace AppDepa.Dominio
         public int TipoDocumentoId { get; set; }
         [Column(TypeName = "varchar(15)")]
         public string Telefono { get; set; }
-        public int EstadoPersonaId { get; set; }
+        public int EstadoId { get; set; }
         [Column(TypeName = "varchar(100)")]
         public string Correo { get; set; }
         [Column(TypeName = "char(1)")]
@@ -30,6 +30,8 @@ namespace AppDepa.Dominio
         // Relación con Departamentos
         public int DepartamentoId { get; set; }
         public Departamento Departamento { get; set; }
+
+        public ICollection<Visita> Visitas { get; set; }
     }
 }
 
