@@ -16,7 +16,7 @@ namespace AppDepa.Aplicaciones.Departamentos
     {
         public class Ejecuta : IRequest
         {
-            public int IdDepartamento { get; set; }
+            public int DepartamentoId { get; set; }
         }
 
         public class Handler : IRequestHandler<Ejecuta>
@@ -28,10 +28,10 @@ namespace AppDepa.Aplicaciones.Departamentos
             }
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var departamentos = await context.Departamento.Where(x => x.DepartamentoId != request.IdDepartamento).SingleOrDefaultAsync();
+                var departamentos = await context.Departamento.Where(x => x.DepartamentoId == request.DepartamentoId).SingleOrDefaultAsync();
                 if (departamentos == null)
                 {
-                    throw new ExceptionHandler(HttpStatusCode.NotFound, new { mensaje = "El Departamento no existe..." });
+                    throw new ExceptionHandler(HttpStatusCode.NotFound, new { mensaje = "El Departamento no existe" });
                 }
                 context.Departamento.Remove(departamentos);
                 var result = await context.SaveChangesAsync();
@@ -39,7 +39,7 @@ namespace AppDepa.Aplicaciones.Departamentos
                 {
                     return Unit.Value;
                 }
-                throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al eliminar el Departamento..." });
+                throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al eliminar el Departamento" });
             }
         }
     }

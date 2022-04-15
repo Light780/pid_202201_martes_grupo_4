@@ -8,6 +8,6 @@ namespace AppDepa.Aplicaciones.Utils
 {
     public interface IUtils
     {
-        string BuscarParamaetro(int param, string reporte);
+        string BuscarParametro(int param, string reporte);
     }
 }

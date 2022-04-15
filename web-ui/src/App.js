@@ -13,6 +13,7 @@ import { Alert } from '@material-ui/lab';
 import PerfilUsuario from './components/security/PerfilUsuario';
 import Departamento from './components/mantenimiento/Departamento';
 import Propietario from './components/mantenimiento/Propietario';
+import Mascota from './components/mantenimiento/Mascota';
 function App() {
   const [{sesionUsuario, openSnackBar}, dispatch] = useStateValue()
   const [iniciaApp, setIniciaApp] = useState(false);
@@ -47,7 +48,8 @@ function App() {
               <Route exact path='/' element= {<SecurePath><Inicio/></SecurePath>}/>              
               <Route exact path='/auth/perfil' element= {<SecurePath><PerfilUsuario/></SecurePath>}/>
               <Route exact path='/mantenimiento/departamento' element= {<SecurePath><Departamento/></SecurePath>}/>
-              <Route exact path='/mantenimiento/propietario' element= {<SecurePath><Propietario/></SecurePath>}/>              
+              <Route exact path='/mantenimiento/propietario' element= {<SecurePath><Propietario/></SecurePath>}/>      
+              <Route exact path='/mantenimiento/mascota' element= {<SecurePath><Mascota/></SecurePath>}/>                          
             </Routes>
           </Grid>
         </ThemeProvider>

@@ -4,14 +4,16 @@ using AppDepa.Infraestructura.Datos.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppDepa.Infraestructura.Datos.Migrations
 {
     [DbContext(typeof(GestionDepartamentosContext))]
-    partial class GestionDepartamentosContextModelSnapshot : ModelSnapshot
+    [Migration("20220411194013_MascotaCambioTipoRaza")]
+    partial class MascotaCambioTipoRaza
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,48 +95,6 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.ToTable("Departamento");
                 });
 
-            modelBuilder.Entity("AppDepa.Dominio.HistorialIncidencia", b =>
-                {
-                    b.Property<int>("HistorialIncidenciaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DepartamentoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DescripcionIncidencia")
-                        .HasColumnType("varchar(300)");
-
-                    b.Property<int>("EstadoIncidenciaId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("FechaIncidencia")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("FechaRegistro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("IncidenciaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TipoIncidenciaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
-
-                    b.HasKey("HistorialIncidenciaId");
-
-                    b.HasIndex("DepartamentoId");
-
-                    b.HasIndex("IncidenciaId");
-
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("HistorialIncidencia");
-                });
-
             modelBuilder.Entity("AppDepa.Dominio.Incidencia", b =>
                 {
                     b.Property<int>("IncidenciaId")
@@ -148,26 +108,15 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Property<string>("DescripcionIncidencia")
                         .HasColumnType("varchar(300)");
 
-                    b.Property<int>("EstadoIncidenciaId")
+                    b.Property<int>("EstadoId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaIncidencia")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("FechaRegistro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TipoIncidenciaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
-
                     b.HasKey("IncidenciaId");
 
                     b.HasIndex("DepartamentoId");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Incidencia");
                 });
@@ -182,14 +131,14 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Property<int>("DepartamentoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EspecieId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("FechaRegistro")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("NombreMascota")
                         .HasColumnType("varchar(45)");
+
+                    b.Property<int>("RazaId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Sexo")
                         .HasColumnType("char(1)");
@@ -328,23 +277,15 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Property<DateTime>("FechaEntrada")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("FechaRegistro")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("FechaSalida")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("PersonaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
-
                     b.HasKey("VisitaId");
 
                     b.HasIndex("PersonaId");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Visita");
                 });
@@ -360,33 +301,6 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Navigation("Departamento");
                 });
 
-            modelBuilder.Entity("AppDepa.Dominio.HistorialIncidencia", b =>
-                {
-                    b.HasOne("AppDepa.Dominio.Departamento", "Departamento")
-                        .WithMany()
-                        .HasForeignKey("DepartamentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AppDepa.Dominio.Incidencia", "Incidencia")
-                        .WithMany("HistorialIncidencias")
-                        .HasForeignKey("IncidenciaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AppDepa.Dominio.Usuario", "Usuario")
-                        .WithMany("HistorialIncidencias")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Departamento");
-
-                    b.Navigation("Incidencia");
-
-                    b.Navigation("Usuario");
-                });
-
             modelBuilder.Entity("AppDepa.Dominio.Incidencia", b =>
                 {
                     b.HasOne("AppDepa.Dominio.Departamento", "Departamento")
@@ -395,15 +309,7 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AppDepa.Dominio.Usuario", "Usuario")
-                        .WithMany("Incidencias")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Departamento");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("AppDepa.Dominio.Mascota", b =>
@@ -447,15 +353,7 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AppDepa.Dominio.Usuario", "Usuario")
-                        .WithMany("Visitas")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Persona");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("AppDepa.Dominio.Departamento", b =>
@@ -469,22 +367,8 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Navigation("Personas");
                 });
 
-            modelBuilder.Entity("AppDepa.Dominio.Incidencia", b =>
-                {
-                    b.Navigation("HistorialIncidencias");
-                });
-
             modelBuilder.Entity("AppDepa.Dominio.Persona", b =>
                 {
-                    b.Navigation("Visitas");
-                });
-
-            modelBuilder.Entity("AppDepa.Dominio.Usuario", b =>
-                {
-                    b.Navigation("HistorialIncidencias");
-
-                    b.Navigation("Incidencias");
-
                     b.Navigation("Visitas");
                 });
 #pragma warning restore 612, 618
