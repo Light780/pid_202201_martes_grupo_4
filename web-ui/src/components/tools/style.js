@@ -16,7 +16,7 @@ export const style = {
         marginBottom:10
     },
     crudTitle:{
-        margin: 5,        
+        margin: 5,
     },
     backgroundTitle:{
         backgroundColor:'lightgray'
@@ -26,6 +26,9 @@ export const style = {
         backgroundColor: "#1976d2",
         width: 100,
         height: 100
+    },
+    checkFiltro:{
+        marginTop:15
     },
     icon: {
         fontSize: 40
@@ -62,14 +65,15 @@ export const useStyles = makeStyles((theme) => ({
     crud:{
         padding: 10, 
         width: "100%"        
-    },    
+    },     
     paperTitle:{
         backgroundColor: theme.palette.primary.main,
         color:theme.palette.primary.contrastText,
-    },
+        marginBottom:10          
+    },    
     paperBody:{
         paddingLeft:5, 
-        paddingRight:5
+        paddingRight:5        
     },
     table:{        
         maxHeight: 650,

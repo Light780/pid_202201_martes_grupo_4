@@ -3,10 +3,8 @@ using AppDepa.Aplicaciones.Utils;
 using AppDepa.Infraestructura.Datos.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,9 +12,12 @@ namespace AppDepa.Aplicaciones.Personas
 {
     public class Consultar
     {
-        public class Ejecuta : IRequest<List<PersonaDto>> { }
+        public class ListarPersonas : IRequest<List<PersonaDto>>
+        {
+            public int DepartamentoId { get; set; }
+        }
 
-        public class Handler : IRequestHandler<Ejecuta, List<PersonaDto>>
+        public class Handler : IRequestHandler<ListarPersonas, List<PersonaDto>>
         {
             private readonly GestionDepartamentosContext context;
             private readonly IUtils utils;
@@ -26,11 +27,12 @@ namespace AppDepa.Aplicaciones.Personas
                 this.utils = _utils;
             }
 
-            public async Task<List<PersonaDto>> Handle(Ejecuta request, CancellationToken cancellationToken)
+            public async Task<List<PersonaDto>> Handle(ListarPersonas request, CancellationToken cancellationToken)
             {
                 var query = from p in context.Persona
                             join d in context.Departamento on p.DepartamentoId equals d.DepartamentoId
                             orderby p.PersonaId
+                            where (request.DepartamentoId == 0 || p.DepartamentoId == request.DepartamentoId)
                             select new PersonaDto
                             {
                                 PersonaId = p.PersonaId,
