@@ -15,6 +15,7 @@ namespace AppDepa.Aplicaciones.Personas
         public class ListarPersonas : IRequest<List<PersonaDto>>
         {
             public int DepartamentoId { get; set; }
+            public int TipoPersonaId { get; set; }
         }
 
         public class Handler : IRequestHandler<ListarPersonas, List<PersonaDto>>
@@ -33,6 +34,7 @@ namespace AppDepa.Aplicaciones.Personas
                             join d in context.Departamento on p.DepartamentoId equals d.DepartamentoId
                             orderby p.PersonaId
                             where (request.DepartamentoId == 0 || p.DepartamentoId == request.DepartamentoId)
+                            where (request.TipoPersonaId == 0 || p.TipoPersonaId == request.TipoPersonaId)
                             select new PersonaDto
                             {
                                 PersonaId = p.PersonaId,

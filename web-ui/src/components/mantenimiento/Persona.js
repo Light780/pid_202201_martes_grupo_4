@@ -2,7 +2,7 @@ import { Grid, Table, Button, Container, TextField, Typography, Modal, TableCont
 import { Edit, Delete, Info } from '@material-ui/icons/';
 import React, { useState, useEffect } from 'react';
 import { useStyles, style } from '../tools/style'
-import { registrarPersona, consultarPersona} from '../../actions/PersonaAction';
+import { registrarPersona, consultarPersona } from '../../actions/PersonaAction';
 import { useStateValue } from '../../context/store';
 import SelectParametro from '../utils/SelectParametro';
 function Persona() {
@@ -13,14 +13,15 @@ function Persona() {
    const [listaPersona, setListaPersona] = useState([])
    const [persona, setPersona] = useState({
       personaId: 0,
-      nombres: '',
-      doc: 0,
-      tipodoc: '',
+      nombreCompleto: '',
+      documento: 0,
+      tipoDocumentoId: '',
       telefono: 0,
-      estadoId:'',
-      correo:'',
-      sexo:'',
-      tipopersona:''
+      estadoId: '',
+      correo: '',
+      sexo: '',
+      tipoPersonaId: '',
+      departamentoId: 0
 
    })
    const [errores, setErrores] = useState({})
@@ -38,194 +39,159 @@ function Persona() {
    };
    const emptyRows = rowsPerPage - Math.min(rowsPerPage, listaPersona.length - page * rowsPerPage);
    const peticionGet = () => {
-      listarPersona().then(respuesta => {
-         if (respuesta.status === 200) {
-            setListaPersona(respuesta.data)
-         } else {
-            dispatch({
-               type: 'OPEN_SNACKBAR',
-               openMensaje: {
-                  open: true,
-                  mensaje: 'Error al listar Persona',
-                  severity: 'error'
-               }
-            })
-         }
-      })
+      // listarPersona().then(respuesta => {
+      //    if (respuesta.status === 200) {
+      //       setListaPersona(respuesta.data)
+      //    } else {
+      //       dispatch({
+      //          type: 'OPEN_SNACKBAR',
+      //          openMensaje: {
+      //             open: true,
+      //             mensaje: 'Error al listar Persona',
+      //             severity: 'error'
+      //          }
+      //       })
+      //    }
+      // })
    }
    const limpiarForm = () => {
       setPersona({
          personaId: 0,
-         nombres: '',
-         doc: 0,
-         tipodoc: '',
+         nombreCompleto: '',
+         documento: 0,
+         tipoDocumentoId: '',
          telefono: 0,
-         estadoId:'',
-         correo:'',
-         sexo:'',
-         tipopersona:'',
-         departamentoId:0 
+         estadoId: '',
+         correo: '',
+         sexo: '',
+         tipoPersonaId: '',
+         departamentoId: 0
       })
       setErrores({})
    }
    const peticionPost = e => {
       e.preventDefault()
-      validarForm(persona)
-      if (Object.keys(errores).length === 0) {
-         registrarPersona(persona).then(respuesta => {
-            if (respuesta.status === 200) {
-               dispatch({
-                  type: 'OPEN_SNACKBAR',
-                  openMensaje: {
-                     open: true,
-                     mensaje: "Persona registrada correctamente",
-                     severity: 'success'
-                  }
-               })
-               abrirCerrarModalInsertar()
-               limpiarForm()
-               peticionGet()
-            } else {
-               dispatch({
-                  type: 'OPEN_SNACKBAR',
-                  openMensaje: {
-                     open: true,
-                     mensaje: "Error al guardar la Persona\n Detalles del error : " + Object.values(respuesta.response.data.errores),
-                     severity: 'error'
-                  }
-               })
-            }
-         })
-      }
+      // validarForm(persona)
+      // if (Object.keys(errores).length === 0) {
+      //    registrarPersona(persona).then(respuesta => {
+      //       if (respuesta.status === 200) {
+      //          dispatch({
+      //             type: 'OPEN_SNACKBAR',
+      //             openMensaje: {
+      //                open: true,
+      //                mensaje: "Persona registrada correctamente",
+      //                severity: 'success'
+      //             }
+      //          })
+      //          abrirCerrarModalInsertar()
+      //          limpiarForm()
+      //          peticionGet()
+      //       } else {
+      //          dispatch({
+      //             type: 'OPEN_SNACKBAR',
+      //             openMensaje: {
+      //                open: true,
+      //                mensaje: "Error al guardar la Persona\n Detalles del error : " + Object.values(respuesta.response.data.errores),
+      //                severity: 'error'
+      //             }
+      //          })
+      //       }
+      //    })
+      // }
 
    }
    const peticionUnico = async (persona) => {
-      await consultarUnico(persona.personaId).then(respuesta => {
-         if (respuesta.status === 200) {
-            setPersona(respuesta.data)
-         } else {
-            dispatch({
-               type: 'OPEN_SNACKBAR',
-               openMensaje: {
-                  open: true,
-                  mensaje: "Error al consultar la persona",
-                  severity: 'error'
-               }
-            })
-         }
-      })
+      // await consultarUnico(persona.personaId).then(respuesta => {
+      //    if (respuesta.status === 200) {
+      //       setPersona(respuesta.data)
+      //    } else {
+      //       dispatch({
+      //          type: 'OPEN_SNACKBAR',
+      //          openMensaje: {
+      //             open: true,
+      //             mensaje: "Error al consultar la persona",
+      //             severity: 'error'
+      //          }
+      //       })
+      //    }
+      // })
    }
 
    const validarForm = (persona) => {
 
-      if (persona.personaId === '') {
+      if (persona.nroDocumento === '') {
          setErrores(anterior => ({
             ...anterior,
-            personaId: 'El campo es obligatorio'
+            nroDocumento: 'El campo es obligatorio'
          }))
       }
-      else if (!/^[0-9]+$/.test(persona.personaId)) {
+      else if (!/^[0-9]+$/.test(persona.nroDocumento)) {
          setErrores(anterior => ({
             ...anterior,
-            personaId: 'Debe ser numérico'
+            nroDocumento: 'Debe ser numérico'
          }))
       }
-      else if (persona.personaId.trim().length !== 3) {
+      else if (persona.nroDocumento.trim().length !== 8) {
          setErrores(anterior => ({
             ...anterior,
-            personaId: 'Debe tener 3 caracteres'
+            nroDocumento: 'Debe tener 8 caracteres'
          }))
       }
-      else delete errores.personaId
+      else delete errores.nroDocumento
 
 
-      if (departamento.doc === '') {
-         setErrores(anterior => ({
-            ...anterior,
-            doc: 'El campo es obligatorio'
-         }))
-      }
-      else if (!/^[0-9]+$/.test(departamento.doc)) {
-         setErrores(anterior => ({
-            ...anterior,
-            doc: 'Debe ser numérico'
-         }))
-      }
-      else if (departamento.doc.trim().length !== 8) {
-         setErrores(anterior => ({
-            ...anterior,
-            doc: 'Debe tener 8 caracteres'
-         }))
-      }
-      else delete errores.doc
-
-
-      if (departamento.telefono === '') {
+      if (persona.telefono === '') {
          setErrores(anterior => ({
             ...anterior,
             telefono: 'El campo es obligatorio'
          }))
       }
-      else if (!/^[0-9]+$/.test(departamento.telefono)) {
+      else if (!/^[0-9]+$/.test(persona.telefono)) {
          setErrores(anterior => ({
             ...anterior,
-             telefono: 'Debe ser numérico'
+            telefono: 'Debe ser numérico'
          }))
       }
-      else if (departamento.telefono.trim().length !== 8) {
+      else if (persona.telefono.trim().length !== 9) {
          setErrores(anterior => ({
             ...anterior,
             telefono: 'Debe tener 9 caracteres'
          }))
       }
       else delete errores.telefono
-
-      const handleCheck = e => {
-         const { name, value } = e.target
-         setPersona(anterior => ({
-            ...anterior,
-            [name]: value === 'false'
-         }))
-      }
-
-      const abrirCerrarModalInsertar = () => {
-         limpiarForm()
-         setModalInsertar(!modalInsertar);
-      }
-      const abrirCerrarModalEditar = () => {
-         setModalEditar(!modalEditar);
-      }
-      const abrirCerrarModalEliminar = () => {
-         setModalEliminar(!modalEliminar);
-      }
-      const abrirCerrarModalDetalle = () => {
-         setModalDetalle(!modalDetalle);
-      }
-      useEffect(() => {
-         peticionGet()
-      }, [])
-   
-
-   const PeticionGet = async () => {
-      
+   }
+   const handleChange = e => {
+      const { name, value } = e.target
+      setPersona(anterior => ({
+         ...anterior,
+         [name]: value
+      }))
+   }
+   const handleCheck = e => {
+      const { name, value } = e.target
+      setPersona(anterior => ({
+         ...anterior,
+         [name]: value === 'false'
+      }))
    }
 
-   const PeticionPost = async () => {
-      
+   const abrirCerrarModalInsertar = () => {
+      limpiarForm()
+      setModalInsertar(!modalInsertar);
    }
-   const PeticionPut = async () => {
-      // await axios.get(baseUrl)
-      //    .then(response => {
-      //       setPersona(response.persona);
-      //    })
+   const abrirCerrarModalEditar = () => {
+      setModalEditar(!modalEditar);
    }
-   const PeticionDelete = async () => {
-      // await axios.get(baseUrl)
-      //    .then(response => {
-      //       setPersona(response.persona);
-      //    })
+   const abrirCerrarModalEliminar = () => {
+      setModalEliminar(!modalEliminar);
    }
-  
+   const abrirCerrarModalDetalle = () => {
+      setModalDetalle(!modalDetalle);
+   }
+
+   useEffect(() => {
+      peticionGet()
+   }, [])
 
    const bodyInsertar = (
       <div className={styles.modal}>
@@ -247,13 +213,13 @@ function Persona() {
                   </Grid>
                   <Grid item xs={12} md={6}>
                      <TextField name="telefono" className={styles.inputMaterial} label="Telefono" onChange={handleChange} />
-                  </Grid> 
+                  </Grid>
                   <Grid item xs={12} md={6}>
                      <TextField name="estadoId" className={styles.inputMaterial} label="Estado ID" onChange={handleChange} />
                   </Grid>
                   <Grid item xs={12} md={6}>
                      <TextField name="correo" className={styles.inputMaterial} label="Correo" onChange={handleChange} />
-                  </Grid> 
+                  </Grid>
                   <Grid item xs={12} md={6}>
                      <TextField name="sexo" className={styles.inputMaterial} label="Sexo" onChange={handleChange} />
                   </Grid>
@@ -266,13 +232,13 @@ function Persona() {
                </Grid>
                <Grid container spacing={2} justifyContent="center">
                   <Grid item xs={6} md={6}>
-                     <Button type="submit" fullWidth variant="contained" size="large" color="primary" style={style.submit} onClick={() => PeticionPost()}>
+                     <Button type="submit" fullWidth variant="contained" size="large" color="primary" style={style.submit} onClick={() => peticionPost()}>
                         Guardar
                      </Button>
                   </Grid>
                   <Grid item xs={6} md={6}>
                      <Button type="submit" fullWidth variant="contained" size="large" color="secondary" style={style.submit} onClick={abrirCerrarModalInsertar}>Cancelar</Button>
-                     </Grid>
+                  </Grid>
                </Grid>
             </form>
          </Container>
@@ -280,11 +246,20 @@ function Persona() {
       </div>
    )
 
-   
+   const bodyEditar = (
+      <div className={styles.modal}>
+
+      </div>
+   )
+   const bodyEliminar = (
+      <div className={styles.modal}>
+
+      </div>
+   )
    return (
       <div className={styles.table}>
          <Grid container justify="flex-end">
-            <Button type="button"  variant="contained" size="large" color="primary" style={style.submit} onClick={abrirCerrarModalInsertar}>
+            <Button type="button" variant="contained" size="large" color="primary" style={style.submit} onClick={abrirCerrarModalInsertar}>
                Registrar
             </Button>
          </Grid>
@@ -331,22 +306,21 @@ function Persona() {
          </Modal>
 
          <Modal
-         open={modalEditar}
-         onClose={abrirCerrarModalEditar}>
+            open={modalEditar}
+            onClose={abrirCerrarModalEditar}>
             {bodyEditar}
          </Modal>
 
          <Modal
-         open={modalEliminar}
-         onClose={abrirCerrarModalEliminar}>
-          {bodyEliminar}
+            open={modalEliminar}
+            onClose={abrirCerrarModalEliminar}>
+            {bodyEliminar}
          </Modal>
       </div>
 
 
    );
-   }
-
 }
+
 export default Persona;
 

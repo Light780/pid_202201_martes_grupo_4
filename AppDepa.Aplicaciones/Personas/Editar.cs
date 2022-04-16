@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace AppDepa.Aplicaciones.Personas
 {
-    public class Actualizar
+    public class Editar
     {
         public class Ejecuta : IRequest<PersonaDto>
         {

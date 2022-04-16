@@ -41,7 +41,7 @@ function Departamento() {
       setPage(0);
    };
    const emptyRows = rowsPerPage - Math.min(rowsPerPage, listaDepa.length - page * rowsPerPage);
-   const peticionGet = (tipoDepaId) => {
+   const peticionGet = () => {
       listarDepartamento(tipoDepaFiltro).then(respuesta => {
          if (respuesta.status === 200) {
             setListaDepa(respuesta.data)
@@ -89,7 +89,7 @@ function Departamento() {
                })
                abrirCerrarModalInsertar()
                limpiarForm()
-               peticionGet(tipoDepaFiltro)
+               peticionGet()
             } else {
                dispatch({
                   type: 'OPEN_SNACKBAR',
@@ -120,7 +120,7 @@ function Departamento() {
                })
                abrirCerrarModalEditar()
                limpiarForm()
-               peticionGet(tipoDepaFiltro)
+               peticionGet()
             } else {
                dispatch({
                   type: 'OPEN_SNACKBAR',
@@ -149,7 +149,7 @@ function Departamento() {
             })
             abrirCerrarModalEliminar()
             limpiarForm()
-            peticionGet(tipoDepaFiltro)
+            peticionGet()
          } else {
             dispatch({
                type: 'OPEN_SNACKBAR',
@@ -286,7 +286,7 @@ function Departamento() {
       setModalDetalle(!modalDetalle);
    }
    useEffect(() => {
-      peticionGet(tipoDepaFiltro)
+      peticionGet()
    }, [tipoDepaFiltro])
 
    const bodyInsertar = (

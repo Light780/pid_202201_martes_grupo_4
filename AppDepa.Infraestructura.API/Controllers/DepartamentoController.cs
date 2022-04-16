@@ -21,10 +21,10 @@ namespace AppDepa.Infraestructura.API.Controllers
             return await mediator.Send(data);
         }
 
-        [HttpGet("consulta/{tipoDepaId}")]
-        public async Task<ActionResult<List<DepartamentoDto>>> ListarDepartamento(int tipoDepaId)
+        [HttpGet("consulta")]
+        public async Task<ActionResult<List<DepartamentoDto>>> ListarDepartamento([FromQuery] Consultar.ListaDepartamento data)
         {
-            return await mediator.Send(new Consultar.ListaDepartamento() { TipoDepaId = tipoDepaId });
+            return await mediator.Send(data);
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<Departamento>> ObtenerDepartamento(int id)

@@ -22,9 +22,9 @@ export const actualizarDepartamento = (departamento) => {
     })
 }
 
-export const listarDepartamento = (tipodepaId) => {
+export const listarDepartamento = (tipoDepaId) => {
     return new Promise((resolve, reject) => {
-        HttpClient.get(`Departamento/consulta/${tipodepaId}`).then(response => {
+        HttpClient.get(`Departamento/consulta`, {params: {tipoDepaId : tipoDepaId}}).then(response => {
             resolve(response)
         }).catch(e => resolve(e,reject))
     })
