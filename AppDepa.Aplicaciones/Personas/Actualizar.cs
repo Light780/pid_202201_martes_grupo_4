@@ -79,16 +79,15 @@ namespace AppDepa.Aplicaciones.Personas
             public class Handler : IRequestHandler<Ejecuta, PersonaDto>
             {
                 private readonly GestionDepartamentosContext context;
-                public Handler(GestionDepartamentosContext _context)
+                private readonly IUtils utils;
+
+                public Handler(GestionDepartamentosContext _context, IUtils _util)
                 {
                     this.context = _context;
-                }
-
-                private readonly IUtils utils;
-                public Handler(IUtils _util)
-                {
                     this.utils = _util;
                 }
+
+                
 
                 public async Task<PersonaDto> Handle(Ejecuta request, CancellationToken cancellationToken)
                 {
