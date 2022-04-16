@@ -15,10 +15,10 @@ namespace AppDepa.Infraestructura.API.Controllers
         {
             return await mediator.Send(data);
         }
-        [HttpGet("consulta/{departamentoId}")]
-        public async Task<ActionResult<List<MascotaDto>>> ListarMascotas(int departamentoId)
+        [HttpGet("consulta")]
+        public async Task<ActionResult<List<MascotaDto>>> ListarMascotas([FromQuery] Consultar.ListarMascotas data)
         {
-            return await mediator.Send(new Consultar.ListarMascotas() { DepartamentoId = departamentoId });
+            return await mediator.Send(data);
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<Mascota>> ObtenerMascota(int id)

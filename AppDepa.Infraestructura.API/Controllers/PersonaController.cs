@@ -15,14 +15,14 @@ namespace AppDepa.Infraestructura.API.Controllers
             return await mediator.Send(data);
         }
 
-        [HttpGet("{departamentoId}")]
-        public async Task<ActionResult<List<PersonaDto>>> ListarPersona(int departamentoId)
+        [HttpGet("consulta/")]
+        public async Task<ActionResult<List<PersonaDto>>> ListarPersona([FromQuery] Consultar.ListarPersonas data)
         {
-            return await mediator.Send(new Consultar.ListarPersonas() { DepartamentoId = departamentoId });
+            return await mediator.Send(data);
         }
 
         [HttpPut]
-        public async Task<ActionResult<PersonaDto>> ActualizarPersona(Actualizar.Ejecuta data)
+        public async Task<ActionResult<PersonaDto>> ActualizarPersona(Editar.Ejecuta data)
         {
             return await mediator.Send(data);
         }

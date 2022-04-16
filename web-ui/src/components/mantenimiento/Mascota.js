@@ -78,7 +78,7 @@ function Mascota() {
                })
                abrirCerrarModalInsertar()
                limpiarForm()
-               peticionGet(depaFiltro)
+               peticionGet()
             } else {
                dispatch({
                   type: 'OPEN_SNACKBAR',
@@ -109,7 +109,7 @@ function Mascota() {
                })
                abrirCerrarModalEditar()
                limpiarForm()
-               peticionGet(depaFiltro)
+               peticionGet()
             } else {
                dispatch({
                   type: 'OPEN_SNACKBAR',
