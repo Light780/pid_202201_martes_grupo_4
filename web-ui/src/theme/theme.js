@@ -1,4 +1,6 @@
 import {createTheme} from '@material-ui/core/styles'
+import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
+const breakpoints = createBreakpoints({})
 const theme = createTheme({
     palette:{
         primary:{
@@ -11,8 +13,10 @@ const theme = createTheme({
     overrides:{    
         MuiTableCell:{
             root:{
-                fontSize:'13px'
-            },
+                [breakpoints.up('md')]: {
+                    fontSize:'13px'            
+                }    
+            },            
             stickyHeader:{
                 fontWeight:"bold"
             }
