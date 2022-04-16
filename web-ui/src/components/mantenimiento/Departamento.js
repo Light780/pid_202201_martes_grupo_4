@@ -8,9 +8,11 @@ import SelectParametro from '../utils/SelectParametro';
 function Departamento() {
    const styles = useStyles();
    const [{ sesionUsuario }, dispatch] = useStateValue()
-   const [page, setPage] = useState(0);
-   const [rowsPerPage, setRowsPerPage] = useState(10);
+   const [page, setPage] = useState(0)
+   const [rowsPerPage, setRowsPerPage] = useState(10)
    const [listaDepa, setListaDepa] = useState([])
+   const [tipoDepaFiltro, setTipoDepaFiltro] = useState(0)
+   const [checkTipoDepaFiltro, setCheckTipoDepaFiltro] = useState(false)
    const [departamento, setDepartamento] = useState({
       departamentoId: 0,
       nroDepartamento: '',
@@ -24,7 +26,7 @@ function Departamento() {
       indPiscina: false,
       indPatio: false
 
-   })   
+   })
    const [errores, setErrores] = useState({})
    const [modalInsertar, setModalInsertar] = useState(false);
    const [modalEditar, setModalEditar] = useState(false);
@@ -39,8 +41,8 @@ function Departamento() {
       setPage(0);
    };
    const emptyRows = rowsPerPage - Math.min(rowsPerPage, listaDepa.length - page * rowsPerPage);
-   const peticionGet = () => {
-      listarDepartamento().then(respuesta => {
+   const peticionGet = (tipoDepaId) => {
+      listarDepartamento(tipoDepaFiltro).then(respuesta => {
          if (respuesta.status === 200) {
             setListaDepa(respuesta.data)
          } else {
@@ -87,7 +89,7 @@ function Departamento() {
                })
                abrirCerrarModalInsertar()
                limpiarForm()
-               peticionGet()
+               peticionGet(tipoDepaFiltro)
             } else {
                dispatch({
                   type: 'OPEN_SNACKBAR',
@@ -118,7 +120,7 @@ function Departamento() {
                })
                abrirCerrarModalEditar()
                limpiarForm()
-               peticionGet()
+               peticionGet(tipoDepaFiltro)
             } else {
                dispatch({
                   type: 'OPEN_SNACKBAR',
@@ -147,7 +149,7 @@ function Departamento() {
             })
             abrirCerrarModalEliminar()
             limpiarForm()
-            peticionGet()
+            peticionGet(tipoDepaFiltro)
          } else {
             dispatch({
                type: 'OPEN_SNACKBAR',
@@ -261,6 +263,15 @@ function Departamento() {
          [name]: value === 'false'
       }))
    }
+   const handleChangeFiltro = e => {
+      setTipoDepaFiltro(e.target.value);      
+   }
+   const handleCheckFiltro = e => {
+      setCheckTipoDepaFiltro(e.target.value === 'false');
+      if(e.target.value === 'true'){
+         setTipoDepaFiltro(0)
+      }
+   }
    const abrirCerrarModalInsertar = () => {
       limpiarForm()
       setModalInsertar(!modalInsertar);
@@ -275,8 +286,8 @@ function Departamento() {
       setModalDetalle(!modalDetalle);
    }
    useEffect(() => {
-      peticionGet()
-   }, [])
+      peticionGet(tipoDepaFiltro)
+   }, [tipoDepaFiltro])
 
    const bodyInsertar = (
       <div className={styles.modal}>
@@ -287,7 +298,7 @@ function Departamento() {
                   <Grid item xs={12} md={12}>
                      <TextField value={departamento.nroDepartamento} error={Boolean(errores?.nroDepartamento)} helperText={(errores?.nroDepartamento)} required name="nroDepartamento" className={styles.inputMaterial} label="Nro de Departamento" onChange={handleChange} />
                   </Grid>
-                  
+
                   <Grid item xs={12} md={6}>
                      <TextField value={departamento.tamano} error={Boolean(errores?.tamano)} helperText={(errores?.tamano)} required name="tamano" type="number" className={styles.inputMaterial} label="Area m2" onChange={handleChange} />
                   </Grid>
@@ -295,7 +306,8 @@ function Departamento() {
                      <SelectParametro concepto="TIPO_DEPA_ID" error={Boolean(errores?.tipoDepaId)}
                         errorMessage={(errores?.tipoDepaId)} name="tipoDepaId"
                         className={styles.inputMaterial} value={departamento.tipoDepaId}
-                        label="Tipo Departamento" onChange={handleChange} />
+                        label="Tipo Departamento" onChange={handleChange}
+                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
                      <SelectParametro concepto="ESTADO_ID" error={Boolean(errores?.estadoId)}
@@ -365,13 +377,15 @@ function Departamento() {
                      <SelectParametro concepto="TIPO_DEPA_ID" error={Boolean(errores?.tipoDepaId)}
                         errorMessage={(errores?.tipoDepaId)} name="tipoDepaId"
                         className={styles.inputMaterial} value={departamento.tipoDepaId}
-                        label="Tipo Departamento" onChange={handleChange} />
+                        label="Tipo Departamento" onChange={handleChange}
+                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
                      <SelectParametro concepto="ESTADO_ID" error={Boolean(errores?.estadoId)}
                         errorMessage={(errores?.estadoId)} name="estadoId"
                         className={styles.inputMaterial} value={departamento.estadoId}
-                        label="Estado" onChange={handleChange} />
+                        label="Estado" onChange={handleChange}
+                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
                      <TextField error={Boolean(errores?.cantidadHabitaciones)} helperText={(errores?.cantidadHabitaciones)} name="cantidadHabitaciones" className={styles.inputMaterial} label="CantHabitaciones" onChange={handleChange} value={departamento && departamento.cantidadHabitaciones}></TextField>
@@ -421,7 +435,7 @@ function Departamento() {
    const bodyEliminar = (
       <div className={styles.modal}>
          <Container component="main" maxWidth="md" justifyContent="center">
-            <Typography className={styles.modalTitle} component="h1" variant="h5" align="center">Estás seguro de eliminar el departamento</Typography>            
+            <Typography className={styles.modalTitle} component="h1" variant="h5" align="center">Estás seguro de eliminar el departamento</Typography>
             <Typography className={styles.modalTitle} component="h1" variant="h5" align="center"><b>{departamento.nroDepartamento}</b></Typography>
             <Grid container spacing={2} justifyContent="center">
                <Grid item xs={6} md={6}>
@@ -526,10 +540,28 @@ function Departamento() {
                   </Grid>
                </Paper>
                <Paper className={styles.paperBody}>
-                  <Grid container justifyContent="flex-start">
-                     <Button type="button" variant="contained" size="large" color="primary" style={style.submit} onClick={abrirCerrarModalInsertar}>
-                        Registrar
-                     </Button>
+                  <Grid container spacing={2} justifyContent="flex-start">
+                     <Grid item container xs={6} md={2} >                        
+                        <Grid item xs={10} md={10}>
+                           <SelectParametro concepto="TIPO_DEPA_ID"
+                              className={styles.inputMaterial}
+                              label="Filtro Tipo Departamento" onChange={handleChangeFiltro}
+                              disabled={!checkTipoDepaFiltro}
+                              value={tipoDepaFiltro}
+                           />
+                        </Grid>
+                        <Grid item xs={2} md={2}>
+                           <Checkbox checked={checkTipoDepaFiltro} className={styles.inputMaterial} style={style.checkFiltro}
+                           onChange={handleCheckFiltro} color='primary' value={checkTipoDepaFiltro} />
+                        </Grid>
+                     </Grid>
+                     <Grid item container xs={6} md={10}>
+                        <Grid container justifyContent="flex-end">
+                           <Button type="button" variant="contained" size="large" color="primary" style={style.submit} onClick={abrirCerrarModalInsertar}>
+                              Registrar
+                           </Button>
+                        </Grid>
+                     </Grid>
                   </Grid>
                   <TableContainer className={styles.table}>
                      <Table stickyHeader>

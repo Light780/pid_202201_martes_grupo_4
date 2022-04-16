@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FormHelperText, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
 import { listarParametro } from '../../actions/UtilsAction';
-const SelectParametro = ({ name, value, onChange, className, label, error, errorMessage, concepto }) => {
+const SelectParametro = ({ name, value, onChange, className, label, error, errorMessage, concepto, disabled=false }) => {
     const [parametros, setParametros] = useState([])
     const [isLoading, setLoading] = useState(true);
     const listarParametrosSelect = () => {
@@ -17,9 +17,9 @@ const SelectParametro = ({ name, value, onChange, className, label, error, error
         return <div className="App">Cargando...</div>;
     }
     return (
-        <FormControl className={className} error={error}>
+        <FormControl className={className} error={error} required>
             <InputLabel id="seleccionarLabel">{label}</InputLabel>
-            <Select labelId="seleccionarLabel" value={value} onChange={onChange} name={name} >
+            <Select disabled={disabled} labelId="seleccionarLabel" value={value} onChange={onChange} name={name} >
                 <MenuItem value="0">
                     <em>Seleccione una opción</em>
                 </MenuItem>

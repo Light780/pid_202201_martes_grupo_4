@@ -11,10 +11,13 @@ using System.Threading.Tasks;
 namespace AppDepa.Aplicaciones.Mascotas
 {
     public class Consultar
-    {
-        public class Ejecuta : IRequest<List<MascotaDto>> { }
+    {        
+        public class ListarMascotas : IRequest<List<MascotaDto>>
+        {
+            public int DepartamentoId { get; set; }
+        }
 
-        public class Handler : IRequestHandler<Ejecuta, List<MascotaDto>>
+        public class Handler : IRequestHandler<ListarMascotas, List<MascotaDto>>
         {
             private readonly GestionDepartamentosContext context;
             private readonly IUtils utils;
@@ -23,12 +26,12 @@ namespace AppDepa.Aplicaciones.Mascotas
                 this.context = _context;
                 this.utils = _utils;
             }
-
-            public async Task<List<MascotaDto>> Handle(Ejecuta request, CancellationToken cancellationToken)
+            public async Task<List<MascotaDto>> Handle(ListarMascotas request, CancellationToken cancellationToken)
             {
                 var query = from m in context.Mascota
                             join d in context.Departamento on m.DepartamentoId equals d.DepartamentoId
                             orderby m.MascotaId
+                            where (request.DepartamentoId == 0 || m.DepartamentoId == request.DepartamentoId)
                             select new MascotaDto
                             {
                                 MascotaId = m.MascotaId,

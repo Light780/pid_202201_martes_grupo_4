@@ -3,10 +3,7 @@ using AppDepa.Aplicaciones.Dto;
 using AppDepa.Dominio;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AppDepa.Infraestructura.API.Controllers
@@ -24,10 +21,10 @@ namespace AppDepa.Infraestructura.API.Controllers
             return await mediator.Send(data);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<DepartamentoDto>>> ListarDepartamento()
+        [HttpGet("consulta/{tipoDepaId}")]
+        public async Task<ActionResult<List<DepartamentoDto>>> ListarDepartamento(int tipoDepaId)
         {
-            return await mediator.Send(new Consultar.ListaDepartamento());
+            return await mediator.Send(new Consultar.ListaDepartamento() { TipoDepaId = tipoDepaId });
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<Departamento>> ObtenerDepartamento(int id)
