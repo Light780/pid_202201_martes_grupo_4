@@ -42,12 +42,7 @@ namespace AppDepa.Aplicaciones.Mascotas
                 this.context = _context;
             }
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
-            {
-                var mascota = await context.Mascota.Where(x => x.MascotaId.Equals(request.MascotaId)).AnyAsync();
-                if (mascota)
-                {
-                    throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Ya exite la Mascota" });
-                }
+            {                
                 Mascota masc = new Mascota()
                 {
                     MascotaId = request.MascotaId,
@@ -61,7 +56,7 @@ namespace AppDepa.Aplicaciones.Mascotas
                 {
                     return Unit.Value;
                 }
-                throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al registrar la Mascota" });
+                throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al registrar Mascota" });
             }
         }
     }
