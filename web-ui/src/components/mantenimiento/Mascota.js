@@ -168,59 +168,42 @@ function Mascota() {
       })
    }
    const validarForm = (mascota) => {
-
-      if (mascota.nombreMascota === '') {
-         setErrores(anterior => ({
-            ...anterior,
-            nombreMascota: 'El campo es obligatorio'
-         }))
+      const newErrors = {...errores}
+      if (mascota.nombreMascota === '') {         
+         newErrors.nombreMascota = 'El campo es obligatorio'
       }
-      else if (mascota.nombreMascota.trim().length < 3) {
-         setErrores(anterior => ({
-            ...anterior,
-            nombreMascota: 'Debe tener almenos 3 caracteres'
-         }))
+      else if (mascota.nombreMascota.trim().length < 3) {         
+         newErrors.nombreMascota = 'Debe tener almenos 3 caracteres'
       }
-      else if (!/^[A-Za-z ]+$/.test(mascota.nombreMascota)) {
-         setErrores(anterior => ({
-            ...anterior,
-            nombreMascota: 'Debe contener letras'
-         }))
+      else if (!/^[A-Za-z ]+$/.test(mascota.nombreMascota)) {         
+         newErrors.nombreMascota = 'Debe contener letras'
       }
-      else delete errores.nombreMascota
+      else{
+         delete newErrors.nombreMascota
+      } 
 
-
-      if (mascota.sexo === '') {
-         setErrores(anterior => ({
-            ...anterior,
-            sexo: 'El campo es obligatorio'
-         }))
+      if (mascota.sexo === '') {         
+         newErrors.sexo = 'El campo es obligatorio'
       }
-      else if (!/^[A-Za-z ]+$/.test(mascota.sexo)) {
-         setErrores(anterior => ({
-            ...anterior,
-            sexo: 'Debe contener letras'
-         }))
+      else{
+         delete newErrors.sexo
+      } 
+
+      if (mascota.especieId <= 0) {         
+         newErrors.especieId = 'Debe seleccionar una especie'
       }
-      else delete errores.sexo
+      else{
+         delete newErrors.especieId
+      } 
 
-
-      if (mascota.especieId <= 0) {
-         setErrores(anterior => ({
-            ...anterior,
-            especieId: 'Debe seleccionar una especie'
-         }))
+      if (mascota.departamentoId <= 0) {         
+         newErrors.departamentoId = 'Debe seleccionar un departamento'
       }
-      else delete errores.especieId
+      else{
+         delete newErrors.departamentoId
+      } 
 
-      if (mascota.departamentoId <= 0) {
-         setErrores(anterior => ({
-            ...anterior,
-            departamentoId: 'Debe seleccionar un departamento'
-         }))
-      }
-      else delete errores.departamentoId
-
+      setErrores(newErrors)
    }
    const handleChange = e => {
       const { name, value } = e.target
@@ -432,6 +415,10 @@ function Mascota() {
                                  </TableCell>
                               </TableRow>
                            ))}
+                           {emptyRows > 0 && (
+                              <TableRow style={{ height: 53 * emptyRows }}>
+                                 <TableCell colSpan={6} />
+                              </TableRow>)}
                         </TableBody>
                      </Table>
                   </TableContainer>

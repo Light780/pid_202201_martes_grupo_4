@@ -179,75 +179,56 @@ function Departamento() {
       })
    }
    const validarForm = (departamento) => {
+      const newErrors = {...errores}
 
-      if (departamento.nroDepartamento === '') {
-         setErrores(anterior => ({
-            ...anterior,
-            nroDepartamento: 'El campo es obligatorio'
-         }))
+      if (departamento.nroDepartamento === '') {         
+         newErrors.nroDepartamento = 'El campo es obligatorio'
       }
-      else if (!/^[0-9]+$/.test(departamento.nroDepartamento)) {
-         setErrores(anterior => ({
-            ...anterior,
-            nroDepartamento: 'Debe ser numérico'
-         }))
+      else if (!/^[0-9]+$/.test(departamento.nroDepartamento)) {         
+         newErrors.nroDepartamento = 'Debe ser numérico'
       }
-      else if (departamento.nroDepartamento.trim().length !== 3) {
-         setErrores(anterior => ({
-            ...anterior,
-            nroDepartamento: 'Debe tener 3 caracteres'
-         }))
+      else if (departamento.nroDepartamento.trim().length !== 3) {         
+         newErrors.nroDepartamento = 'Debe tener 3 caracteres'
       }
-      else delete errores.nroDepartamento
+      else{
+         delete newErrors.nroDepartamento
+      } 
 
-
-      if (departamento.tamano === '') {
-         setErrores(anterior => ({
-            ...anterior,
-            tamano: 'El campo es obligatorio'
-         }))
+      if (departamento.tamano === '') {         
+         newErrors.tamano = 'El campo es obligatorio'
       }
-      else if (!/^[0-9.]+$/.test(departamento.tamano)) {
-         setErrores(anterior => ({
-            ...anterior,
-            tamano: 'Debe ser numérico'
-         }))
+      else if (!/^[0-9.]+$/.test(departamento.tamano)) {         
+         newErrors.tamano = 'Debe ser numérico'
       }
-      else if (departamento.tamano <= 0) {
-         setErrores(anterior => ({
-            ...anterior,
-            tamano: 'Debe ser mayor a 0'
-         }))
+      else if (departamento.tamano <= 0) {         
+         newErrors.tamano = 'Debe ser mayor a 0'
       }
-      else delete errores.tamano
+      else{
+         delete newErrors.tamano
+      } 
 
-
-      if (departamento.tipoDepaId <= 0) {
-         setErrores(anterior => ({
-            ...anterior,
-            tipoDepaId: 'Debe seleccionar un tipo'
-         }))
+      if (departamento.tipoDepaId <= 0) {         
+         newErrors.tipoDepaId = 'Debe seleccionar un tipo'
       }
-      else delete errores.tipoDepaId
+      else{
+         delete newErrors.tipoDepaId
+      } 
 
-
-      if (departamento.estadoId <= 0) {
-         setErrores(anterior => ({
-            ...anterior,
-            estadoId: 'Debe seleccionar un estado'
-         }))
+      if (departamento.estadoId <= 0) {         
+         newErrors.estadoId = 'Debe seleccionar un estado'
       }
-      else delete errores.estadoId
+      else{
+         delete newErrors.estadoId
+      } 
 
-
-      if (departamento.cantidadHabitaciones <= 0) {
-         setErrores(anterior => ({
-            ...anterior,
-            cantidadHabitaciones: 'Debe ser mayor a 0'
-         }))
+      if (departamento.cantidadHabitaciones <= 0) {         
+         newErrors.cantidadHabitaciones = 'Debe ser mayor a 0'
       }
-      else delete errores.cantidadHabitaciones
+      else{
+         delete newErrors.cantidadHabitaciones
+      }
 
+      setErrores(newErrors)
    }
    const handleChange = e => {
       const { name, value } = e.target

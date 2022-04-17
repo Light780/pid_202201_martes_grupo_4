@@ -1,16 +1,11 @@
 ﻿using AppDepa.Aplicaciones.Exceptions;
+using AppDepa.Dominio;
 using AppDepa.Infraestructura.Datos.Context;
 using FluentValidation;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using AppDepa.Dominio;
 
 namespace AppDepa.Aplicaciones.Mascotas
 {
@@ -18,7 +13,6 @@ namespace AppDepa.Aplicaciones.Mascotas
     {
         public class Ejecuta : IRequest
         {
-            public int MascotaId { get; set; }
             public string NombreMascota { get; set; }
             public string Sexo { get; set; }
             public int EspecieId { get; set; }
@@ -42,12 +36,12 @@ namespace AppDepa.Aplicaciones.Mascotas
                 this.context = _context;
             }
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
-            {                
+            {
                 Mascota masc = new Mascota()
                 {
-                    MascotaId = request.MascotaId,
                     NombreMascota = request.NombreMascota,
                     Sexo = request.Sexo,
+                    EspecieId = request.EspecieId,
                     DepartamentoId = request.DepartamentoId,
                 };
                 context.Mascota.Add(masc);

@@ -1,10 +1,7 @@
 ﻿using AppDepa.Dominio;
 using AppDepa.Infraestructura.Datos.Context;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppDepa.Aplicaciones.Utils
 {
@@ -15,8 +12,8 @@ namespace AppDepa.Aplicaciones.Utils
 
         public Utils(GestionDepartamentosContext _context)
         {
-           this.context=_context;
-           InicializarVariables();
+            this.context = _context;
+            InicializarVariables();
         }
         private void InicializarVariables()
         {
@@ -25,7 +22,7 @@ namespace AppDepa.Aplicaciones.Utils
 
         public string BuscarParametro(int param, string reporte)
         {
-            return ListaParametros.Where(x => x.ParametroId.Equals(reporte) && x.ParamId==param).FirstOrDefault().Descripcion ?? "";
+            return ListaParametros.Where(x => x.ParametroId.Equals(reporte) && x.ParamId == param).SingleOrDefault()?.Descripcion ?? "";
         }
     }
 }

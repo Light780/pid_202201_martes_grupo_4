@@ -20,7 +20,7 @@ const SelectParametro = ({ name, value, onChange, className, label, error, error
         <FormControl className={className} error={error} required>
             <InputLabel id="seleccionarLabel">{label}</InputLabel>
             <Select disabled={disabled} labelId="seleccionarLabel" value={value} onChange={onChange} name={name} >
-                <MenuItem value="0">
+                <MenuItem value="0" disabled={!disabled}>
                     <em>Seleccione una opción</em>
                 </MenuItem>
                 {parametros && parametros.map(parametro => (
