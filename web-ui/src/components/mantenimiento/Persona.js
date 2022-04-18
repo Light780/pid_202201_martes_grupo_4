@@ -21,7 +21,7 @@ function Persona() {
       correo: '',
       sexo: '',
       tipoPersonaId: '',
-      departamentoId: 0
+      personaId: 0
 
    })
    const [errores, setErrores] = useState({})
@@ -199,23 +199,28 @@ function Persona() {
             <Typography className={styles.modalTitle} component="h1" variant="h5">Registrar Persona</Typography>
             <form className={styles.modalForm}>
                <Grid container spacing={2} justifyContent="center">
-                  <Grid item xs={12} md={12}>
-                     <TextField name="personaId" className={styles.inputMaterial} label="ID Persona" onChange={handleChange} />
-                  </Grid>
                   <Grid item xs={12} md={6}>
                      <TextField name="nombres" className={styles.inputMaterial} label="Nombres" onChange={handleChange} />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <TextField name="doc" className={styles.inputMaterial} label="Documnento " onChange={handleChange} />
+                     <TextField name="doc" className={styles.inputMaterial} label="Documento " onChange={handleChange} />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <TextField name="tipodoc" className={styles.inputMaterial} label="Tipo Documento" onChange={handleChange} />
+                     <SelectParametro concepto="TIPO_DOC_ID" error={Boolean(errores?.tipoDocumentoId)}
+                        errorMessage={(errores?.tipoDocumentoId)} name="tipoDocumentoId"
+                        className={styles.inputMaterial} value={persona.tipoDocumentoId}
+                        label="Tipo Documento" onChange={handleChange}
+                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
                      <TextField name="telefono" className={styles.inputMaterial} label="Telefono" onChange={handleChange} />
                   </Grid>
-                  <Grid item xs={12} md={6}>
-                     <TextField name="estadoId" className={styles.inputMaterial} label="Estado ID" onChange={handleChange} />
+                                   <Grid item xs={12} md={6}>
+                     <SelectParametro concepto="ESTADO_ID" error={Boolean(errores?.estadoId)}
+                        errorMessage={(errores?.estadoId)} name="estadoId"
+                        className={styles.inputMaterial} value={persona.estadoId}
+                        label="Estado" onChange={handleChange}
+                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
                      <TextField name="correo" className={styles.inputMaterial} label="Correo" onChange={handleChange} />
@@ -224,10 +229,18 @@ function Persona() {
                      <TextField name="sexo" className={styles.inputMaterial} label="Sexo" onChange={handleChange} />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <TextField name="tipopersona" className={styles.inputMaterial} label="Tipo Persona" onChange={handleChange} />
+                     <SelectParametro concepto="TIPO_PERSONA_ID" error={Boolean(errores?.tipoPersonaId)}
+                        errorMessage={(errores?.tipoPersonaId)} name="tipopersonaId"
+                        className={styles.inputMaterial} value={persona.tipoPersonaId}
+                        label="Tipo Persona" onChange={handleChange}
+                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                     <TextField name="departamentoId" className={styles.inputMaterial} label="Departamento ID" onChange={handleChange} />
+                     <SelectParametro concepto="DEPA_ID" error={Boolean(errores?.personaId)}
+                        errorMessage={(errores?.departamentoId)} name="departamentoId"
+                        className={styles.inputMaterial} value={persona.departamentoId}
+                        label="Departamento ID" onChange={handleChange}
+                     />
                   </Grid>
                </Grid>
                <Grid container spacing={2} justifyContent="center">
@@ -244,83 +257,271 @@ function Persona() {
          </Container>
 
       </div>
+
+      
    )
 
    const bodyEditar = (
       <div className={styles.modal}>
+         <Container component="main" maxWidth="md" justifyContentContent="center">
+            <Typography className={styles.modalTitle} component="h1" variant="h5">Editar Persona</Typography>
+            <form className={styles.modalForm}>
+               <Grid container spacing={2} justifyContent="center">
+                  <Grid item xs={12} md={12}>
+                     <TextField error={Boolean(errores?.nroPersona)} helperText={(errores?.nroPersona)} name="nombres" className={styles.inputMaterial} label="Nombres" onChange={handleChange} value={persona && persona.nombreCompleto}></TextField>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                     <TextField error={Boolean(errores?.documento)} helperText={(errores?.documento)} name="documento" className={styles.inputMaterial} label="Documento" onChange={handleChange} value={persona && persona.documento}></TextField>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                     <SelectParametro concepto="TIPO_DOC_ID" error={Boolean(errores?.tipoDocumentoId)}
+                        errorMessage={(errores?.tipoDocumentoId)} name="tipoDocId"
+                        className={styles.inputMaterial} value={persona.tipoDocumentoId}
+                        label="Tipo Documento" onChange={handleChange}
+                     />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                     <TextField error={Boolean(errores?.telefono)} helperText={(errores?.telefono)} name="telefono" className={styles.inputMaterial} label="Telefono" onChange={handleChange} value={persona && persona.telefono}></TextField>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                     <SelectParametro concepto="ESTADO_ID" error={Boolean(errores?.estadoId)}
+                        errorMessage={(errores?.estadoId)} name="estadoId"
+                        className={styles.inputMaterial} value={persona.estadoId}
+                        label="Estado" onChange={handleChange}
+                     />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                     <TextField error={Boolean(errores?.correo)} helperText={(errores?.correo)} name="correo" className={styles.inputMaterial} label="Correo" onChange={handleChange} value={persona && persona.correo}></TextField>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                     <TextField error={Boolean(errores?.sexo)} helperText={(errores?.sexo)} name="sexo" className={styles.inputMaterial} label="Sexo" onChange={handleChange} value={persona && persona.sexo}></TextField>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                     <SelectParametro concepto="TIPO_PERSONA_ID" error={Boolean(errores?.tipoPersonaId)}
+                        errorMessage={(errores?.tipoPersonaId)} name="tipopersonaId"
+                        className={styles.inputMaterial} value={persona.tipoPersonaId}
+                        label="Tipo Persona" onChange={handleChange}
+                     />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                     <SelectParametro concepto="DEPA_ID" error={Boolean(errores?.departamentoId)}
+                        errorMessage={(errores?.departamentoId)} name="tipopersonaId"
+                        className={styles.inputMaterial} value={persona.departamentoId}
+                        label="Departamento ID" onChange={handleChange}
+                     />
+                  </Grid>
+               </Grid>
+               <Grid container spacing={2} justifyContent="center">
+                  <Grid item xs={6} md={6}>
+                     <Button type="submit" fullWidth variant="contained" size="large" color="primary" style={style.submit} onClick={peticionPut}>
+                        Guardar
+                     </Button>
+                  </Grid>
+                  <Grid item xs={6} md={6}>
+                     <Button type="button" fullWidth variant="contained" size="large" color="secondary" style={style.submit} onClick={abrirCerrarModalEditar}>Cancelar</Button>
+                  </Grid>
+               </Grid>
+            </form>
+         </Container>
 
       </div>
    )
    const bodyEliminar = (
       <div className={styles.modal}>
+      <Container component="main" maxWidth="md" justifyContent="center">
+         <Typography className={styles.modalTitle} component="h1" variant="h5" align="center">Estás seguro de eliminar la Persona</Typography>
+         <Typography className={styles.modalTitle} component="h1" variant="h5" align="center"><b>{persona.nroDocumento}</b></Typography>
+         <Grid container spacing={2} justifyContent="center">
+            <Grid item xs={6} md={6}>
+               <Button fullWidth variant="contained" size="large" style={style.submit} color="secondary" onClick={peticionDelete}>Si</Button>
+            </Grid>
+            <Grid item xs={6} md={6}>
+               <Button fullWidth variant="contained" size="large" style={style.submit} onClick={abrirCerrarModalEliminar}>No</Button>
+            </Grid>
+         </Grid>
+      </Container>
+   </div>
+   )
 
+   const bodyDetalle = (
+      <div className={styles.modal}>
+         <Container component="main" maxWidth="md" justifyContent="center">
+            <Typography className={styles.modalTitle} component="h1" variant="h5">Detalle Persona</Typography>
+            <div style={style.detail}>
+               <Grid container spacing={2} justifyContent="center">
+                  <Grid item xs={6} md={6}>
+                     <Typography align="center" variant='h6' component='h2'>Nombres </Typography>
+                  </Grid>
+                  <Grid item xs={6} md={6}>
+                     <Typography align="center" variant='h6' component='h2'>{persona.nombreCompleto}</Typography>
+                  </Grid>
+                  <Grid item xs={6} md={6}>
+                     <Typography align="center" variant='h6' component='h2'>Documento</Typography>
+                  </Grid>
+                  <Grid item xs={6} md={6}>
+                     <Typography align="center" variant='h6' component='h2'>{persona.documento}</Typography>
+                  </Grid>
+                  <Grid item xs={6} md={6}>
+                     <Typography align="center" variant='h6' component='h2'>Telefono</Typography>
+                  </Grid>
+                  <Grid item xs={6} md={6}>
+                     <Typography align="center" variant='h6' component='h2'>{persona.telefono}</Typography>
+                  </Grid>
+                  <Grid item xs={6} md={6}>
+                     <Typography align="center" variant='h6' component='h2'>Correo</Typography>
+                  </Grid>
+                  <Grid item xs={6} md={6}>
+                     <Typography align="center" variant='h6' component='h2'>{persona.correo}</Typography>
+                  </Grid>
+                  <Grid item xs={6} md={6}>
+                     <Typography align="center" variant='h6' component='h2'>Sexo</Typography>
+                  </Grid>
+                  <Grid item xs={6} md={6}>
+                     <Typography align="center" variant='h6' component='h2'>{persona.sexo}</Typography>
+                  </Grid>
+                  </Grid>
+               <Grid container spacing={2} justifyContent="center">
+                  <Grid item xs={12} md={12}>
+                     <Button type="button" fullWidth variant="contained" size="large" color="secondary" style={style.submit} onClick={abrirCerrarModalDetalle}>Cerrar</Button>
+                  </Grid>
+               </Grid>
+            </div>
+         </Container>
       </div>
    )
+
    return (
-      <div className={styles.table}>
-         <Grid container justify="flex-end">
-            <Button type="button" variant="contained" size="large" color="primary" style={style.submit} onClick={abrirCerrarModalInsertar}>
-               Registrar
-            </Button>
-         </Grid>
-         <TableContainer component={Paper}>
-            <Table>
-               <TableHead>
-                  <TableRow>
-                     <TableCell>Persona ID</TableCell>
-                     <TableCell>Nombres</TableCell>
-                     <TableCell>Documento</TableCell>
-                     <TableCell>Tipo Documento</TableCell>
-                     <TableCell>Telefono</TableCell>
-                     <TableCell>Estado </TableCell>
-                     <TableCell>Correo </TableCell>
-                     <TableCell>Sexo </TableCell>
-                     <TableCell>Tipo Persona </TableCell>
-                     <TableCell>Departamento ID </TableCell>
-                     <TableCell>Acciones</TableCell>
-                  </TableRow>
-               </TableHead>
+      <React.Fragment>
+         <div className={styles.crud}>
+            <Paper>
+               <Paper className={styles.paperTitle}>
+                  <Grid container justifyContent="flex-start">
+                     <Typography component="h5" variant="h5" style={style.crudTitle}>
+                        Persona
+                     </Typography>
+                  </Grid>
+               </Paper>
+               <Paper className={styles.paperBody}>
+                  <Grid container spacing={2} justifyContent="flex-start">
+                     <Grid item container xs={6} md={2} >                        
+                        <Grid item xs={10} md={10}>
+                           <SelectParametro concepto="DOCUMENTO"
+                              className={styles.inputMaterial}
+                              label="Filtro Tipo Documento" onChange={handleChangeFiltro}
+                              disabled={!checkTipoDocumentoFiltro}
+                              value={checkTipoDocumentoFiltro}
+                           />
+                        </Grid>
+                        <Grid item xs={2} md={2}>
+                           <Checkbox checked={checkTipoDocumentoFiltro} className={styles.inputMaterial} style={style.checkFiltro}
+                           onChange={handleCheckFiltro} color='primary' value={checkTipoDocumentoFiltro} />
+                        </Grid>
+                     </Grid>
+                     <Grid item container xs={6} md={10}>
+                        <Grid container justifyContent="flex-end">
+                           <Button type="button" variant="contained" size="large" color="primary" style={style.submit} onClick={abrirCerrarModalInsertar}>
+                              Registrar
+                           </Button>
+                        </Grid>
+                     </Grid>
+                  </Grid>
+                  <TableContainer className={styles.table}>
+                     <Table stickyHeader>
+                        <TableHead>
+                           <TableRow>
+                              <TableCell align='center'>Nombres</TableCell>
+                              <TableCell align='center'>Documento</TableCell>
+                              <Hidden mdDown>
+                                 <TableCell align='center'>Telefono</TableCell>
+                                 <TableCell align='center'>Correo</TableCell>
+                              </Hidden>
+                              <TableCell align='center'>Estado</TableCell>
+                              <TableCell align='center'>Departamento ID</TableCell>
+                              <TableCell align='center'>Acciones</TableCell>
+                           </TableRow>
+                        </TableHead>
 
-               <TableBody>
-                  <TableRow key={1}>
-                     <TableCell>{1}</TableCell>
-                     <TableCell>{3}</TableCell>
-                     <TableCell>{'Alan Becker'}</TableCell>
-                     <TableCell>{250}</TableCell>
-                     <TableCell>{'Activo'}</TableCell>
-                     <TableCell>{15}</TableCell>
-                     <TableCell>
-                        <Edit />
-                        &nbsp;&nbsp;&nbsp;
-                        <Delete />
-                     </TableCell>
-                  </TableRow>
-               </TableBody>
-            </Table>
-         </TableContainer>
+                        <TableBody>
+                           {listaPersona.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((persona, index) => (
+                              <TableRow key={persona.departamentoId} style={index % 2 ? { background: "#f5f5f5" } : { background: "white" }}>
+                                 <TableCell size="small" align='center'>{persona.nombreCompleto}</TableCell>
+                                 <TableCell size="small" align='center'>{persona.documento}</TableCell>
+                                 <Hidden mdDown>
+                                    <TableCell size="small" align='center'>{persona.telefono}</TableCell>
+                                    <TableCell size="small" align='center'>{persona.correo}</TableCell>
+                                 </Hidden>
+                                 <TableCell size="small" align='center'>{persona.estado}</TableCell>
+                                 <TableCell size="small" align='center'>{persona.departamentoId}</TableCell>
+                                 <TableCell size="small" align='center'>
+                                    <IconButton color="primary" component="span" size="medium" onClick={async () => {
+                                       limpiarForm();
+                                       await peticionUnico(persona);
+                                       abrirCerrarModalEditar();
+                                    }}>
+                                       <Edit />
+                                    </IconButton>
+                                    <IconButton color="default" component="span" size="medium" onClick={() => {
+                                       limpiarForm(); setPersona(persona); abrirCerrarModalDetalle()
+                                    }}>
+                                       <Info />
+                                    </IconButton>
+                                    <IconButton color="secondary" component="span" size="medium" onClick={() => {
+                                       limpiarForm();
+                                       setPersona(persona);
+                                       abrirCerrarModalEliminar()
+                                    }}
+                                    >
+                                       <Delete />
+                                    </IconButton>
+                                 </TableCell>
+                              </TableRow>
+                           ))}
+                           {emptyRows > 0 && (
+                              <TableRow style={{ height: 53 * emptyRows }}>
+                                 <TableCell colSpan={6} />
+                              </TableRow>)}
+                        </TableBody>
+                     </Table>
+                  </TableContainer>
+                  <TablePagination
+                     rowsPerPageOptions={[5, 10, 25]}
+                     component="div"
+                     count={listaPersona.length}
+                     rowsPerPage={rowsPerPage}
+                     page={page}
+                     onChangePage={handleChangePage}
+                     onChangeRowsPerPage={handleChangeRowsPerPage}
+                  />
+               </Paper>
+            </Paper>
+            <Modal
+               open={modalInsertar}
+               onClose={abrirCerrarModalInsertar} disableBackdropClick >
+               {bodyInsertar}
+            </Modal>
 
-         <Modal
-            open={modalInsertar}
-            onClose={abrirCerrarModalInsertar}>
-            {bodyInsertar}
-         </Modal>
+            <Modal
+               open={modalEditar}
+               onClose={abrirCerrarModalEditar} disableBackdropClick >
+               {bodyEditar}
+            </Modal>
 
-         <Modal
-            open={modalEditar}
-            onClose={abrirCerrarModalEditar}>
-            {bodyEditar}
-         </Modal>
-
-         <Modal
-            open={modalEliminar}
-            onClose={abrirCerrarModalEliminar}>
-            {bodyEliminar}
-         </Modal>
-      </div>
-
-
+            <Modal
+               open={modalEliminar}
+               onClose={abrirCerrarModalEliminar} disableBackdropClick >
+               {bodyEliminar}
+            </Modal>
+            <Modal
+               open={modalDetalle}
+               onClose={abrirCerrarModalDetalle} disableBackdropClick >
+               {bodyDetalle}
+            </Modal>
+         </div>
+      </React.Fragment >
    );
-}
+
+   
+   }
 
 export default Persona;
 
