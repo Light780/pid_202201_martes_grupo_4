@@ -48,7 +48,7 @@ function App() {
               <Route exact path='/' element= {<SecurePath><Inicio/></SecurePath>}/>              
               <Route exact path='/auth/perfil' element= {<SecurePath><PerfilUsuario/></SecurePath>}/>
               <Route exact path='/mantenimiento/departamento' element= {<SecurePath><Departamento/></SecurePath>}/>
-              <Route exact path='/mantenimiento/propietario' element= {<SecurePath><Persona/></SecurePath>}/>      
+              <Route exact path='/mantenimiento/persona' element= {<SecurePath><Persona/></SecurePath>}/>      
               <Route exact path='/mantenimiento/mascota' element= {<SecurePath><Mascota/></SecurePath>}/>                          
             </Routes>
           </Grid>

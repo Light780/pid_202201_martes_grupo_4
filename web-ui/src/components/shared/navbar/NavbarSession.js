@@ -6,37 +6,8 @@ import { LeftMenu } from './LeftMenu';
 import { RightMenu } from './RightMenu';
 import { useStateValue } from '../../../context/store';
 import { blobConverter } from '../../../services/Utils';
-const useStyles = makeStyles((theme) => ({
-    seccionDesktop: {
-        display: 'none',
-        [theme.breakpoints.up("md")]: {
-            display: 'flex'
-        }
-    },
-    seccionMobil: {
-        display: 'flex',
-        [theme.breakpoints.up("md")]: {
-            display: 'none'
-        }
-    },
-    grow: {
-        flexGrow: 1,
+import useStyles from '../../tools/style';
 
-    },
-    avatarSize: {
-        width: 40,
-        height: 40
-    },
-    list: {
-        width: 250
-    },
-    listItemText: {
-        fontSize: '14px',
-        fontWeight: 600,
-        paddingLeft: "15px",
-        color: "#212121"
-    }
-}))
 function NavbarSession() {
     const classes = useStyles()
     const navigate = useNavigate()
@@ -61,8 +32,8 @@ function NavbarSession() {
     return (
         <React.Fragment>
             <Drawer open={openLeftMenu} onClose={openCloseLeftMenu} anchor="left">
-                <div className={classes.list} onKeyDown={openCloseLeftMenu} onClick={openCloseLeftMenu}>
-                    <LeftMenu classes={classes} />
+                <div className={classes.list} onKeyDown={openCloseLeftMenu}>
+                    <LeftMenu classes={classes} onClick={openCloseLeftMenu}/>
                 </div>
             </Drawer>
             <Drawer open={openRightMenu} onClose={openCloseRightMenu} anchor="right">

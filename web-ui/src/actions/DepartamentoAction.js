@@ -4,8 +4,7 @@ export const registrarDepartamento = (departamento) => {
     return new Promise((resolve,reject) => {
         HttpClient.post('Departamento',departamento).then(response => {
             resolve(response)
-        }).catch( e => {
-            console.log(e)
+        }).catch( e => {            
             resolve(e,reject)
         })
     })
@@ -15,8 +14,7 @@ export const actualizarDepartamento = (departamento) => {
     return new Promise((resolve, reject) => {
         HttpClient.put('Departamento',departamento).then(response => {
             resolve(response)
-        }).catch(e => {
-            console.log(e)
+        }).catch(e => {            
             resolve(e,reject)
         })
     })

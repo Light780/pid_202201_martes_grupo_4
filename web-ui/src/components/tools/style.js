@@ -38,6 +38,45 @@ export const style = {
     }  
 }
 export const useStyles = makeStyles((theme) => ({
+    seccionDesktop: {
+        display: 'none',
+        [theme.breakpoints.up("md")]: {
+            display: 'flex'
+        }
+    },
+    seccionMobil: {
+        display: 'flex',
+        [theme.breakpoints.up("md")]: {
+            display: 'none'
+        }
+    },
+    grow: {
+        flexGrow: 1,
+
+    },
+    avatarSize: {
+        width: 40,
+        height: 40
+    },
+    list: {
+        width: 250
+    },
+    listItemText: {
+        fontSize: '14px',
+        fontWeight: 600,        
+        color: "black"
+    },
+    iconMenu:{
+      paddingRight:10  
+    },
+    menu:{
+        backgroundColor:theme.palette.primary.main,
+        color:theme.palette.primary.contrastText,        
+    },
+    subMenu:{
+        backgroundColor:"white",
+        color:"black"        
+    },
     modal: {
         position: 'absolute',
         width: 700,
@@ -45,7 +84,7 @@ export const useStyles = makeStyles((theme) => ({
             width: 500,
         },
         [theme.breakpoints.down("xs")]: {
-            width: 300,
+            width: 400,
         },
         backgroundColor: theme.palette.background.paper,
         border: '2px solid #000',
@@ -62,9 +101,9 @@ export const useStyles = makeStyles((theme) => ({
     inputMaterial:{
        width: '100%'
     },
-    crud:{
-        padding: 10, 
-        width: "100%"        
+    crud:{        
+        paddingTop:10,        
+        width: "100%"
     },     
     paperTitle:{
         backgroundColor: theme.palette.primary.main,
@@ -86,6 +125,6 @@ export const useStyles = makeStyles((theme) => ({
     },    
     modalTitle: {
         marginTop:5        
-    }    
+    }
  }));
 export default useStyles

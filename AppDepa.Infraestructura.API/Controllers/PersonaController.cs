@@ -23,7 +23,7 @@ namespace AppDepa.Infraestructura.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<PersonaDto>> ActualizarPersona(Editar.Ejecuta data)
+        public async Task<ActionResult<Unit>> ActualizarPersona(Editar.Ejecuta data)
         {
             return await mediator.Send(data);
         }

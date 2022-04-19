@@ -4,8 +4,7 @@ export const registrarMascota= (mascota) => {
     return new Promise((resolve,reject) => {
         HttpClient.post('Mascota',mascota).then(response => {
             resolve(response)
-        }).catch( e => {
-            console.log(e)
+        }).catch( e => {            
             resolve(e,reject)
         })
     })
@@ -15,8 +14,7 @@ export const actualizarMascota = (mascota) => {
     return new Promise((resolve, reject) => {
         HttpClient.put('Mascota',mascota).then(response => {
             resolve(response)
-        }).catch(e => {
-            console.log(e)
+        }).catch(e => {            
             resolve(e,reject)
         })
     })
