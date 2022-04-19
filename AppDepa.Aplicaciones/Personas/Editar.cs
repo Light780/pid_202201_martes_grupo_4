@@ -1,16 +1,11 @@
-﻿using AppDepa.Aplicaciones.Dto;
-using AppDepa.Aplicaciones.Exceptions;
+﻿using AppDepa.Aplicaciones.Exceptions;
 using AppDepa.Aplicaciones.Utils;
-using AppDepa.Dominio;
 using AppDepa.Infraestructura.Datos.Context;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,7 +13,7 @@ namespace AppDepa.Aplicaciones.Personas
 {
     public class Editar
     {
-        public class Ejecuta : IRequest<PersonaDto>
+        public class Ejecuta : IRequest
         {
             public int PersonaId { get; set; }
             public string NombreCompleto { get; set; }
@@ -48,18 +43,13 @@ namespace AppDepa.Aplicaciones.Personas
 
                 When(persona => persona.TipoDocumentoId == 1, () =>
                 {
-                    RuleFor(x => x.Documento).Length(8).WithMessage("El Nro Documento debe tener 8 caracteres");
-                });
-
-                When(persona => persona.TipoDocumentoId == 2, () =>
-                {
-                    RuleFor(x => x.Documento).Length(9).WithMessage("El Carnet de Extranjeria debe tener 9 caracteres");
+                    RuleFor(x => x.Documento).Length(8).WithMessage("El Documento debe tener 8 caracteres");
                 }).Otherwise(() =>
                 {
-                    RuleFor(x => x.Documento).Length(12).WithMessage("El Pasaporte debe tener 12 caracteres");
+                    RuleFor(x => x.Documento).Length(12).WithMessage("El Documento debe tener 12 caracteres");
                 });
 
-                RuleFor(x => x.Telefono).Length(9).WithMessage("El Telefono debe tener 9 caracteres");
+                RuleFor(x => x.Telefono).Length(7, 9).WithMessage("El Telefono debe tener 9 o 7 caracteres");
 
                 RuleFor(x => x.EstadoId).GreaterThan(0).WithMessage("El Estado es obligatorio");
 
@@ -76,7 +66,7 @@ namespace AppDepa.Aplicaciones.Personas
 
             }
 
-            public class Handler : IRequestHandler<Ejecuta, PersonaDto>
+            public class Handler : IRequestHandler<Ejecuta>
             {
                 private readonly GestionDepartamentosContext context;
                 private readonly IUtils utils;
@@ -87,9 +77,9 @@ namespace AppDepa.Aplicaciones.Personas
                     this.utils = _util;
                 }
 
-                
 
-                public async Task<PersonaDto> Handle(Ejecuta request, CancellationToken cancellationToken)
+
+                public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
                 {
                     var persona = await context.Persona.Where(x => x.PersonaId == request.PersonaId).SingleOrDefaultAsync();
                     // True si existe, false si no existe
@@ -100,14 +90,14 @@ namespace AppDepa.Aplicaciones.Personas
 
                     // valida documento existente en otra persona
                     var existeDocumento = await context.Persona.Where(x => x.Documento.Equals(request.Documento) && x.PersonaId != persona.PersonaId).AnyAsync();
-                    
+
                     if (existeDocumento)
                     {
                         throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "El documento ya se encuentra registrado" });
                     }
 
                     // valida correo existente en otra persona
-                    var existeCorreo = await context.Persona.Where(x => x.Correo.Equals(request.Correo) && x.PersonaId != persona.PersonaId).AnyAsync();                
+                    var existeCorreo = await context.Persona.Where(x => x.Correo.Equals(request.Correo) && x.PersonaId != persona.PersonaId).AnyAsync();
 
                     if (existeCorreo)
                     {
@@ -132,26 +122,14 @@ namespace AppDepa.Aplicaciones.Personas
                     persona.TipoPersonaId = request.TipoPersonaId;
                     persona.DepartamentoId = request.DepartamentoId;
 
+                    context.Persona.Update(persona);
                     var result = await context.SaveChangesAsync();
-                    
+
                     if (result > 0)
                     {
-                        return new PersonaDto()
-                        {
-                            PersonaId = persona.PersonaId,
-                            NombreCompleto = persona.NombreCompleto,
-                            Documento = persona.Documento,
-                            TipoDocumento = utils.BuscarParametro(persona.TipoDocumentoId, "TIPO_PERSONA_ID"),
-                            Telefono = persona.Telefono,
-                            Estado = utils.BuscarParametro(persona.EstadoId, "ESTADO_ID"),
-                            Correo = persona.Correo,
-                            Sexo = persona.Sexo,
-                            TipoPersona = utils.BuscarParametro(persona.TipoPersonaId, "TIPO_PERSONA_ID"),
-                            // Nro. Departamento
-                            Departamento = context.Departamento.Where(x => x.DepartamentoId == persona.DepartamentoId).SingleOrDefault().NroDepartamento
-                        };
+                        return Unit.Value;
                     }
-                    throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al registrar Persona" });
+                    throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al actualizar Persona" });
                 }
             }
         }

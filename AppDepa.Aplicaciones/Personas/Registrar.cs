@@ -5,10 +5,8 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,7 +15,7 @@ namespace AppDepa.Aplicaciones.Personas
     public class Registrar
     {
         public class Ejecuta : IRequest
-        {            
+        {
             public string NombreCompleto { get; set; }
             public string Documento { get; set; }
             public int TipoDocumentoId { get; set; }
@@ -25,7 +23,7 @@ namespace AppDepa.Aplicaciones.Personas
             public int EstadoId { get; set; }
             public string Correo { get; set; }
             public string Sexo { get; set; }
-            public int TipoPersonaId { get; set; }            
+            public int TipoPersonaId { get; set; }
             public int DepartamentoId { get; set; }
         }
         public class EjecutaValidacion : AbstractValidator<Ejecuta>
@@ -44,18 +42,13 @@ namespace AppDepa.Aplicaciones.Personas
 
                 When(persona => persona.TipoDocumentoId == 1, () =>
                 {
-                    RuleFor(x => x.Documento).Length(8).WithMessage("El Nro Documento debe tener 8 caracteres");
-                });
-
-                When(persona => persona.TipoDocumentoId == 2, () =>
-                {
-                    RuleFor(x => x.Documento).Length(9).WithMessage("El Carnet de Extranjeria debe tener 9 caracteres");
+                    RuleFor(x => x.Documento).Length(8).WithMessage("El Documento debe tener 8 caracteres");
                 }).Otherwise(() =>
                 {
-                    RuleFor(x => x.Documento).Length(12).WithMessage("El Pasaporte debe tener 12 caracteres");
+                    RuleFor(x => x.Documento).Length(12).WithMessage("El Documento debe tener 12 caracteres");
                 });
 
-                RuleFor(x => x.Telefono).Length(9).WithMessage("El Telefono debe tener 9 caracteres");
+                RuleFor(x => x.Telefono).Length(7, 9).WithMessage("El Telefono debe tener 9 o 7 caracteres");
 
                 RuleFor(x => x.EstadoId).GreaterThan(0).WithMessage("El Estado es obligatorio");
 
@@ -101,7 +94,7 @@ namespace AppDepa.Aplicaciones.Personas
                     };
                     context.Persona.Add(persona);
                     var result = await context.SaveChangesAsync();
-                    if(result > 0)
+                    if (result > 0)
                     {
                         return Unit.Value;
                     }

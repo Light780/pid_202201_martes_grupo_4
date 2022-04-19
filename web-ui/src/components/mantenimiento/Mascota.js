@@ -1,5 +1,5 @@
-import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, FormControlLabel, Hidden, IconButton } from '@material-ui/core';
-import { Edit, Delete, Info } from '@material-ui/icons/';
+import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, IconButton } from '@material-ui/core';
+import { Edit, Delete } from '@material-ui/icons/';
 import React, { useState, useEffect } from 'react';
 import { useStyles, style } from '../tools/style'
 import { useStateValue } from '../../context/store';
@@ -137,7 +137,7 @@ function Mascota() {
             })
             abrirCerrarModalEliminar()
             limpiarForm()
-            peticionGet(depaFiltro)
+            peticionGet()
          } else {
             dispatch({
                type: 'OPEN_SNACKBAR',
@@ -168,40 +168,40 @@ function Mascota() {
       })
    }
    const validarForm = (mascota) => {
-      const newErrors = {...errores}
-      if (mascota.nombreMascota === '') {         
+      const newErrors = { ...errores }
+      if (mascota.nombreMascota === '') {
          newErrors.nombreMascota = 'El campo es obligatorio'
       }
-      else if (mascota.nombreMascota.trim().length < 3) {         
+      else if (mascota.nombreMascota.trim().length < 3) {
          newErrors.nombreMascota = 'Debe tener almenos 3 caracteres'
       }
-      else if (!/^[A-Za-z ]+$/.test(mascota.nombreMascota)) {         
-         newErrors.nombreMascota = 'Debe contener letras'
+      else if (!/^[A-Za-z ]+$/.test(mascota.nombreMascota)) {
+         newErrors.nombreMascota = 'Debe contener solo letras'
       }
-      else{
+      else {
          delete newErrors.nombreMascota
-      } 
+      }
 
-      if (mascota.sexo === '') {         
+      if (mascota.sexo === '') {
          newErrors.sexo = 'El campo es obligatorio'
       }
-      else{
+      else {
          delete newErrors.sexo
-      } 
+      }
 
-      if (mascota.especieId <= 0) {         
+      if (mascota.especieId <= 0) {
          newErrors.especieId = 'Debe seleccionar una especie'
       }
-      else{
+      else {
          delete newErrors.especieId
-      } 
+      }
 
-      if (mascota.departamentoId <= 0) {         
+      if (mascota.departamentoId <= 0) {
          newErrors.departamentoId = 'Debe seleccionar un departamento'
       }
-      else{
+      else {
          delete newErrors.departamentoId
-      } 
+      }
 
       setErrores(newErrors)
    }
@@ -345,112 +345,114 @@ function Mascota() {
 
    return (
       <React.Fragment>
-         <div className={styles.crud}>
-            <Paper>
-               <Paper className={styles.paperTitle}>
-                  <Grid container justifyContent="flex-start">
-                     <Typography component="h5" variant="h5" style={style.crudTitle}>
-                        Mascota
-                     </Typography>
-                  </Grid>
-               </Paper>
-               <Paper className={styles.paperBody}>
-                  <Grid container spacing={2} justifyContent="flex-start">
-                     <Grid item container xs={6} md={2} >
-                        <Grid item xs={10} md={10}>
-                           <SelectDepartamento value={depaFiltro}
-                              label="Filtro Departamento"
-                              className={styles.inputMaterial}
-                              onChange={handleChangeFiltro}
-                              disabled={!checkDepaFiltro} />
+         <Container component="main" maxWidth={false}>
+            <div className={styles.crud}>
+               <Paper>
+                  <Paper className={styles.paperTitle}>
+                     <Grid container justifyContent="flex-start">
+                        <Typography component="h5" variant="h5" style={style.crudTitle}>
+                           Mascota
+                        </Typography>
+                     </Grid>
+                  </Paper>
+                  <Paper className={styles.paperBody}>
+                     <Grid container spacing={2} justifyContent="flex-start">
+                        <Grid item container xs={6} md={2} >
+                           <Grid item xs={10} md={10}>
+                              <SelectDepartamento value={depaFiltro}
+                                 label="Filtro Departamento"
+                                 className={styles.inputMaterial}
+                                 onChange={handleChangeFiltro}
+                                 disabled={!checkDepaFiltro} />
+                           </Grid>
+                           <Grid item xs={2} md={2}>
+                              <Checkbox checked={checkDepaFiltro} className={styles.inputMaterial} style={style.checkFiltro}
+                                 onChange={handleCheckFiltro} color='primary' value={checkDepaFiltro} />
+                           </Grid>
                         </Grid>
-                        <Grid item xs={2} md={2}>
-                           <Checkbox checked={checkDepaFiltro} className={styles.inputMaterial} style={style.checkFiltro}
-                              onChange={handleCheckFiltro} color='primary' value={checkDepaFiltro} />
+                        <Grid item container xs={6} md={10}>
+                           <Grid container justifyContent="flex-end">
+                              <Button type="button" variant="contained" size="large" color="primary" style={style.submit} onClick={abrirCerrarModalInsertar}>
+                                 Registrar
+                              </Button>
+                           </Grid>
                         </Grid>
                      </Grid>
-                     <Grid item container xs={6} md={10}>
-                        <Grid container justifyContent="flex-end">
-                           <Button type="button" variant="contained" size="large" color="primary" style={style.submit} onClick={abrirCerrarModalInsertar}>
-                              Registrar
-                           </Button>
-                        </Grid>
-                     </Grid>
-                  </Grid>
-                  <TableContainer className={styles.table}>
-                     <Table stickyHeader>
-                        <TableHead>
-                           <TableRow>
-                              <TableCell align='center'>Nombre</TableCell>
-                              <TableCell align='center'>Sexo</TableCell>
-                              <TableCell align='center'>Especie</TableCell>
-                              <TableCell align='center'>Departamento</TableCell>
-                              <TableCell align='center'>Acciones</TableCell>
-                           </TableRow>
-                        </TableHead>
-
-                        <TableBody>
-                           {listaMascota.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((mascota, index) => (
-                              <TableRow key={mascota.mascotaId} style={index % 2 ? { background: "#f5f5f5" } : { background: "white" }}>
-                                 <TableCell size="small" align='center'>{mascota.nombreMascota}</TableCell>
-                                 <TableCell size="small" align='center'>{mascota.sexo}</TableCell>
-                                 <TableCell size="small" align='center'>{mascota.especie}</TableCell>
-                                 <TableCell size="small" align='center'>{mascota.departamento}</TableCell>
-                                 <TableCell size="small" align='center'>
-                                    <IconButton color="primary" component="span" size="medium" onClick={async () => {
-                                       limpiarForm();
-                                       await peticionUnico(mascota);
-                                       abrirCerrarModalEditar();
-                                    }}>
-                                       <Edit />
-                                    </IconButton>
-                                    <IconButton color="secondary" component="span" size="medium" onClick={() => {
-                                       limpiarForm();
-                                       setMascota(mascota);
-                                       abrirCerrarModalEliminar()
-                                    }}
-                                    >
-                                       <Delete />
-                                    </IconButton>
-                                 </TableCell>
+                     <TableContainer className={styles.table}>
+                        <Table stickyHeader>
+                           <TableHead>
+                              <TableRow>
+                                 <TableCell align='center'>Nombre</TableCell>
+                                 <TableCell align='center'>Sexo</TableCell>
+                                 <TableCell align='center'>Especie</TableCell>
+                                 <TableCell align='center'>Departamento</TableCell>
+                                 <TableCell align='center'>Acciones</TableCell>
                               </TableRow>
-                           ))}
-                           {emptyRows > 0 && (
-                              <TableRow style={{ height: 53 * emptyRows }}>
-                                 <TableCell colSpan={6} />
-                              </TableRow>)}
-                        </TableBody>
-                     </Table>
-                  </TableContainer>
-                  <TablePagination
-                     rowsPerPageOptions={[5, 10, 25]}
-                     component="div"
-                     count={listaMascota.length}
-                     rowsPerPage={rowsPerPage}
-                     page={page}
-                     onChangePage={handleChangePage}
-                     onChangeRowsPerPage={handleChangeRowsPerPage}
-                  />
+                           </TableHead>
+
+                           <TableBody>
+                              {listaMascota.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((mascota, index) => (
+                                 <TableRow key={mascota.mascotaId} style={index % 2 ? { background: "#f5f5f5" } : { background: "white" }}>
+                                    <TableCell size="small" align='center'>{mascota.nombreMascota}</TableCell>
+                                    <TableCell size="small" align='center'>{mascota.sexo}</TableCell>
+                                    <TableCell size="small" align='center'>{mascota.especie}</TableCell>
+                                    <TableCell size="small" align='center'>{mascota.departamento}</TableCell>
+                                    <TableCell size="small" align='center'>
+                                       <IconButton color="primary" component="span" size="medium" onClick={async () => {
+                                          limpiarForm();
+                                          await peticionUnico(mascota);
+                                          abrirCerrarModalEditar();
+                                       }}>
+                                          <Edit />
+                                       </IconButton>
+                                       <IconButton color="secondary" component="span" size="medium" onClick={() => {
+                                          limpiarForm();
+                                          setMascota(mascota);
+                                          abrirCerrarModalEliminar()
+                                       }}
+                                       >
+                                          <Delete />
+                                       </IconButton>
+                                    </TableCell>
+                                 </TableRow>
+                              ))}
+                              {emptyRows > 0 && (
+                                 <TableRow style={{ height: 53 * emptyRows }}>
+                                    <TableCell colSpan={6} />
+                                 </TableRow>)}
+                           </TableBody>
+                        </Table>
+                     </TableContainer>
+                     <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]}
+                        component="div"
+                        count={listaMascota.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onChangePage={handleChangePage}
+                        onChangeRowsPerPage={handleChangeRowsPerPage}
+                     />
+                  </Paper>
                </Paper>
-            </Paper>
-            <Modal
-               open={modalInsertar}
-               onClose={abrirCerrarModalInsertar} disableBackdropClick >
-               {bodyInsertar}
-            </Modal>
+            </div>
+         </Container>
+         <Modal
+            open={modalInsertar}
+            onClose={abrirCerrarModalInsertar} disableBackdropClick >
+            {bodyInsertar}
+         </Modal>
 
-            <Modal
-               open={modalEditar}
-               onClose={abrirCerrarModalEditar} disableBackdropClick >
-               {bodyEditar}
-            </Modal>
+         <Modal
+            open={modalEditar}
+            onClose={abrirCerrarModalEditar} disableBackdropClick >
+            {bodyEditar}
+         </Modal>
 
-            <Modal
-               open={modalEliminar}
-               onClose={abrirCerrarModalEliminar} disableBackdropClick >
-               {bodyEliminar}
-            </Modal>
-         </div>
+         <Modal
+            open={modalEliminar}
+            onClose={abrirCerrarModalEliminar} disableBackdropClick >
+            {bodyEliminar}
+         </Modal>
       </React.Fragment >
    );
 }
