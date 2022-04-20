@@ -1,32 +1,30 @@
 ﻿using AppDepa.Aplicaciones.Exceptions;
+using AppDepa.Dominio;
 using AppDepa.Infraestructura.Datos.Context;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using AppDepa.Dominio;
 
 namespace AppDepa.Aplicaciones.Departamentos
 {
     public class Registrar
     {
         public class Ejecuta : IRequest
-        {            
+        {
             public string NroDepartamento { get; set; }
-            public decimal Tamano { get; set; }                        
+            public decimal Tamano { get; set; }
             public int TipoDepaId { get; set; }
             public int EstadoId { get; set; }
-            public int CantidadHabitaciones { get; set; }            
-            public bool IndCocina { get; set; }            
-            public bool IndBalcon { get; set; }            
-            public bool IndLavanderia { get; set; }            
-            public bool IndPiscina { get; set; }            
+            public int CantidadHabitaciones { get; set; }
+            public bool IndCocina { get; set; }
+            public bool IndBalcon { get; set; }
+            public bool IndLavanderia { get; set; }
+            public bool IndPiscina { get; set; }
             public bool IndPatio { get; set; }
         }
         public class EjecutaValidator : AbstractValidator<Ejecuta>
@@ -60,7 +58,7 @@ namespace AppDepa.Aplicaciones.Departamentos
                 if (existeNroIgual)
                 {
                     throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Ya existe un Departamento con el mismo numero" });
-                }                    
+                }
                 Departamento dep = new Departamento()
                 {
                     NroDepartamento = request.NroDepartamento,
@@ -80,7 +78,7 @@ namespace AppDepa.Aplicaciones.Departamentos
                 if (result > 0)
                 {
                     return Unit.Value;
-                }                   
+                }
                 throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al registrar el Departamento" });
             }
 

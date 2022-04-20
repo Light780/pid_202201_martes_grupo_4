@@ -8,25 +8,26 @@ export const LeftMenu = ({ classes, onClick }) => {
         estadoColapsoMantenimiento : false
     });
     const [selectedIndex, setSelectedIndex] = useState(0);
-    const handleClick = (name) => {        
+    const handleClick = (name) => {
+        let localStorageJson = JSON.parse(window.localStorage.getItem("open")) ?? open
+        let nuevoBoolean = localStorageJson[name] === false
         setOpen(anterior => ({
             ...anterior,
-            [name] : window.localStorage.getItem(name) === 'false'
-        }));    
-        window.localStorage.setItem(name,window.localStorage.getItem(name) === 'false')    
+            [name] : nuevoBoolean
+        }));
+        localStorageJson[name] = nuevoBoolean
+        window.localStorage.setItem("open",JSON.stringify(localStorageJson))
     };
     const handleListItemClick = (event, index) => {
         const name ="indiceMenu"
         setSelectedIndex(index);
-        window.localStorage.setItem(name,index)    
+        window.localStorage.setItem(name,index)
         onClick()
     };
     useEffect(()=>{
-        setOpen(({
-            estadoColapsoMantenimiento: window.localStorage.getItem("estadoColapsoMantenimiento") === 'true' ?? false
-        }))
+        setOpen(JSON.parse(window.localStorage.getItem("open")) ?? open)
         setSelectedIndex(Number(window.localStorage.getItem("indiceMenu")));
-    },[])
+    },[])    
 
     return (
         <div className={classes.list}>
