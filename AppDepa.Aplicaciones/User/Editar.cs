@@ -1,17 +1,14 @@
-﻿using AppDepa.Dominio;
+﻿using AppDepa.Aplicaciones.Dto;
+using AppDepa.Aplicaciones.Exceptions;
 using AppDepa.Infraestructura.Datos.Context;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using AppDepa.Aplicaciones.Dto;
-using AppDepa.Aplicaciones.Exceptions;
 
 namespace AppDepa.Aplicaciones.User
 {
@@ -32,21 +29,21 @@ namespace AppDepa.Aplicaciones.User
             public EjecutaValidation()
             {
                 RuleFor(x => x.UserName).NotEmpty().WithMessage("Username no debe estar vacio");
-                RuleFor(x => x.NombreCompleto).NotEmpty().WithMessage("Nombre Completo no debe estar vacio");                
+                RuleFor(x => x.NombreCompleto).NotEmpty().WithMessage("Nombre Completo no debe estar vacio");
                 RuleFor(x => x.Email)
                     .NotEmpty().WithMessage("Email no debe estar vacio")
-                    .EmailAddress().WithMessage("Debe tener formato de Email");
+                    .EmailAddress().WithMessage("Email debe tener formato de Email");
                 RuleFor(x => x.Password)
-                    .NotEmpty().WithMessage("Email no debe estar vacio")
-                    .MinimumLength(8).WithMessage("Debe tener almenos 8 caracteres");
+                    .NotEmpty().WithMessage("Contraseña no debe estar vacio")
+                    .MinimumLength(8).WithMessage("Contraseña debe tener almenos 8 caracteres");
             }
         }
         public class Handler : IRequestHandler<Ejecuta, UsuarioDto>
         {
-            private readonly GestionDepartamentosContext context;                        
+            private readonly GestionDepartamentosContext context;
             public Handler(GestionDepartamentosContext _context)
             {
-                this.context = _context;                                
+                this.context = _context;
             }
             public async Task<UsuarioDto> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
@@ -57,7 +54,7 @@ namespace AppDepa.Aplicaciones.User
                 {
                     throw new ExceptionHandler(HttpStatusCode.NotFound, new { mensaje = "El Usuario no existe" });
                 }
-                var existe = await context.Usuario.Where(x => x.UserName.Equals(request.UserName) && x.UsuarioId!=usuario.UsuarioId).AnyAsync();
+                var existe = await context.Usuario.Where(x => x.UserName.Equals(request.UserName) && x.UsuarioId != usuario.UsuarioId).AnyAsync();
                 if (existe)
                 {
                     throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "El Username ya ha sido registrado por otro usuario" });
@@ -71,7 +68,7 @@ namespace AppDepa.Aplicaciones.User
                 usuario.UserName = request.UserName;
                 usuario.NombreCompleto = request.NombreCompleto;
                 usuario.Email = request.Email;
-                usuario.Password = request.Password;                
+                usuario.Password = request.Password;
                 usuario.FotoPerfil = request.FotoPerfil != null ? Convert.FromBase64String(request.FotoPerfil.Split(',')[1]) : usuario.FotoPerfil;
                 context.Usuario.Update(usuario);
                 var result = await context.SaveChangesAsync();
@@ -83,7 +80,7 @@ namespace AppDepa.Aplicaciones.User
                         UserName = usuario.UserName,
                         NombreCompleto = usuario.NombreCompleto,
                         Email = usuario.Email,
-                        FotoPerfil = usuario.FotoPerfil != null ? Convert.ToBase64String(usuario.FotoPerfil) : null,                        
+                        FotoPerfil = usuario.FotoPerfil != null ? Convert.ToBase64String(usuario.FotoPerfil) : null,
                     };
                 }
                 throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al modificar datos del usuario" });

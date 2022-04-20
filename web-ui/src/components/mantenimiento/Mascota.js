@@ -84,7 +84,7 @@ function Mascota() {
                   type: 'OPEN_SNACKBAR',
                   openMensaje: {
                      open: true,
-                     mensaje: "Error al guardar la Mascota\n Detalles del error : " + Object.values(respuesta.response.data.errores),
+                     mensaje: "Error al guardar la Mascota\n Detalles del error : " + Object.values(respuesta.response.data.errors),
                      severity: 'error'
                   }
                })
@@ -115,7 +115,7 @@ function Mascota() {
                   type: 'OPEN_SNACKBAR',
                   openMensaje: {
                      open: true,
-                     mensaje: "Error al actualizar la Mascota, Detalles del error : " + Object.values(respuesta.response.data.errores),
+                     mensaje: "Error al actualizar la Mascota, Detalles del error : " + Object.values(respuesta.response.data.errors),
                      severity: 'error'
                   }
                })

@@ -95,7 +95,7 @@ function Departamento() {
                   type: 'OPEN_SNACKBAR',
                   openMensaje: {
                      open: true,
-                     mensaje: "Error al guardar el Departamento\n Detalles del error : " + Object.values(respuesta.response.data.errores),
+                     mensaje: "Error al guardar el Departamento\n Detalles del error : " + Object.values(respuesta.response.data.errors),
                      severity: 'error'
                   }
                })
@@ -126,7 +126,7 @@ function Departamento() {
                   type: 'OPEN_SNACKBAR',
                   openMensaje: {
                      open: true,
-                     mensaje: "Error al actualizar el Departamento, Detalles del error : " + Object.values(respuesta.response.data.errores),
+                     mensaje: "Error al actualizar el Departamento, Detalles del error : " + Object.values(respuesta.response.data.errors),
                      severity: 'error'
                   }
                })

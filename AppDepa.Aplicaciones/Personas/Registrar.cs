@@ -1,10 +1,10 @@
 ﻿using AppDepa.Aplicaciones.Exceptions;
+using AppDepa.Aplicaciones.Utils;
 using AppDepa.Dominio;
 using AppDepa.Infraestructura.Datos.Context;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -68,9 +68,11 @@ namespace AppDepa.Aplicaciones.Personas
             public class Handler : IRequestHandler<Ejecuta>
             {
                 private readonly GestionDepartamentosContext context;
-                public Handler(GestionDepartamentosContext _context)
+                private readonly IUtils utils;
+                public Handler(GestionDepartamentosContext _context, IUtils _utils)
                 {
                     this.context = _context;
+                    this.utils = _utils;
                 }
                 public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
                 {
@@ -90,7 +92,7 @@ namespace AppDepa.Aplicaciones.Personas
                         Sexo = request.Sexo,
                         TipoPersonaId = request.TipoPersonaId,
                         EstadoId = request.EstadoId,
-                        FechaRegistro = DateTime.UtcNow
+                        FechaRegistro = utils.ObtenerFecha()
                     };
                     context.Persona.Add(persona);
                     var result = await context.SaveChangesAsync();

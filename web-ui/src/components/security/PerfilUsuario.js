@@ -77,7 +77,7 @@ function PerfilUsuario() {
                     type: "OPEN_SNACKBAR",
                     openMensaje: {
                         open: true,
-                        mensaje: "Error al guardar la informacion del usuario\n Detalles del error : " + Object.keys(response.data.errors),
+                        mensaje: "Error al guardar la informacion del usuario\n Detalles del error : " + Object.values(response.response.data.errors),
                         severity: 'error'
                     }
                 })

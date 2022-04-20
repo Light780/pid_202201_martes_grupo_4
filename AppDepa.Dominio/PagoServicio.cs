@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppDepa.Dominio
 {
@@ -16,6 +12,7 @@ namespace AppDepa.Dominio
         [Column(TypeName = "varchar(10)")]
         public string NroOperacion { get; set; }
         public DateTime FechaPago { get; set; }
-
+        public int UsuarioId { get; set; }
+        public Usuario Usuario { get; set; }
     }
 }

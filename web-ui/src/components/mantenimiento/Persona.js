@@ -101,7 +101,7 @@ function Persona() {
                   type: 'OPEN_SNACKBAR',
                   openMensaje: {
                      open: true,
-                     mensaje: "Error al guardar la Persona\n Detalles del error : " + Object.values(respuesta.response.data.errores),
+                     mensaje: "Error al guardar la Persona\n Detalles del error : " + Object.values(respuesta.response.data.errors),
                      severity: 'error'
                   }
                })
@@ -149,7 +149,7 @@ function Persona() {
                   type: 'OPEN_SNACKBAR',
                   openMensaje: {
                      open: true,
-                     mensaje: "Error al actualizar la Persona\n Detalles del error : " + Object.values(respuesta.response.data.errores),
+                     mensaje: "Error al actualizar la Persona\n Detalles del error : " + Object.values(respuesta.response.data.errors),
                      severity: 'error'
                   }
                })

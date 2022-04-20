@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppDepa.Dominio
 {
     public class Usuario
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UsuarioId { get; set; }
-        [Column(TypeName ="varchar(35)")]
+        [Column(TypeName = "varchar(35)")]
         public string UserName { get; set; }
         [Column(TypeName = "varchar(80)")]
         public string NombreCompleto { get; set; }
@@ -24,5 +21,10 @@ namespace AppDepa.Dominio
         public ICollection<Visita> Visitas { get; set; }
         public ICollection<Incidencia> Incidencias { get; set; }
         public ICollection<HistorialIncidencia> HistorialIncidencias { get; set; }
+        public ICollection<Departamento> Departamentos { get; set; }
+        public ICollection<Mascota> Mascotas { get; set; }
+        public ICollection<Persona> Persona { get; set; }
+        public ICollection<PagoServicio> PagoServicios { get; set; }
+        public ICollection<Boleta> Boletas { get; set; }
     }
 }

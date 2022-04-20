@@ -32,6 +32,7 @@ namespace AppDepa.Aplicaciones.Personas
             {
                 var query = from p in context.Persona
                             join d in context.Departamento on p.DepartamentoId equals d.DepartamentoId
+                            join u in context.Usuario on d.UsuarioId equals u.UsuarioId
                             orderby p.PersonaId
                             where (request.DepartamentoId == 0 || p.DepartamentoId == request.DepartamentoId)
                             where (request.TipoPersonaId == 0 || p.TipoPersonaId == request.TipoPersonaId)
@@ -46,7 +47,9 @@ namespace AppDepa.Aplicaciones.Personas
                                 Correo = p.Correo,
                                 Sexo = p.Sexo,
                                 TipoPersona = utils.BuscarParametro(p.TipoPersonaId, "TIPO_PERSONA_ID"),
-                                Departamento = d.NroDepartamento
+                                Departamento = d.NroDepartamento,
+                                FechaRegistro = d.FechaRegistro.ToString("dd/MM/yyyy hh:mm:ss"),
+                                Usuario = u.UserName
                             };
                 return await query.ToListAsync();
             }
