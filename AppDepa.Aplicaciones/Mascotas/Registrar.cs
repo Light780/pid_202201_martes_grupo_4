@@ -3,6 +3,7 @@ using AppDepa.Dominio;
 using AppDepa.Infraestructura.Datos.Context;
 using FluentValidation;
 using MediatR;
+using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,6 +44,7 @@ namespace AppDepa.Aplicaciones.Mascotas
                     Sexo = request.Sexo,
                     EspecieId = request.EspecieId,
                     DepartamentoId = request.DepartamentoId,
+                    FechaRegistro = DateTime.UtcNow
                 };
                 context.Mascota.Add(masc);
                 var result = await context.SaveChangesAsync();
