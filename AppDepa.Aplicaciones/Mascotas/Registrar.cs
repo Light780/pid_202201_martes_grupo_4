@@ -1,9 +1,9 @@
 ﻿using AppDepa.Aplicaciones.Exceptions;
+using AppDepa.Aplicaciones.Utils;
 using AppDepa.Dominio;
 using AppDepa.Infraestructura.Datos.Context;
 using FluentValidation;
 using MediatR;
-using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,9 +32,11 @@ namespace AppDepa.Aplicaciones.Mascotas
         public class Handler : IRequestHandler<Ejecuta>
         {
             private readonly GestionDepartamentosContext context;
-            public Handler(GestionDepartamentosContext _context)
+            private readonly IUtils utils;
+            public Handler(GestionDepartamentosContext _context, IUtils _utils)
             {
                 this.context = _context;
+                this.utils = _utils;
             }
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
@@ -44,7 +46,7 @@ namespace AppDepa.Aplicaciones.Mascotas
                     Sexo = request.Sexo,
                     EspecieId = request.EspecieId,
                     DepartamentoId = request.DepartamentoId,
-                    FechaRegistro = DateTime.UtcNow
+                    FechaRegistro = utils.ObtenerFecha()
                 };
                 context.Mascota.Add(masc);
                 var result = await context.SaveChangesAsync();

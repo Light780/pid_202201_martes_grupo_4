@@ -11,10 +11,11 @@ using System.Threading.Tasks;
 namespace AppDepa.Aplicaciones.Mascotas
 {
     public class Consultar
-    {        
+    {
         public class ListarMascotas : IRequest<List<MascotaDto>>
         {
             public int DepartamentoId { get; set; }
+            public int EspecieId { get; set; }
         }
 
         public class Handler : IRequestHandler<ListarMascotas, List<MascotaDto>>
@@ -30,15 +31,19 @@ namespace AppDepa.Aplicaciones.Mascotas
             {
                 var query = from m in context.Mascota
                             join d in context.Departamento on m.DepartamentoId equals d.DepartamentoId
+                            join u in context.Usuario on d.UsuarioId equals u.UsuarioId
                             orderby m.MascotaId
                             where (request.DepartamentoId == 0 || m.DepartamentoId == request.DepartamentoId)
+                            where (request.EspecieId == 0 || m.EspecieId == request.EspecieId)
                             select new MascotaDto
                             {
                                 MascotaId = m.MascotaId,
                                 NombreMascota = m.NombreMascota,
                                 Especie = utils.BuscarParametro(m.EspecieId, "ESPECIE_MASCOTA_ID"),
                                 Sexo = m.Sexo,
-                                Departamento = d.NroDepartamento
+                                Departamento = d.NroDepartamento,
+                                FechaRegistro = d.FechaRegistro.ToString("dd/MM/yyyy hh:mm:ss"),
+                                Usuario = u.UserName
                             };
                 return await query.ToListAsync();
             }

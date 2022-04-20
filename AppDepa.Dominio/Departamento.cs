@@ -1,26 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppDepa.Dominio
 {
     public class Departamento
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int DepartamentoId { get; set; }
         [Column(TypeName = "varchar(3)")]
         public string NroDepartamento { get; set; }
         [Column(TypeName = "decimal(18,2)")]
-        public decimal Tamano { get; set; }        
+        public decimal Tamano { get; set; }
         public int TipoDepaId { get; set; }
         public int EstadoId { get; set; }
 
         public int CantidadHabitaciones { get; set; }
         [Column(TypeName = "bit")]
-        public bool IndCocina { get; set; }        
+        public bool IndCocina { get; set; }
         [Column(TypeName = "bit")]
         public bool IndBalcon { get; set; }
         [Column(TypeName = "bit")]
@@ -30,6 +27,8 @@ namespace AppDepa.Dominio
         [Column(TypeName = "bit")]
         public bool IndPatio { get; set; }
         public DateTime FechaRegistro { get; set; }
+        public int UsuarioId { get; set; }
+        public Usuario Usuario { get; set; }
 
 
         // Relación con Mascota

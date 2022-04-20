@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppDepa.Dominio
 {
     public class Boleta
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BoletaId { get; set; }
         public int ServicioId { get; set; }
         public int DepartamentoId { get; set; }
@@ -20,6 +15,8 @@ namespace AppDepa.Dominio
         public string CodigoPago { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal Monto { get; set; }
-        
+        public int UsuarioId { get; set; }
+        public Usuario Usuario { get; set; }
+
     }
 }
