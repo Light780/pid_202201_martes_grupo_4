@@ -1,18 +1,11 @@
 ﻿using AppDepa.Aplicaciones.Dto;
 using AppDepa.Aplicaciones.User;
-using AppDepa.Dominio;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AppDepa.Infraestructura.API.Controllers
 {
-    [AllowAnonymous]
     public class UsuarioController : CustomController
     {
         [HttpPost]
@@ -23,23 +16,27 @@ namespace AppDepa.Infraestructura.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UsuarioDto>> GetUsuario(int id)
         {
-            return await mediator.Send(new Consultar.UsuarioUnico() { UsuarioId = id});
+            return await mediator.Send(new Consultar.UsuarioUnico() { UsuarioId = id });
         }
-        [HttpPut("{id}")]
-        public async Task<ActionResult<UsuarioDto>> EditarUsuario(Editar.Ejecuta data, int id)
+        [HttpPut]
+        public async Task<ActionResult<UsuarioDto>> EditarUsuario(Editar.Ejecuta data)
         {
-            data.UsuarioId = id;
             return await mediator.Send(data);
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult<Unit>> EliminarUsuario(int id)
-        {            
-            return await mediator.Send(new Eliminar.Ejecuta { Id = id});
+        {
+            return await mediator.Send(new Eliminar.Ejecuta { Id = id });
         }
         [HttpPost("login")]
         public async Task<ActionResult<UsuarioDto>> Login(Login.Ejecuta data)
         {
             return await mediator.Send(data);
+        }
+        [HttpDelete]
+        public async Task<ActionResult<Unit>> CerrarSesion()
+        {
+            return await mediator.Send(new CerrarSesion.Ejecuta());
         }
 
     }

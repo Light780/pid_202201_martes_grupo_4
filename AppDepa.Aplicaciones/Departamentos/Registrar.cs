@@ -73,7 +73,8 @@ namespace AppDepa.Aplicaciones.Departamentos
                     IndLavanderia = request.IndLavanderia,
                     IndPiscina = request.IndPiscina,
                     IndPatio = request.IndPatio,
-                    FechaRegistro = utils.ObtenerFecha()
+                    FechaRegistro = utils.ObtenerFecha(),
+                    UsuarioId = utils.GetUsuarioSession()
                 };
                 context.Departamento.Add(dep);
                 var result = await context.SaveChangesAsync();

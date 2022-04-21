@@ -553,8 +553,10 @@ function Departamento() {
                                  <TableCell align='center'>Tipo Depart.</TableCell>
                                  <Hidden mdDown>
                                     <TableCell align='center'>N° de Habitaciones</TableCell>
-                                    <TableCell align='center'>Area</TableCell>
+                                    <TableCell align='center'>Area</TableCell>                                    
                                  </Hidden>
+                                 <TableCell align='center'>Usuario</TableCell>
+                                 <TableCell align='center'>Fecha Registro</TableCell>
                                  <TableCell align='center'>Estado</TableCell>
                                  <TableCell align='center'>Acciones</TableCell>
                               </TableRow>
@@ -567,8 +569,10 @@ function Departamento() {
                                     <TableCell size="small" align='center'>{departamento.tipoDepa}</TableCell>
                                     <Hidden mdDown>
                                        <TableCell size="small" align='center'>{departamento.cantidadHabitaciones}</TableCell>
-                                       <TableCell size="small" align='center'>{departamento.tamano}m2</TableCell>
+                                       <TableCell size="small" align='center'>{departamento.tamano}m2</TableCell>                                       
                                     </Hidden>
+                                    <TableCell size="small" align='center'>{departamento.usuario}</TableCell>
+                                    <TableCell size="small" align='center'>{departamento.fechaRegistro}</TableCell>
                                     <TableCell size="small" align='center'>{departamento.estado}</TableCell>
                                     <TableCell size="small" align='center'>
                                        <IconButton color="primary" component="span" size="medium" onClick={async () => {

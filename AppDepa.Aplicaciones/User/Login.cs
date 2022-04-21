@@ -1,15 +1,13 @@
 ﻿using AppDepa.Aplicaciones.Dto;
-using AppDepa.Dominio;
 using AppDepa.Aplicaciones.Exceptions;
+using AppDepa.Aplicaciones.Utils;
 using AppDepa.Infraestructura.Datos.Context;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,30 +28,33 @@ namespace AppDepa.Aplicaciones.User
                    .NotEmpty().WithMessage("Email no debe estar vacio")
                    .EmailAddress().WithMessage("Debe tener formato de Email");
                 RuleFor(x => x.Password)
-                    .NotEmpty().WithMessage("Email no debe estar vacio");                  
+                    .NotEmpty().WithMessage("Email no debe estar vacio");
             }
         }
         public class Handler : IRequestHandler<Ejecuta, UsuarioDto>
         {
-            private readonly GestionDepartamentosContext context;                        
-            public Handler(GestionDepartamentosContext _context)
+            private readonly GestionDepartamentosContext context;
+            private readonly IUtils utils;
+            public Handler(GestionDepartamentosContext _context, IUtils _utils)
             {
-                this.context = _context;                                
+                this.context = _context;
+                this.utils = _utils;
             }
             public async Task<UsuarioDto> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
                 var usuario = await context.Usuario.Where(x => x.Email.Equals(request.Email) && x.Password.Equals(request.Password)).SingleOrDefaultAsync();
-                if(usuario == null)
+                if (usuario == null)
                 {
                     throw new ExceptionHandler(HttpStatusCode.BadRequest, "Credenciales incorrectas");
                 }
+                utils.SetUsuarioSession(usuario.UsuarioId);
                 return new UsuarioDto()
                 {
                     UsuarioId = usuario.UsuarioId,
                     UserName = usuario.UserName,
                     NombreCompleto = usuario.NombreCompleto,
                     Email = usuario.Email,
-                    FotoPerfil = usuario.FotoPerfil != null ? Convert.ToBase64String(usuario.FotoPerfil) : ""                    
+                    FotoPerfil = usuario.FotoPerfil != null ? Convert.ToBase64String(usuario.FotoPerfil) : ""
                 };
             }
         }

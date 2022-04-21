@@ -386,6 +386,8 @@ function Mascota() {
                                  <TableCell align='center'>Sexo</TableCell>
                                  <TableCell align='center'>Especie</TableCell>
                                  <TableCell align='center'>Departamento</TableCell>
+                                 <TableCell align='center'>Usuario</TableCell>
+                                 <TableCell align='center'>Fecha Registro</TableCell>
                                  <TableCell align='center'>Acciones</TableCell>
                               </TableRow>
                            </TableHead>
@@ -397,6 +399,8 @@ function Mascota() {
                                     <TableCell size="small" align='center'>{mascota.sexo}</TableCell>
                                     <TableCell size="small" align='center'>{mascota.especie}</TableCell>
                                     <TableCell size="small" align='center'>{mascota.departamento}</TableCell>
+                                    <TableCell size="small" align='center'>{mascota.usuario}</TableCell>
+                                    <TableCell size="small" align='center'>{mascota.fechaRegistro}</TableCell>
                                     <TableCell size="small" align='center'>
                                        <IconButton color="primary" component="span" size="medium" onClick={async () => {
                                           limpiarForm();

@@ -46,7 +46,8 @@ namespace AppDepa.Aplicaciones.Mascotas
                     Sexo = request.Sexo,
                     EspecieId = request.EspecieId,
                     DepartamentoId = request.DepartamentoId,
-                    FechaRegistro = utils.ObtenerFecha()
+                    FechaRegistro = utils.ObtenerFecha(),
+                    UsuarioId = utils.GetUsuarioSession()
                 };
                 context.Mascota.Add(masc);
                 var result = await context.SaveChangesAsync();

@@ -92,7 +92,8 @@ namespace AppDepa.Aplicaciones.Personas
                         Sexo = request.Sexo,
                         TipoPersonaId = request.TipoPersonaId,
                         EstadoId = request.EstadoId,
-                        FechaRegistro = utils.ObtenerFecha()
+                        FechaRegistro = utils.ObtenerFecha(),
+                        UsuarioId = utils.GetUsuarioSession()
                     };
                     context.Persona.Add(persona);
                     var result = await context.SaveChangesAsync();

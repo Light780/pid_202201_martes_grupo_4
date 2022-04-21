@@ -23,7 +23,7 @@ function Login(){
         e.preventDefault();        
         loginUsuario(usuario,dispatch).then(response => {            
             if(response.status===200){
-                window.localStorage.setItem('id',response.data.usuarioId)
+                window.localStorage.setItem('id',response.data.usuarioId)                
                 navigate("/")
             }else{
                 dispatch({
