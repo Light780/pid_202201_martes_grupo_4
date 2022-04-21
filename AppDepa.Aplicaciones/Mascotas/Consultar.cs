@@ -42,7 +42,7 @@ namespace AppDepa.Aplicaciones.Mascotas
                                 Especie = utils.BuscarParametro(m.EspecieId, "ESPECIE_MASCOTA_ID"),
                                 Sexo = m.Sexo,
                                 Departamento = d.NroDepartamento,
-                                FechaRegistro = d.FechaRegistro.ToString("dd/MM/yyyy hh:mm:ss"),
+                                FechaRegistro = d.FechaRegistro.ToString("dd/MM/yyyy hh:mm"),
                                 Usuario = u.UserName
                             };
                 return await query.ToListAsync();

@@ -630,6 +630,8 @@ function Persona() {
                                  </Hidden>
                                  <TableCell align='center'>Tipo Persona</TableCell>
                                  <TableCell align='center'>Departamento</TableCell>
+                                 <TableCell align='center'>Usuario</TableCell>
+                                 <TableCell align='center'>Fecha Registro</TableCell>
                                  <TableCell align='center'>Estado</TableCell>
                                  <TableCell align='center'>Acciones</TableCell>
                               </TableRow>
@@ -648,6 +650,8 @@ function Persona() {
                                     </Hidden>
                                     <TableCell size="small" align='center'>{persona.tipoPersona}</TableCell>
                                     <TableCell size="small" align='center'>{persona.departamento}</TableCell>
+                                    <TableCell size="small" align='center'>{persona.usuario}</TableCell>
+                                    <TableCell size="small" align='center'>{persona.fechaRegistro}</TableCell>
                                     <TableCell size="small" align='center'>{persona.estado}</TableCell>
                                     <TableCell size="small" align='center'>
                                        <IconButton color="primary" component="span" size="medium" onClick={async () => {

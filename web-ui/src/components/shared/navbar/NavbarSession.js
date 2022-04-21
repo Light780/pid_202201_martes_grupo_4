@@ -7,13 +7,14 @@ import { RightMenu } from './RightMenu';
 import { useStateValue } from '../../../context/store';
 import { blobConverter } from '../../../services/Utils';
 import useStyles from '../../tools/style';
+import { cerrarSesion } from '../../../actions/UsuarioAction';
 
 function NavbarSession() {
     const classes = useStyles()
     const navigate = useNavigate()
-    const [{sesionUsuario, openSnackBar}, dispatch] = useStateValue();
+    const [{ sesionUsuario, openSnackBar }, dispatch] = useStateValue();
     const [openLeftMenu, setOpenLeftMenu] = useState(false)
-    const [openRightMenu, setOpenRightMenu] = useState(false)        
+    const [openRightMenu, setOpenRightMenu] = useState(false)
     const openCloseLeftMenu = () => {
         setOpenLeftMenu(!openLeftMenu)
     }
@@ -21,19 +22,20 @@ function NavbarSession() {
         setOpenRightMenu(!openRightMenu)
     }
     const closeSession = () => {
-        window.localStorage.removeItem('token_seguridad');
-        dispatch({
-            type: "SALIR_SESION",
-            nuevoUsuario: null,
-            autenticado: false
+        cerrarSesion(dispatch).then(response => {
+            if (response.status === 200) {
+                window.localStorage.removeItem('id');
+                window.localStorage.removeItem('open');
+                window.localStorage.removeItem('indiceMenu');
+                navigate('/auth/login')
+            }
         })
-        navigate('/auth/login')
     }
     return (
         <React.Fragment>
             <Drawer open={openLeftMenu} onClose={openCloseLeftMenu} anchor="left">
                 <div className={classes.list} onKeyDown={openCloseLeftMenu}>
-                    <LeftMenu classes={classes} onClick={openCloseLeftMenu}/>
+                    <LeftMenu classes={classes} onClick={openCloseLeftMenu} />
                 </div>
             </Drawer>
             <Drawer open={openRightMenu} onClose={openCloseRightMenu} anchor="right">

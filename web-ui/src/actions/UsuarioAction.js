@@ -27,15 +27,30 @@ export const obtenerUsuario = (id, dispatch) => {
         })
     })
 }
-export const actualizarUsuario = (id, usuario, dispatch) => {
+export const actualizarUsuario = (usuario, dispatch) => {
     return new Promise((resolve, reject) => {
-        HttpClient.put(`Usuario/${id}`,usuario).then(response => {            
+        HttpClient.put(`Usuario`,usuario).then(response => {            
             dispatch({
                 type:"INICIAR_SESION",
                 sesion:response.data,
                 autenticado:true
             })
             
+            resolve(response)
+        }).catch(error => {
+            resolve(error,reject)
+        })
+    })
+}
+
+export const cerrarSesion = (dispatch) => {
+    return new Promise((resolve, reject) => {
+        HttpClient.delete(`Usuario`).then(response => {            
+            dispatch({
+                type: "SALIR_SESION",
+                nuevoUsuario: null,
+                autenticado: false
+            })            
             resolve(response)
         }).catch(error => {
             resolve(error,reject)

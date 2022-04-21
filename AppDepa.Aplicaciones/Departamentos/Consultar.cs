@@ -50,7 +50,7 @@ namespace AppDepa.Aplicaciones.Departamentos
                                 IndLavanderia = d.IndLavanderia,
                                 IndPiscina = d.IndPiscina,
                                 IndPatio = d.IndPatio,
-                                FechaRegistro = d.FechaRegistro.ToString("dd/MM/yyyy hh:mm:ss"),
+                                FechaRegistro = d.FechaRegistro.ToString("dd/MM/yyyy hh:mm"),
                                 Usuario = u.UserName
                             };
                 return await query.ToListAsync();

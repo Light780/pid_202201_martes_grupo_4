@@ -61,7 +61,7 @@ function PerfilUsuario() {
     }
     const guardarUsuario = e => {
         e.preventDefault();
-        actualizarUsuario(window.localStorage.getItem("id"), usuario, dispatch).then(response => {
+        actualizarUsuario(usuario, dispatch).then(response => {
             if (response.status === 200) {
                 dispatch({
                     type: 'OPEN_SNACKBAR',

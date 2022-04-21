@@ -6,5 +6,8 @@ namespace AppDepa.Aplicaciones.Utils
     {
         string BuscarParametro(int param, string reporte);
         DateTime ObtenerFecha();
+        void SetUsuarioSession(int usuarioId);
+        int GetUsuarioSession();
+        void DeleteUsuarioSession();
     }
 }

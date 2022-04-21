@@ -48,7 +48,7 @@ namespace AppDepa.Aplicaciones.Personas
                                 Sexo = p.Sexo,
                                 TipoPersona = utils.BuscarParametro(p.TipoPersonaId, "TIPO_PERSONA_ID"),
                                 Departamento = d.NroDepartamento,
-                                FechaRegistro = d.FechaRegistro.ToString("dd/MM/yyyy hh:mm:ss"),
+                                FechaRegistro = d.FechaRegistro.ToString("dd/MM/yyyy hh:mm"),
                                 Usuario = u.UserName
                             };
                 return await query.ToListAsync();
