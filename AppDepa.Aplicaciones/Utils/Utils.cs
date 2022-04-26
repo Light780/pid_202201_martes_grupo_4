@@ -31,7 +31,7 @@ namespace AppDepa.Aplicaciones.Utils
 
         public DateTime ObtenerFecha()
         {
-            var fecha = DateTime.UtcNow;
+            var fecha = DateTime.Now;
             return new DateTime(fecha.Year, fecha.Month, fecha.Day,
                         fecha.Hour, fecha.Minute, fecha.Second);
         }
