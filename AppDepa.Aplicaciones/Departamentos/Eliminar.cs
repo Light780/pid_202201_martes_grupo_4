@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AppDepa.Aplicaciones.Exceptions;
 using AppDepa.Infraestructura.Datos.Context;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Net;
 using System.Threading;
-using Microsoft.EntityFrameworkCore;
-using AppDepa.Aplicaciones.Exceptions;
-using MediatR;
+using System.Threading.Tasks;
 
 namespace AppDepa.Aplicaciones.Departamentos
 {
@@ -28,12 +25,13 @@ namespace AppDepa.Aplicaciones.Departamentos
             }
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var departamentos = await context.Departamento.Where(x => x.DepartamentoId == request.DepartamentoId).SingleOrDefaultAsync();
-                if (departamentos == null)
+                var departamento = await context.Departamento.Where(x => x.DepartamentoId == request.DepartamentoId).SingleOrDefaultAsync();
+                if (departamento == null)
                 {
                     throw new ExceptionHandler(HttpStatusCode.NotFound, new { mensaje = "El Departamento no existe" });
                 }
-                context.Departamento.Remove(departamentos);
+                departamento.Eliminado = true;
+                context.Departamento.Update(departamento);
                 var result = await context.SaveChangesAsync();
                 if (result > 0)
                 {

@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppDepa.Dominio
 {
     public class Incidencia
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IncidenciaId { get; set; }
         public int DepartamentoId { get; set; }
         public Departamento Departamento { get; set; }
@@ -22,6 +19,8 @@ namespace AppDepa.Dominio
         public DateTime FechaIncidencia { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime FechaRegistro { get; set; }
+        [Column(TypeName = "bit")]
+        public bool Eliminado { get; set; }
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
         public ICollection<HistorialIncidencia> HistorialIncidencias { get; set; }
