@@ -13,6 +13,8 @@ namespace AppDepa.Dominio
         public string Sexo { get; set; }
         public int EspecieId { get; set; }
         public DateTime FechaRegistro { get; set; }
+        [Column(TypeName = "bit")]
+        public bool Eliminado { get; set; }
         // Relación con Departamentos
         public int DepartamentoId { get; set; }
         public Departamento Departamento { get; set; }

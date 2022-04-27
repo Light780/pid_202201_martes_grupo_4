@@ -2,11 +2,8 @@
 using AppDepa.Infraestructura.Datos.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,13 +26,14 @@ namespace AppDepa.Aplicaciones.Mascotas
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
                 var mascota = await context.Mascota.Where(x => x.MascotaId == request.MascotaId).SingleOrDefaultAsync();
-                if(mascota == null)
+                if (mascota == null)
                 {
                     throw new ExceptionHandler(HttpStatusCode.NotFound, new { mensaje = "La Mascota no existe" });
                 }
-                context.Mascota.Remove(mascota);
+                mascota.Eliminado = true;
+                context.Mascota.Update(mascota);
                 var result = await context.SaveChangesAsync();
-                if(result > 0)
+                if (result > 0)
                 {
                     return Unit.Value;
                 }

@@ -37,6 +37,7 @@ namespace AppDepa.Aplicaciones.Departamentos
                             join u in context.Usuario on d.UsuarioId equals u.UsuarioId
                             orderby d.NroDepartamento
                             where (request.TipoDepaId == 0 || d.TipoDepaId == request.TipoDepaId)
+                            where d.Eliminado == false
                             select new DepartamentoDto
                             {
                                 DepartamentoId = d.DepartamentoId,

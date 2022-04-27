@@ -26,6 +26,8 @@ namespace AppDepa.Dominio
         public bool IndPiscina { get; set; }
         [Column(TypeName = "bit")]
         public bool IndPatio { get; set; }
+        [Column(TypeName = "bit")]
+        public bool Eliminado { get; set; }
         public DateTime FechaRegistro { get; set; }
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
