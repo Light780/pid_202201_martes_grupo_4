@@ -36,7 +36,7 @@ namespace AppDepa.Aplicaciones.Personas
                             orderby p.PersonaId
                             where (request.DepartamentoId == 0 || p.DepartamentoId == request.DepartamentoId)
                             where (request.TipoPersonaId == 0 || p.TipoPersonaId == request.TipoPersonaId)
-                            where d.Eliminado == false
+                            where p.Eliminado == false
                             select new PersonaDto
                             {
                                 PersonaId = p.PersonaId,

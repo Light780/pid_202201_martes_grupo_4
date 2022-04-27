@@ -35,7 +35,7 @@ namespace AppDepa.Aplicaciones.Mascotas
                             orderby m.MascotaId
                             where (request.DepartamentoId == 0 || m.DepartamentoId == request.DepartamentoId)
                             where (request.EspecieId == 0 || m.EspecieId == request.EspecieId)
-                            where d.Eliminado == false
+                            where m.Eliminado == false
                             select new MascotaDto
                             {
                                 MascotaId = m.MascotaId,
