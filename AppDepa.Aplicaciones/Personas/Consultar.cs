@@ -3,6 +3,7 @@ using AppDepa.Aplicaciones.Utils;
 using AppDepa.Infraestructura.Datos.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -16,6 +17,7 @@ namespace AppDepa.Aplicaciones.Personas
         {
             public int DepartamentoId { get; set; }
             public int TipoPersonaId { get; set; }
+            public int Eliminado { get; set; }
         }
 
         public class Handler : IRequestHandler<ListarPersonas, List<PersonaDto>>
@@ -36,7 +38,7 @@ namespace AppDepa.Aplicaciones.Personas
                             orderby p.PersonaId
                             where (request.DepartamentoId == 0 || p.DepartamentoId == request.DepartamentoId)
                             where (request.TipoPersonaId == 0 || p.TipoPersonaId == request.TipoPersonaId)
-                            where p.Eliminado == false
+                            where p.Eliminado == Convert.ToBoolean(request.Eliminado)
                             select new PersonaDto
                             {
                                 PersonaId = p.PersonaId,
@@ -49,7 +51,8 @@ namespace AppDepa.Aplicaciones.Personas
                                 Sexo = p.Sexo,
                                 TipoPersona = utils.BuscarParametro(p.TipoPersonaId, "TIPO_PERSONA_ID"),
                                 Departamento = d.NroDepartamento,
-                                FechaRegistro = p.FechaRegistro.ToString("dd/MM/yyyy hh:mm"),
+                                Eliminado = p.Eliminado,
+                                FechaRegistro = p.FechaRegistro.ToString("dd/MM/yyyy HH:mm"),
                                 Usuario = u.UserName
                             };
                 return await query.ToListAsync();

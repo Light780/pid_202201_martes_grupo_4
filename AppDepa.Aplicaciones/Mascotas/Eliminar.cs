@@ -30,7 +30,7 @@ namespace AppDepa.Aplicaciones.Mascotas
                 {
                     throw new ExceptionHandler(HttpStatusCode.NotFound, new { mensaje = "La Mascota no existe" });
                 }
-                mascota.Eliminado = true;
+                mascota.Eliminado = !mascota.Eliminado;
                 context.Mascota.Update(mascota);
                 var result = await context.SaveChangesAsync();
                 if (result > 0)

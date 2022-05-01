@@ -1,5 +1,5 @@
-import { Avatar, Button, Container, TextField, Typography } from '@material-ui/core';
-import { LockOutlined } from '@material-ui/icons/';
+import { Avatar, Button, Container, TextField, Typography } from '@mui/material';
+import { LockOutlined } from '@mui/icons-material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStateValue } from '../../context/store';

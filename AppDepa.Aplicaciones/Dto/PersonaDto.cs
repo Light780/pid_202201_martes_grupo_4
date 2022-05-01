@@ -12,6 +12,7 @@
         public string Sexo { get; set; }
         public string TipoPersona { get; set; }
         public string Departamento { get; set; }
+        public bool Eliminado { get; set; }
         public string FechaRegistro { get; set; }
         public string Usuario { get; set; }
     }

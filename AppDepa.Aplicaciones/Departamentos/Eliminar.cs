@@ -30,7 +30,7 @@ namespace AppDepa.Aplicaciones.Departamentos
                 {
                     throw new ExceptionHandler(HttpStatusCode.NotFound, new { mensaje = "El Departamento no existe" });
                 }
-                departamento.Eliminado = true;
+                departamento.Eliminado = !departamento.Eliminado;
                 context.Departamento.Update(departamento);
                 var result = await context.SaveChangesAsync();
                 if (result > 0)
