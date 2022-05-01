@@ -1,18 +1,25 @@
-import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, FormControlLabel, Hidden, IconButton } from '@material-ui/core';
-import { Edit, Delete, Info } from '@material-ui/icons/';
+import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, FormControlLabel, Hidden, IconButton } from '@mui/material';
+import { Edit, Delete, Info, CheckCircle } from '@mui/icons-material';
 import React, { useState, useEffect } from 'react';
 import { useStyles, style } from '../tools/style'
 import { listarDepartamento, registrarDepartamento, actualizarDepartamento, borrarDepartamento, consultarUnico } from '../../actions/DepartamentoAction';
 import { useStateValue } from '../../context/store';
 import SelectParametro from '../utils/SelectParametro';
+import ResponsiveButton from '../utils/ResponsiveButton';
 function Departamento() {
    const styles = useStyles();
    const [{ sesionUsuario }, dispatch] = useStateValue()
    const [page, setPage] = useState(0)
    const [rowsPerPage, setRowsPerPage] = useState(10)
    const [listaDepa, setListaDepa] = useState([])
-   const [tipoDepaFiltro, setTipoDepaFiltro] = useState(0)
-   const [checkTipoDepaFiltro, setCheckTipoDepaFiltro] = useState(false)
+   const [filtro, setFiltro] = useState({
+      filtroTipoDepaId: 0,
+      filtroEliminado: 0
+   })
+   const [checkFiltro, setCheckFiltro] = useState({
+      filtroTipoDepaId: false,
+      filtroEliminado: false
+   })
    const [departamento, setDepartamento] = useState({
       departamentoId: 0,
       nroDepartamento: '',
@@ -33,16 +40,16 @@ function Departamento() {
    const [modalEliminar, setModalEliminar] = useState(false);
    const [modalDetalle, setModalDetalle] = useState(false);
 
-   const handleChangePage = (event, newPage) => {
+   const handlePageChange = (event, newPage) => {
       setPage(newPage);
    };
-   const handleChangeRowsPerPage = event => {
+   const handleRowsPerPageChange = event => {
       setRowsPerPage(parseInt(event.target.value, 10));
       setPage(0);
    };
    const emptyRows = rowsPerPage - Math.min(rowsPerPage, listaDepa.length - page * rowsPerPage);
    const peticionGet = () => {
-      listarDepartamento(tipoDepaFiltro).then(respuesta => {
+      listarDepartamento(filtro).then(respuesta => {
          if (respuesta.status === 200) {
             setListaDepa(respuesta.data)
          } else {
@@ -138,12 +145,14 @@ function Departamento() {
    const peticionDelete = e => {
       e.preventDefault()
       borrarDepartamento(departamento.departamentoId).then(respuesta => {
+         let mensaje;
          if (respuesta.status === 200) {
+            mensaje = "Departamento" + (departamento.eliminado ? "activado" : "eliminado") + "correctamente"
             dispatch({
                type: 'OPEN_SNACKBAR',
                openMensaje: {
                   open: true,
-                  mensaje: "Departamento eliminado correctamente",
+                  mensaje: mensaje,
                   severity: 'success'
                }
             })
@@ -151,11 +160,12 @@ function Departamento() {
             limpiarForm()
             peticionGet()
          } else {
+            mensaje = "Error al "+ (departamento.eliminado ? "activar" : "eliminar") + " el Departamento"
             dispatch({
                type: 'OPEN_SNACKBAR',
                openMensaje: {
                   open: true,
-                  mensaje: "Error al eliminar el Departamento",
+                  mensaje: mensaje,
                   severity: 'error'
                }
             })
@@ -245,12 +255,28 @@ function Departamento() {
       }))
    }
    const handleChangeFiltro = e => {
-      setTipoDepaFiltro(e.target.value);
+      const { name, value } = e.target
+      setFiltro(anterior => ({
+         ...anterior,
+         [name]: value
+      }))
    }
    const handleCheckFiltro = e => {
-      setCheckTipoDepaFiltro(e.target.value === 'false');
-      if (e.target.value === 'true') {
-         setTipoDepaFiltro(0)
+      const { name, value } = e.target
+      setCheckFiltro(anterior => ({
+         ...anterior,
+         [name]: value === 'false'
+      }))
+      if (value === 'true') {
+         setFiltro(anterior => ({
+            ...anterior,
+            [name]: 0
+         }))
+      } else {
+         setFiltro(anterior => ({
+            ...anterior,
+            [name]: name === 'filtroEliminado' ? 1 : 0
+         }))
       }
    }
    const abrirCerrarModalInsertar = () => {
@@ -268,7 +294,7 @@ function Departamento() {
    }
    useEffect(() => {
       peticionGet()
-   }, [tipoDepaFiltro])
+   }, [filtro])
 
    const bodyInsertar = (
       <div className={styles.modal}>
@@ -416,14 +442,19 @@ function Departamento() {
    const bodyEliminar = (
       <div className={styles.modal}>
          <Container component="main" maxWidth="md" justifyContent="center">
-            <Typography className={styles.modalTitle} component="h1" variant="h5" align="center">Estás seguro de eliminar el departamento</Typography>
+            <Typography className={styles.modalTitle} component="h1" variant="h5" align="center">Estás seguro de {departamento.eliminado ? "activar" : "eliminar"} el departamento</Typography>
             <Typography className={styles.modalTitle} component="h1" variant="h5" align="center"><b>{departamento.nroDepartamento}</b></Typography>
             <Grid container spacing={2} justifyContent="center">
                <Grid item xs={6} md={6}>
-                  <Button fullWidth variant="contained" size="large" style={style.submit} color="secondary" onClick={peticionDelete}>Si</Button>
+                  <Button fullWidth variant="contained" size="large" style={style.submit}
+                     color={departamento.eliminado ? "success" : "secondary"} onClick={peticionDelete}>
+                     Si
+                  </Button>
                </Grid>
                <Grid item xs={6} md={6}>
-                  <Button fullWidth variant="contained" size="large" style={style.submit} onClick={abrirCerrarModalEliminar}>No</Button>
+                  <Button fullWidth variant="contained" size="large" 
+                  color={departamento.eliminado ? "secondary" : "primary"}
+                  style={style.submit} onClick={abrirCerrarModalEliminar}>No</Button>
                </Grid>
             </Grid>
          </Container>
@@ -523,25 +554,33 @@ function Departamento() {
                   </Paper>
                   <Paper className={styles.paperBody}>
                      <Grid container spacing={2} justifyContent="flex-start">
-                        <Grid item container xs={6} md={2} >
+                        <Grid item container xs={4} md={2} >
                            <Grid item xs={10} md={10}>
                               <SelectParametro concepto="TIPO_DEPA_ID"
                                  className={styles.inputMaterial}
                                  label="Filtro Tipo Departamento" onChange={handleChangeFiltro}
-                                 disabled={!checkTipoDepaFiltro}
-                                 value={tipoDepaFiltro}
+                                 disabled={!checkFiltro.filtroTipoDepaId}
+                                 value={filtro.filtroTipoDepaId}
+                                 name="filtroTipoDepaId"
                               />
                            </Grid>
                            <Grid item xs={2} md={2}>
-                              <Checkbox checked={checkTipoDepaFiltro} className={styles.inputMaterial} style={style.checkFiltro}
-                                 onChange={handleCheckFiltro} color='primary' value={checkTipoDepaFiltro} />
+                              <Checkbox checked={checkFiltro.filtroTipoDepaId} className={styles.inputMaterial} style={style.checkFiltro}
+                                 onChange={handleCheckFiltro} color='primary' value={checkFiltro.filtroTipoDepaId}
+                                 name="filtroTipoDepaId" />
                            </Grid>
                         </Grid>
-                        <Grid item container xs={6} md={10}>
+                        <Grid item container xs={2} md={2} >
+                           <Grid item xs={12} md={12}>
+                              <FormControlLabel
+                                 control={<Checkbox checked={checkFiltro.filtroEliminado} value={checkFiltro.filtroEliminado} onChange={handleCheckFiltro} color='primary' name="filtroEliminado" />}
+                                 label="Eliminados" labelPlacement='start' style={style.checkFiltro} />
+                           </Grid>
+                        </Grid>
+
+                        <Grid item container xs={6} md={8}>
                            <Grid container justifyContent="flex-end">
-                              <Button type="button" variant="contained" size="large" color="primary" style={style.submit} onClick={abrirCerrarModalInsertar}>
-                                 Registrar
-                              </Button>
+                              <ResponsiveButton style={style.submit} onClick={abrirCerrarModalInsertar} />
                            </Grid>
                         </Grid>
                      </Grid>
@@ -553,7 +592,7 @@ function Departamento() {
                                  <TableCell align='center'>Tipo Depart.</TableCell>
                                  <Hidden mdDown>
                                     <TableCell align='center'>N° de Habitaciones</TableCell>
-                                    <TableCell align='center'>Area</TableCell>                                    
+                                    <TableCell align='center'>Area</TableCell>
                                  </Hidden>
                                  <TableCell align='center'>Usuario</TableCell>
                                  <TableCell align='center'>Fecha Registro</TableCell>
@@ -569,7 +608,7 @@ function Departamento() {
                                     <TableCell size="small" align='center'>{departamento.tipoDepa}</TableCell>
                                     <Hidden mdDown>
                                        <TableCell size="small" align='center'>{departamento.cantidadHabitaciones}</TableCell>
-                                       <TableCell size="small" align='center'>{departamento.tamano}m2</TableCell>                                       
+                                       <TableCell size="small" align='center'>{departamento.tamano}m2</TableCell>
                                     </Hidden>
                                     <TableCell size="small" align='center'>{departamento.usuario}</TableCell>
                                     <TableCell size="small" align='center'>{departamento.fechaRegistro}</TableCell>
@@ -587,13 +626,13 @@ function Departamento() {
                                        }}>
                                           <Info />
                                        </IconButton>
-                                       <IconButton color="secondary" component="span" size="medium" onClick={() => {
+                                       <IconButton color={departamento.eliminado ? "success" : "secondary"} component="span" size="medium" onClick={() => {
                                           limpiarForm();
                                           setDepartamento(departamento);
                                           abrirCerrarModalEliminar()
                                        }}
                                        >
-                                          <Delete />
+                                          {departamento.eliminado ? <CheckCircle /> : <Delete />}
                                        </IconButton>
                                     </TableCell>
                                  </TableRow>
@@ -611,8 +650,8 @@ function Departamento() {
                         count={listaDepa.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
-                        onChangePage={handleChangePage}
-                        onChangeRowsPerPage={handleChangeRowsPerPage}
+                        onPageChange={handlePageChange}
+                        onRowsPerPageChange={handleRowsPerPageChange}
                      />
                   </Paper>
                </Paper>
@@ -620,24 +659,40 @@ function Departamento() {
          </Container>
          <Modal
             open={modalInsertar}
-            onClose={abrirCerrarModalInsertar} disableBackdropClick >
+            onClose={(event, reason) => {
+               if (reason !== 'backdropClick') {
+                  abrirCerrarModalInsertar();
+               }
+            }}>
             {bodyInsertar}
          </Modal>
 
          <Modal
             open={modalEditar}
-            onClose={abrirCerrarModalEditar} disableBackdropClick >
+            onClose={(event, reason) => {
+               if (reason !== 'backdropClick') {
+                  abrirCerrarModalEditar();
+               }
+            }}>
             {bodyEditar}
          </Modal>
 
          <Modal
             open={modalEliminar}
-            onClose={abrirCerrarModalEliminar} disableBackdropClick >
+            onClose={(event, reason) => {
+               if (reason !== 'backdropClick') {
+                  abrirCerrarModalEliminar();
+               }
+            }}>
             {bodyEliminar}
          </Modal>
          <Modal
             open={modalDetalle}
-            onClose={abrirCerrarModalDetalle} disableBackdropClick >
+            onClose={(event, reason) => {
+               if (reason !== 'backdropClick') {
+                  abrirCerrarModalDetalle();
+               }
+            }}>
             {bodyDetalle}
          </Modal>
       </React.Fragment >

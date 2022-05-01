@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FormHelperText, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
+import { FormHelperText, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 import { listarParametro } from '../../actions/UtilsAction';
 const SelectParametro = ({ name, value, onChange, className, label, error, errorMessage, concepto, disabled=false }) => {
     const [parametros, setParametros] = useState([])

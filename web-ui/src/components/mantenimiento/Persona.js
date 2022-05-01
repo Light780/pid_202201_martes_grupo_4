@@ -1,5 +1,5 @@
-import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, IconButton, Hidden } from '@material-ui/core';
-import { Edit, Delete, Info } from '@material-ui/icons/';
+import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, IconButton, Hidden, FormControlLabel } from '@mui/material';
+import { Edit, Delete, Info, CheckCircle } from '@mui/icons-material';
 import React, { useState, useEffect } from 'react';
 import { useStyles, style } from '../tools/style'
 import { registrarPersona, listarPersona, consultarUnico, actualizarPersona, borrarPersona } from '../../actions/PersonaAction';
@@ -7,6 +7,7 @@ import { useStateValue } from '../../context/store';
 import SelectParametro from '../utils/SelectParametro';
 import SelectDepartamento from '../utils/SelectDepartamento';
 import SelectSexo from '../utils/SelectSexo';
+import ResponsiveButton from '../utils/ResponsiveButton';
 function Persona() {
    const styles = useStyles();
    const [{ sesionUsuario }, dispatch] = useStateValue()
@@ -28,11 +29,13 @@ function Persona() {
    })
    const [filtro, setFiltro] = useState({
       filtroDepartamentoId: 0,
-      filtroTipoPersonaId: 0
+      filtroTipoPersonaId: 0,
+      filtroEliminado:0
    })
    const [checkFiltro, setCheckFiltro] = useState({
       filtroDepartamentoId: false,
-      filtroTipoPersonaId: false
+      filtroTipoPersonaId: false,
+      filtroEliminado:false
    })
    const [errores, setErrores] = useState({})
    const [modalInsertar, setModalInsertar] = useState(false);
@@ -40,10 +43,10 @@ function Persona() {
    const [modalEliminar, setModalEliminar] = useState(false);
    const [modalDetalle, setModalDetalle] = useState(false);
 
-   const handleChangePage = (event, newPage) => {
+   const handlePageChange = (event, newPage) => {
       setPage(newPage);
    };
-   const handleChangeRowsPerPage = event => {
+   const handleRowsPerPageChange = event => {
       setRowsPerPage(parseInt(event.target.value, 10));
       setPage(0);
    };
@@ -159,13 +162,15 @@ function Persona() {
    }
    const peticionDelete = e => {
       e.preventDefault()
-      borrarPersona(persona.personaId).then(respuesta => {
+      borrarPersona(persona.personaId).then(respuesta => {         
+         let mensaje;
          if (respuesta.status === 200) {
+            mensaje = "Persona "+ (persona.eliminado ? "activada" : "eliminada") +" correctamente"
             dispatch({
                type: 'OPEN_SNACKBAR',
                openMensaje: {
                   open: true,
-                  mensaje: "Persona eliminada correctamente",
+                  mensaje: mensaje,
                   severity: 'success'
                }
             })
@@ -173,11 +178,12 @@ function Persona() {
             limpiarForm()
             peticionGet()
          } else {
+            mensaje = "Error al "+ (persona.eliminado ? "activar" : "eliminar") + " la Persona"
             dispatch({
                type: 'OPEN_SNACKBAR',
                openMensaje: {
                   open: true,
-                  mensaje: "Error al eliminar la Persona",
+                  mensaje: mensaje,
                   severity: 'error'
                }
             })
@@ -201,6 +207,11 @@ function Persona() {
          setFiltro(anterior => ({
             ...anterior,
             [name]: 0
+         }))
+      }else{
+         setFiltro(anterior => ({
+            ...anterior,
+            [name]: name==='filtroEliminado' ? 1 : 0
          }))
       }
    }
@@ -480,14 +491,18 @@ function Persona() {
    const bodyEliminar = (
       <div className={styles.modal}>
          <Container component="main" maxWidth="md" justifyContent="center">
-            <Typography className={styles.modalTitle} component="h1" variant="h5" align="center">Estás seguro de eliminar la Persona</Typography>
+            <Typography className={styles.modalTitle} component="h1" variant="h5" align="center">Estás seguro de {persona.eliminado ? "activar" : "eliminar"} la Persona</Typography>
             <Typography className={styles.modalTitle} component="h1" variant="h5" align="center"><b>{persona.documento} - {persona.nombreCompleto}</b></Typography>
             <Grid container spacing={2} justifyContent="center">
                <Grid item xs={6} md={6}>
-                  <Button fullWidth variant="contained" size="large" style={style.submit} color="secondary" onClick={peticionDelete}>Si</Button>
+                  <Button fullWidth variant="contained" size="large" style={style.submit} 
+                  color={persona.eliminado ? "success" : "secondary"}
+                  onClick={peticionDelete}>Si</Button>
                </Grid>
                <Grid item xs={6} md={6}>
-                  <Button fullWidth variant="contained" size="large" style={style.submit} onClick={abrirCerrarModalEliminar}>No</Button>
+                  <Button fullWidth variant="contained" size="large"
+                   color={persona.eliminado ? "secondary" : "primary"}
+                  style={style.submit} onClick={abrirCerrarModalEliminar}>No</Button>
                </Grid>
             </Grid>
          </Container>
@@ -579,7 +594,7 @@ function Persona() {
                   </Paper>
                   <Paper className={styles.paperBody}>
                      <Grid container spacing={2} justifyContent="flex-start">
-                        <Grid item container xs={4} md={2} >
+                        <Grid item container xs={3} md={2} >
                            <Grid item xs={10} md={10}>
                               <SelectDepartamento value={filtro.filtroDepartamentoId}
                                  label="Filtro Depart."
@@ -594,7 +609,7 @@ function Persona() {
                                  name="filtroDepartamentoId" />
                            </Grid>
                         </Grid>
-                        <Grid item container xs={4} md={2} >
+                        <Grid item container xs={3} md={2} >
                            <Grid item xs={10} md={10}>
                               <SelectParametro concepto="TIPO_PERSONA_ID"
                                  name="filtroTipoPersonaId"
@@ -610,11 +625,16 @@ function Persona() {
                                  name="filtroTipoPersonaId"/>
                            </Grid>
                         </Grid>
-                        <Grid item container xs={4} md={8}>
+                        <Grid item container xs={3} md={2} >
+                           <Grid item xs={12} md={12}>
+                              <FormControlLabel
+                                 control={<Checkbox checked={checkFiltro.filtroEliminado} value={checkFiltro.filtroEliminado} onChange={handleCheckFiltro} color='primary' name="filtroEliminado" />}
+                                 label="Eliminados" labelPlacement='start' style={style.checkFiltro} />
+                           </Grid>
+                        </Grid>
+                        <Grid item container xs={3} md={6}>
                            <Grid container justifyContent="flex-end">
-                              <Button type="button" variant="contained" size="large" color="primary" style={style.submit} onClick={abrirCerrarModalInsertar}>
-                                 Registrar
-                              </Button>
+                               <ResponsiveButton style={style.submit} onClick={abrirCerrarModalInsertar}/>
                            </Grid>
                         </Grid>
                      </Grid>
@@ -666,13 +686,13 @@ function Persona() {
                                        }}>
                                           <Info />
                                        </IconButton>
-                                       <IconButton color="secondary" component="span" size="medium" onClick={() => {
+                                       <IconButton color={persona.eliminado ? "success" : "secondary"} component="span" size="medium" onClick={() => {
                                           limpiarForm();
                                           setPersona(persona);
                                           abrirCerrarModalEliminar()
                                        }}
                                        >
-                                          <Delete />
+                                          {persona.eliminado ? <CheckCircle/> : <Delete />}
                                        </IconButton>
                                     </TableCell>
                                  </TableRow>
@@ -690,8 +710,8 @@ function Persona() {
                         count={listaPersona.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
-                        onChangePage={handleChangePage}
-                        onChangeRowsPerPage={handleChangeRowsPerPage}
+                        onPageChange={handlePageChange}
+                        onRowsPerPageChange={handleRowsPerPageChange}
                      />
                   </Paper>
                </Paper>
@@ -699,24 +719,40 @@ function Persona() {
          </Container>
          <Modal
             open={modalInsertar}
-            onClose={abrirCerrarModalInsertar} disableBackdropClick >
+            onClose={(event, reason) => {
+               if (reason !== 'backdropClick') {
+                  abrirCerrarModalInsertar();
+               }
+            }}>
             {bodyInsertar}
          </Modal>
 
          <Modal
             open={modalEditar}
-            onClose={abrirCerrarModalEditar} disableBackdropClick >
+            onClose={(event, reason) => {
+               if (reason !== 'backdropClick') {
+                  abrirCerrarModalEditar();
+               }
+            }}>
             {bodyEditar}
          </Modal>
 
          <Modal
             open={modalEliminar}
-            onClose={abrirCerrarModalEliminar} disableBackdropClick >
+            onClose={(event, reason) => {
+               if (reason !== 'backdropClick') {
+                  abrirCerrarModalEliminar();
+               }
+            }}>
             {bodyEliminar}
          </Modal>
          <Modal
             open={modalDetalle}
-            onClose={abrirCerrarModalDetalle} disableBackdropClick >
+            onClose={(event, reason) => {
+               if (reason !== 'backdropClick') {
+                  abrirCerrarModalDetalle();
+               }
+            }}>
             {bodyDetalle}
          </Modal>
       </React.Fragment >

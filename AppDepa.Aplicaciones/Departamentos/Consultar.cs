@@ -3,6 +3,7 @@ using AppDepa.Aplicaciones.Utils;
 using AppDepa.Infraestructura.Datos.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace AppDepa.Aplicaciones.Departamentos
         public class ListaDepartamento : IRequest<List<DepartamentoDto>>
         {
             public int TipoDepaId { get; set; }
+            public int Eliminado { get; set; }
         }
 
         public class Handler : IRequestHandler<ListaDepartamento, List<DepartamentoDto>>
@@ -37,7 +39,7 @@ namespace AppDepa.Aplicaciones.Departamentos
                             join u in context.Usuario on d.UsuarioId equals u.UsuarioId
                             orderby d.NroDepartamento
                             where (request.TipoDepaId == 0 || d.TipoDepaId == request.TipoDepaId)
-                            where d.Eliminado == false
+                            where d.Eliminado == Convert.ToBoolean(request.Eliminado)
                             select new DepartamentoDto
                             {
                                 DepartamentoId = d.DepartamentoId,
@@ -51,7 +53,8 @@ namespace AppDepa.Aplicaciones.Departamentos
                                 IndLavanderia = d.IndLavanderia,
                                 IndPiscina = d.IndPiscina,
                                 IndPatio = d.IndPatio,
-                                FechaRegistro = d.FechaRegistro.ToString("dd/MM/yyyy hh:mm"),
+                                Eliminado = d.Eliminado,
+                                FechaRegistro = d.FechaRegistro.ToString("dd/MM/yyyy HH:mm"),
                                 Usuario = u.UserName
                             };
                 return await query.ToListAsync();

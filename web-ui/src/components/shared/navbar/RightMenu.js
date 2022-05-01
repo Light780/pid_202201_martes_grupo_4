@@ -1,4 +1,4 @@
-import { Avatar, Divider, List, ListItem, ListItemText} from '@material-ui/core'
+import { Avatar, Divider, List, ListItem, ListItemText} from '@mui/material'
 import { Link } from 'react-router-dom'
 import React from 'react'
 import FotoUsuarioTemp from "../../../logo.svg";

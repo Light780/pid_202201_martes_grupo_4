@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormHelperText, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
+import { FormHelperText, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 const SelectSexo = ({ name, value, onChange, className, error, errorMessage}) => {
     return (
         <FormControl className={className} error={error} required>

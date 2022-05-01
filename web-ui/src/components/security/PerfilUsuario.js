@@ -1,4 +1,4 @@
-import { Grid, TextField, Typography, Button, Container, Avatar } from '@material-ui/core';
+import { Grid, TextField, Typography, Button, Container, Avatar } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import reactFoto from '../../logo.svg'
 import ImageUploader from 'react-images-upload';

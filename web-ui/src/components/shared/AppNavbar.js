@@ -1,4 +1,4 @@
-import { AppBar } from '@material-ui/core';
+import { AppBar } from '@mui/material';
 import React from 'react';
 import NavbarSession from './navbar/NavbarSession';
 import { useStateValue } from '../../context/store';

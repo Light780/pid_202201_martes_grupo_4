@@ -20,9 +20,13 @@ export const actualizarDepartamento = (departamento) => {
     })
 }
 
-export const listarDepartamento = (tipoDepaId) => {
+export const listarDepartamento = (filtro) => {
     return new Promise((resolve, reject) => {
-        HttpClient.get(`Departamento/consulta`, {params: {tipoDepaId : tipoDepaId}}).then(response => {
+        HttpClient.get(`Departamento/consulta`, {params: {
+            tipoDepaId : filtro.filtroTipoDepaId,
+            eliminado  : filtro.filtroEliminado  
+        }
+        }).then(response => {
             resolve(response)
         }).catch(e => resolve(e,reject))
     })

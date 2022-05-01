@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FormHelperText, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
+import { FormHelperText, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 import { listarDepartamento } from '../../actions/DepartamentoAction';
 const SelectDepartamento = ({ name, value, onChange, className, error, errorMessage, label="Departamento", disabled=false}) => {
     const [departamentos, setDepartamentos] = useState([])

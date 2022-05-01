@@ -1,4 +1,4 @@
-import { Button, Drawer, IconButton, Toolbar, Typography, Avatar, makeStyles } from '@material-ui/core';
+import { Button, Drawer, IconButton, Toolbar, Typography, Avatar} from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FotoUsuarioTemp from "../../../logo.svg";

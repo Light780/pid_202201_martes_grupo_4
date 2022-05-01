@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react'
 import './App.css';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import { Grid, Snackbar, ThemeProvider } from '@material-ui/core';
+import { Grid, Snackbar, ThemeProvider } from '@mui/material';
 import theme from './theme/theme'
 import AppNavBar from './components/shared/AppNavbar'
 import Inicio from './components/Inicio';
@@ -9,7 +9,7 @@ import Login from './components/security/Login';
 import SecurePath from './components/shared/SecurePath'
 import { useStateValue } from './context/store';
 import { obtenerUsuario } from './actions/UsuarioAction';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/lab';
 import PerfilUsuario from './components/security/PerfilUsuario';
 import Departamento from './components/mantenimiento/Departamento';
 import Persona from './components/mantenimiento/Persona';
