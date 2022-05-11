@@ -12,7 +12,7 @@ namespace AppDepa.Infraestructura.Datos.Context
     {
         public GestionDepartamentosContext(DbContextOptions options) : base(options)
         {
-                
+
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,8 +25,9 @@ namespace AppDepa.Infraestructura.Datos.Context
             modelBuilder.Entity<PagoServicio>().HasKey(c => c.PagoServicioId);
             modelBuilder.Entity<Parametro>().HasNoKey();
             modelBuilder.Entity<Visita>().HasKey(c => c.VisitaId);
+            modelBuilder.Entity<Visita>().HasOne(c => c.Persona).WithMany(c => c.Visitas).HasForeignKey(c => c.PersonaId);
+            modelBuilder.Entity<Visita>().HasOne(c => c.PersonaVisita).WithMany(c => c.VisitasPersona).HasForeignKey(c => c.PersonaVisitaId);
             modelBuilder.Entity<HistorialIncidencia>().HasKey(c => c.HistorialIncidenciaId);
-            modelBuilder.Entity<HistorialIncidencia>().HasKey(c => c.HistorialIncidenciaId);            
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<Usuario> Usuario { get; set; }
