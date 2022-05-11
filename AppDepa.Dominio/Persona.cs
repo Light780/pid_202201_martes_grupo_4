@@ -32,6 +32,7 @@ namespace AppDepa.Dominio
         public Usuario Usuario { get; set; }
 
         public ICollection<Visita> Visitas { get; set; }
+        public ICollection<Visita> VisitasPersona { get; set; }
     }
 }
 

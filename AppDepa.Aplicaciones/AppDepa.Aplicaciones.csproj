@@ -5,21 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Boleta\**" />
-    <Compile Remove="Incidencias\**" />
-    <Compile Remove="PagoServicios\**" />
-    <Compile Remove="Visitas\**" />
-    <EmbeddedResource Remove="Boleta\**" />
-    <EmbeddedResource Remove="Incidencias\**" />
-    <EmbeddedResource Remove="PagoServicios\**" />
-    <EmbeddedResource Remove="Visitas\**" />
-    <None Remove="Boleta\**" />
-    <None Remove="Incidencias\**" />
-    <None Remove="PagoServicios\**" />
-    <None Remove="Visitas\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.4.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
   </ItemGroup>
@@ -31,7 +16,15 @@
 
   <ItemGroup>
 
+    <Folder Include="Boleta\" />
+
+    <Folder Include="Incidencias\" />
+
     <Folder Include="Mascotas\" />
+
+    <Folder Include="PagoServicios\" />
+
+    <Folder Include="Visitas\" />
 
   </ItemGroup>
 
