@@ -27,6 +27,12 @@ namespace AppDepa.Dominio
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
         [Column(TypeName = "varchar(300)")]
+
+        //
+        public int EstadoId { get; set; }
+        [ForeignKey("EstadoId")]
+        public Departamento Departamento { get; set; }
+        //
         public string Comentario { get; set; }
     }
 }

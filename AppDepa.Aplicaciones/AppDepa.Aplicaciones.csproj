@@ -24,8 +24,6 @@
 
     <Folder Include="PagoServicios\" />
 
-    <Folder Include="Visitas\" />
-
   </ItemGroup>
 
 </Project>
