@@ -1,5 +1,6 @@
 import { makeStyles } from "@mui/styles";
 
+
 export const style = {
     paper: {
         marginTop: 8,
@@ -13,13 +14,13 @@ export const style = {
     },
     submit: {
         marginTop: 15,
-        marginBottom:10
+        marginBottom: 10
     },
-    crudTitle:{
+    crudTitle: {
         margin: 5,
     },
-    backgroundTitle:{
-        backgroundColor:'lightgray'
+    backgroundTitle: {
+        backgroundColor: 'lightgray'
     },
     avatar: {
         margin: 5,
@@ -27,15 +28,15 @@ export const style = {
         width: 100,
         height: 100
     },
-    checkFiltro:{
-        marginTop:15
+    checkFiltro: {
+        marginTop: 15
     },
     icon: {
         fontSize: 40
     },
-    detail:{                
-        marginTop:20        
-    }  
+    detail: {
+        marginTop: 20
+    }
 }
 export const useStyles = makeStyles((theme) => ({
     seccionDesktop: {
@@ -63,19 +64,19 @@ export const useStyles = makeStyles((theme) => ({
     },
     listItemText: {
         fontSize: '14px',
-        fontWeight: 600,        
+        fontWeight: 600,
         color: "black"
     },
-    iconMenu:{
-      paddingRight:10  
+    iconMenu: {
+        paddingRight: 10
     },
-    menu:{
-        backgroundColor:theme.palette.primary.main,
-        color:theme.palette.primary.contrastText,        
+    menu: {
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.primary.contrastText,
     },
-    subMenu:{
-        backgroundColor:"white",
-        color:"black"        
+    subMenu: {
+        backgroundColor: "white",
+        color: "black"
     },
     modal: {
         position: 'absolute',
@@ -83,8 +84,8 @@ export const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down("md")]: {
             width: 500,
         },
-        [theme.breakpoints.down("xs")]: {
-            width: 400,
+        [theme.breakpoints.down("sm")]: {
+            width: 350,
         },
         backgroundColor: theme.palette.background.paper,
         border: '2px solid #000',
@@ -93,38 +94,38 @@ export const useStyles = makeStyles((theme) => ({
         transform: 'translate(-50%, -50%)'
     },
     modalForm: {
-        width: "100%"        
-    },
-    iconos:{
-       cursor: 'pointer'
-    },
-    inputMaterial:{
-       width: '100%'
-    },
-    crud:{        
-        paddingTop:10,        
         width: "100%"
-    },     
-    paperTitle:{
-        backgroundColor: theme.palette.primary.main,
-        color:theme.palette.primary.contrastText,
-        marginBottom:10          
-    },    
-    paperBody:{
-        paddingLeft:5, 
-        paddingRight:5        
     },
-    table:{        
+    iconos: {
+        cursor: 'pointer'
+    },
+    inputMaterial: {
+        width: '100%'
+    },
+    crud: {
+        paddingTop: 10,
+        width: "100%"
+    },
+    paperTitle: {
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.primary.contrastText,
+        marginBottom: 15
+    },
+    paperBody: {
+        paddingLeft: 5,
+        paddingRight: 5
+    },
+    table: {
         maxHeight: 650,
         [theme.breakpoints.down("xs")]: {
             maxHeight: 500,
         },
         [theme.breakpoints.down("md")]: {
             maxHeight: 500,
-        }                
-    },    
+        }
+    },
     modalTitle: {
-        marginTop:5        
+        marginTop: 5
     }
- }));
+}));
 export default useStyles
