@@ -30,7 +30,7 @@ namespace AppDepa.Dominio
 
         //
         public int EstadoId { get; set; }
-        [ForeignKey("EstadoId")]
+
         public Departamento Departamento { get; set; }
         //
         public string Comentario { get; set; }

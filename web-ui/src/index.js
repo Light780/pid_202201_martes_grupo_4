@@ -6,12 +6,15 @@ import reportWebVitals from './reportWebVitals';
 import {StateProvider} from './context/store'
 import { initialState } from './context/initialState';
 import {mainReducer} from './context/reducers'
+import { StyledEngineProvider } from '@mui/material';
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
 root.render(  
     <React.StrictMode>
         <StateProvider initialState={initialState} reducer={mainReducer}>
-            <App />    
+            <StyledEngineProvider injectFirst>
+                <App />    
+            </StyledEngineProvider>
         </StateProvider>
     </React.StrictMode>
 );

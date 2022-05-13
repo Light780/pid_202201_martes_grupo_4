@@ -1,11 +1,12 @@
 import { List, ListItem, ListItemText, Collapse} from '@mui/material';
 import { Link } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
-import { Build, ExpandLess, ExpandMore } from '@mui/icons-material';
+import { Build, ExpandLess, ExpandMore, People } from '@mui/icons-material';
 
 export const LeftMenu = ({ classes, onClick }) => {
     const [open, setOpen] = useState({
-        estadoColapsoMantenimiento : false
+        estadoColapsoMantenimiento : false,
+        estadoColapsoVisitas : false
     });
     const [selectedIndex, setSelectedIndex] = useState(0);
     const handleClick = (name) => {
@@ -59,6 +60,22 @@ export const LeftMenu = ({ classes, onClick }) => {
                         onClick={(event) => handleListItemClick(event, 4)} button to='/mantenimiento/prueba'>
                             <i className='material-icons'>pets</i>
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Prueba" />
+                        </ListItem>
+                    </List>
+                </Collapse>
+
+                <ListItem button onClick={() => handleClick("estadoColapsoVisitas")} selected={open.estadoColapsoVisitas}>
+                    <People color='black' className={classes.iconMenu}/>
+                    <ListItemText classes={{ primary: classes.listItemText }} primary="Modulo Visita" />
+                    {open.estadoColapsoVisitas ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+                <Collapse in={open.estadoColapsoVisitas} timeout="auto" unmountOnExit>
+                    <List component="div">
+                        <ListItem component={Link} button to="/visitas/registro"
+                        selected={selectedIndex === 5}
+                        onClick={(event) => handleListItemClick(event, 5)}>
+                            <i className='material-icons'>emoji_people</i>
+                            <ListItemText classes={{ primary: classes.listItemText }} primary="Registro" />
                         </ListItem>
                     </List>
                 </Collapse>

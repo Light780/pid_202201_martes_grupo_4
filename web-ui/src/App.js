@@ -15,6 +15,7 @@ import Departamento from './components/mantenimiento/Departamento';
 import Persona from './components/mantenimiento/Persona';
 import Mascota from './components/mantenimiento/Mascota';
 import Prueba from './components/mantenimientos/Prueba';
+import RegistroVisita from './components/visitas/RegistroVisita';
 function App() {
   const [{sesionUsuario, openSnackBar}, dispatch] = useStateValue()
   const [iniciaApp, setIniciaApp] = useState(false);
@@ -52,6 +53,7 @@ function App() {
               <Route exact path='/mantenimiento/persona' element= {<SecurePath><Persona/></SecurePath>}/>      
               <Route exact path='/mantenimiento/mascota' element= {<SecurePath><Mascota/></SecurePath>}/>
               <Route exact path='/mantenimiento/prueba' element= {<SecurePath><Prueba/></SecurePath>}/>
+              <Route exact path='/visitas/registro' element= {<SecurePath><RegistroVisita/></SecurePath>}/>
             </Routes>
           </Grid>
         </ThemeProvider>

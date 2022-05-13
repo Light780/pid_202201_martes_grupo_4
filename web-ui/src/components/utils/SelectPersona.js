@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { FormHelperText, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
-import { listarDepartamento } from '../../actions/DepartamentoAction';
-const SelectDepartamento = ({ name, value, onChange, className, error, errorMessage, label="Departamento", disabled=false}) => {
-    const [departamentos, setDepartamentos] = useState([])
+import { listarPersona } from '../../actions/PersonaAction';
+const SelectPersona = ({ name, value, onChange, className, error, errorMessage, label="Persona", disabled=false}) => {
+    const [personas, setPersonas] = useState([])
     const [isLoading, setLoading] = useState(true);
-    const listarDepartamentosSelect = () => {
-        listarDepartamento({
-            filtroTipoDepaId:0,
-            filtroEliminado:0  
+    const listarPersonasSelect = () => {
+        listarPersona({
+            filtroDepartamentoId:0,
+            filtroTipoPersonaId:0,
+            filtroEliminado:0     
         }).then(respuesta => {
-            setDepartamentos(respuesta.data)
+            setPersonas(respuesta.data)
             setLoading(false)
         })
     }
     useEffect(() => {
-        listarDepartamentosSelect();
+        listarPersonasSelect();
     }, [])
     if (isLoading) {
         return <div className="App">Cargando...</div>;
@@ -26,9 +27,9 @@ const SelectDepartamento = ({ name, value, onChange, className, error, errorMess
                 <MenuItem value="0" disabled={!disabled}>
                     <em>Seleccione una opción</em>
                 </MenuItem>
-                {departamentos && departamentos.map(departamento => (
-                    <MenuItem key={departamento.departamentoId} value={departamento.departamentoId}>
-                        {departamento.nroDepartamento} - {departamento.tipoDepa}
+                {personas && personas.map(persona => (
+                    <MenuItem key={persona.personaId} value={persona.personaId}>
+                        {persona.nombreCompleto} - Dep. {persona.departamento}
                     </MenuItem>
                 ))}
             </Select>
@@ -37,4 +38,4 @@ const SelectDepartamento = ({ name, value, onChange, className, error, errorMess
     );
 };
 
-export default SelectDepartamento;
+export default SelectPersona;
