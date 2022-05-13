@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AppDepa.Aplicaciones.Dto
 {
-    class VisitaDto
+    public class VisitaDto
     {
         public int VisitaId { get; set; }
         public string PersonaVisita { get; set; }

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AppDepa.Aplicaciones.Visitas
 {
-    class Consultar
+    public class Consultar
     {
         public class ListarVisitas : IRequest<List<VisitaDto>>
         {
