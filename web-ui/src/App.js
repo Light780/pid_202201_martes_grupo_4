@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react'
 import './App.css';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import { Grid, Snackbar, ThemeProvider } from '@material-ui/core';
+import { Grid, Snackbar, ThemeProvider } from '@mui/material';
 import theme from './theme/theme'
 import AppNavBar from './components/shared/AppNavbar'
 import Inicio from './components/Inicio';
@@ -9,12 +9,14 @@ import Login from './components/security/Login';
 import SecurePath from './components/shared/SecurePath'
 import { useStateValue } from './context/store';
 import { obtenerUsuario } from './actions/UsuarioAction';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/lab';
 import PerfilUsuario from './components/security/PerfilUsuario';
 import Departamento from './components/mantenimiento/Departamento';
 import Persona from './components/mantenimiento/Persona';
 import Mascota from './components/mantenimiento/Mascota';
 import Visita from './components/mantenimiento/Visita';
+import Prueba from './components/mantenimientos/Prueba';
+import RegistroVisita from './components/visitas/RegistroVisita';
 
 function App() {
   const [{sesionUsuario, openSnackBar}, dispatch] = useStateValue()
@@ -53,6 +55,9 @@ function App() {
               <Route exact path='/mantenimiento/persona' element= {<SecurePath><Persona/></SecurePath>}/>      
               <Route exact path='/mantenimiento/mascota' element= {<SecurePath><Mascota/></SecurePath>}/>                          
               <Route exact path='/mantenimiento/visita' element= {<SecurePath><Visita/></SecurePath>}/>                          
+              <Route exact path='/mantenimiento/mascota' element= {<SecurePath><Mascota/></SecurePath>}/>
+              <Route exact path='/mantenimiento/prueba' element= {<SecurePath><Prueba/></SecurePath>}/>
+              <Route exact path='/visitas/registro' element= {<SecurePath><RegistroVisita/></SecurePath>}/>
             </Routes>
           </Grid>
         </ThemeProvider>

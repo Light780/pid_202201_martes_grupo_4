@@ -3,6 +3,7 @@ using AppDepa.Aplicaciones.Utils;
 using AppDepa.Infraestructura.Datos.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -16,6 +17,7 @@ namespace AppDepa.Aplicaciones.Mascotas
         {
             public int DepartamentoId { get; set; }
             public int EspecieId { get; set; }
+            public int Eliminado { get; set; }
         }
 
         public class Handler : IRequestHandler<ListarMascotas, List<MascotaDto>>
@@ -35,7 +37,7 @@ namespace AppDepa.Aplicaciones.Mascotas
                             orderby m.MascotaId
                             where (request.DepartamentoId == 0 || m.DepartamentoId == request.DepartamentoId)
                             where (request.EspecieId == 0 || m.EspecieId == request.EspecieId)
-                            where m.Eliminado == false
+                            where m.Eliminado == Convert.ToBoolean(request.Eliminado)
                             select new MascotaDto
                             {
                                 MascotaId = m.MascotaId,
@@ -43,7 +45,8 @@ namespace AppDepa.Aplicaciones.Mascotas
                                 Especie = utils.BuscarParametro(m.EspecieId, "ESPECIE_MASCOTA_ID"),
                                 Sexo = m.Sexo,
                                 Departamento = d.NroDepartamento,
-                                FechaRegistro = m.FechaRegistro.ToString("dd/MM/yyyy hh:mm"),
+                                Eliminado = m.Eliminado,
+                                FechaRegistro = m.FechaRegistro.ToString("dd/MM/yyyy HH:mm"),
                                 Usuario = u.UserName
                             };
                 return await query.ToListAsync();

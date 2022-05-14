@@ -1,5 +1,5 @@
-import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, IconButton } from '@material-ui/core';
-import { Edit, Delete } from '@material-ui/icons/';
+import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, IconButton, FormControlLabel } from '@mui/material';
+import { Edit, Delete, CheckCircle } from '@mui/icons-material';
 import React, { useState, useEffect } from 'react';
 import { useStyles, style } from '../tools/style'
 import { useStateValue } from '../../context/store';
@@ -7,6 +7,7 @@ import SelectSexo from '../utils/SelectSexo';
 import SelectParametro from '../utils/SelectParametro';
 import SelectDepartamento from '../utils/SelectDepartamento';
 import { actualizarMascota, borrarMascota, consultarUnico, listarMascota, registrarMascota } from '../../actions/MascotaAction';
+import ResponsiveButton from '../utils/ResponsiveButton';
 
 function Mascota() {
    const styles = useStyles();
@@ -21,23 +22,31 @@ function Mascota() {
       especieId: 0,
       departamentoId: 0
    })
-   const [depaFiltro, setDepaFiltro] = useState(0)
-   const [checkDepaFiltro, setCheckDepaFiltro] = useState(false)
+   const [filtro, setFiltro] = useState({
+      filtroDepartamentoId: 0,
+      filtroEspecieId: 0,
+      filtroEliminado: 0
+   })
+   const [checkFiltro, setCheckFiltro] = useState({
+      filtroDepartamentoId: false,
+      filtroEspecieId: false,
+      filtroEliminado: false
+   })
    const [errores, setErrores] = useState({})
    const [modalInsertar, setModalInsertar] = useState(false);
    const [modalEditar, setModalEditar] = useState(false);
    const [modalEliminar, setModalEliminar] = useState(false);
 
-   const handleChangePage = (event, newPage) => {
+   const handlePageChange = (event, newPage) => {
       setPage(newPage);
    };
-   const handleChangeRowsPerPage = event => {
+   const handleRowsPerPageChange = event => {
       setRowsPerPage(parseInt(event.target.value, 10));
       setPage(0);
    };
    const emptyRows = rowsPerPage - Math.min(rowsPerPage, listaMascota.length - page * rowsPerPage)
    const peticionGet = () => {
-      listarMascota(depaFiltro).then(respuesta => {
+      listarMascota(filtro).then(respuesta => {
          if (respuesta.status === 200) {
             setListaMascota(respuesta.data)
          } else {
@@ -126,12 +135,14 @@ function Mascota() {
    const peticionDelete = e => {
       e.preventDefault()
       borrarMascota(mascota.mascotaId).then(respuesta => {
+         let mensaje;
          if (respuesta.status === 200) {
+            mensaje = "Mascota "+ (mascota.eliminado ? "activada" : "eliminada") +" correctamente"
             dispatch({
                type: 'OPEN_SNACKBAR',
                openMensaje: {
                   open: true,
-                  mensaje: "Mascota eliminada correctamente",
+                  mensaje: mensaje,
                   severity: 'success'
                }
             })
@@ -139,11 +150,12 @@ function Mascota() {
             limpiarForm()
             peticionGet()
          } else {
+            mensaje = "Error al "+ (mascota.eliminado ? "activar" : "eliminar") + " la Mascota"
             dispatch({
                type: 'OPEN_SNACKBAR',
                openMensaje: {
                   open: true,
-                  mensaje: "Error al eliminar la Mascota",
+                  mensaje: mensaje,
                   severity: 'error'
                }
             })
@@ -213,12 +225,28 @@ function Mascota() {
       }))
    }
    const handleChangeFiltro = e => {
-      setDepaFiltro(e.target.value);
+      const { name, value } = e.target
+      setFiltro(anterior => ({
+         ...anterior,
+         [name]: value
+      }))
    }
    const handleCheckFiltro = e => {
-      setCheckDepaFiltro(e.target.value === 'false');
-      if (e.target.value === 'true') {
-         setDepaFiltro(0)
+      const { name, value } = e.target
+      setCheckFiltro(anterior => ({
+         ...anterior,
+         [name]: value === 'false'
+      }))
+      if (value === 'true') {
+         setFiltro(anterior => ({
+            ...anterior,
+            [name]: 0
+         }))
+      }else{
+         setFiltro(anterior => ({
+            ...anterior,
+            [name]: name==='filtroEliminado' ? 1 : 0
+         }))
       }
    }
    const abrirCerrarModalInsertar = () => {
@@ -233,7 +261,7 @@ function Mascota() {
    }
    useEffect(() => {
       peticionGet()
-   }, [depaFiltro])
+   }, [filtro])
 
    const bodyInsertar = (
       <div className={styles.modal}>
@@ -328,14 +356,17 @@ function Mascota() {
    const bodyEliminar = (
       <div className={styles.modal}>
          <Container component="main" maxWidth="md" justifyContent="center">
-            <Typography className={styles.modalTitle} component="h1" variant="h5" align="center">Estás seguro de eliminar la mascota</Typography>
+            <Typography className={styles.modalTitle} component="h1" variant="h5" align="center">Estás seguro de {mascota.eliminado ? "activar" : "eliminar"} la mascota</Typography>
             <Typography className={styles.modalTitle} component="h1" variant="h5" align="center"><b>{mascota.nombreMascota}</b></Typography>
             <Grid container spacing={2} justifyContent="center">
                <Grid item xs={6} md={6}>
-                  <Button fullWidth variant="contained" size="large" style={style.submit} color="secondary" onClick={peticionDelete}>Si</Button>
+                  <Button fullWidth variant="contained" size="large" style={style.submit} 
+                  color={mascota.eliminado ? "success" : "secondary"} onClick={peticionDelete}>Si</Button>
                </Grid>
                <Grid item xs={6} md={6}>
-                  <Button fullWidth variant="contained" size="large" style={style.submit} onClick={abrirCerrarModalEliminar}>No</Button>
+                  <Button fullWidth variant="contained" size="large" 
+                  color={mascota.eliminado ? "secondary" : "primary"}
+                  style={style.submit} onClick={abrirCerrarModalEliminar}>No</Button>
                </Grid>
             </Grid>
          </Container>
@@ -356,25 +387,48 @@ function Mascota() {
                      </Grid>
                   </Paper>
                   <Paper className={styles.paperBody}>
-                     <Grid container spacing={2} justifyContent="flex-start">
-                        <Grid item container xs={6} md={2} >
+                  <Grid container spacing={2} justifyContent="flex-start">
+                        <Grid item container xs={3} md={2} >
                            <Grid item xs={10} md={10}>
-                              <SelectDepartamento value={depaFiltro}
-                                 label="Filtro Departamento"
+                              <SelectDepartamento value={filtro.filtroDepartamentoId}
+                                 label="Filtro Depart."
                                  className={styles.inputMaterial}
                                  onChange={handleChangeFiltro}
-                                 disabled={!checkDepaFiltro} />
+                                 name="filtroDepartamentoId"
+                                 disabled={!checkFiltro.filtroDepartamentoId} />
                            </Grid>
                            <Grid item xs={2} md={2}>
-                              <Checkbox checked={checkDepaFiltro} className={styles.inputMaterial} style={style.checkFiltro}
-                                 onChange={handleCheckFiltro} color='primary' value={checkDepaFiltro} />
+                              <Checkbox checked={checkFiltro.filtroDepartamentoId} className={styles.inputMaterial} style={style.checkFiltro}
+                                 onChange={handleCheckFiltro} color='primary' value={checkFiltro.filtroDepartamentoId}
+                                 name="filtroDepartamentoId" />
                            </Grid>
                         </Grid>
-                        <Grid item container xs={6} md={10}>
+                        <Grid item container xs={3} md={2} >
+                           <Grid item xs={10} md={10}>
+                              <SelectParametro concepto="ESPECIE_MASCOTA_ID"
+                                 name="filtroEspecieId"
+                                 className={styles.inputMaterial}
+                                 label="Filtro Especie" onChange={handleChangeFiltro}
+                                 disabled={!checkFiltro.filtroEspecieId}
+                                 value={filtro.filtroEspecieId}
+                              />
+                           </Grid>
+                           <Grid item xs={2} md={2}>
+                              <Checkbox checked={checkFiltro.filtroEspecieId} className={styles.inputMaterial} style={style.checkFiltro}
+                                 onChange={handleCheckFiltro} color='primary' value={checkFiltro.filtroEspecieId} 
+                                 name="filtroEspecieId"/>
+                           </Grid>
+                        </Grid>
+                        <Grid item container xs={3} md={2} >
+                           <Grid item xs={12} md={12}>
+                              <FormControlLabel
+                                 control={<Checkbox checked={checkFiltro.filtroEliminado} value={checkFiltro.filtroEliminado} onChange={handleCheckFiltro} color='primary' name="filtroEliminado" />}
+                                 label="Eliminados" labelPlacement='start' style={style.checkFiltro} />
+                           </Grid>
+                        </Grid>
+                        <Grid item container xs={3} md={6}>
                            <Grid container justifyContent="flex-end">
-                              <Button type="button" variant="contained" size="large" color="primary" style={style.submit} onClick={abrirCerrarModalInsertar}>
-                                 Registrar
-                              </Button>
+                              <ResponsiveButton style={style.submit} onClick={abrirCerrarModalInsertar}/>
                            </Grid>
                         </Grid>
                      </Grid>
@@ -409,13 +463,13 @@ function Mascota() {
                                        }}>
                                           <Edit />
                                        </IconButton>
-                                       <IconButton color="secondary" component="span" size="medium" onClick={() => {
+                                       <IconButton color={ mascota.eliminado? "success" :"secondary"} component="span" size="medium" onClick={() => {
                                           limpiarForm();
                                           setMascota(mascota);
                                           abrirCerrarModalEliminar()
                                        }}
                                        >
-                                          <Delete />
+                                          {mascota.eliminado ? <CheckCircle/> : <Delete />}
                                        </IconButton>
                                     </TableCell>
                                  </TableRow>
@@ -433,8 +487,8 @@ function Mascota() {
                         count={listaMascota.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
-                        onChangePage={handleChangePage}
-                        onChangeRowsPerPage={handleChangeRowsPerPage}
+                        onPageChange={handlePageChange}
+                        onRowsPerPageChange={handleRowsPerPageChange}
                      />
                   </Paper>
                </Paper>
@@ -442,19 +496,31 @@ function Mascota() {
          </Container>
          <Modal
             open={modalInsertar}
-            onClose={abrirCerrarModalInsertar} disableBackdropClick >
+            onClose={(event, reason) => {
+               if (reason !== 'backdropClick') {
+                  abrirCerrarModalInsertar();
+               }
+            }}>
             {bodyInsertar}
          </Modal>
 
          <Modal
             open={modalEditar}
-            onClose={abrirCerrarModalEditar} disableBackdropClick >
+            onClose={(event, reason) => {
+               if (reason !== 'backdropClick') {
+                  abrirCerrarModalEditar();
+               }
+            }}>
             {bodyEditar}
          </Modal>
 
          <Modal
             open={modalEliminar}
-            onClose={abrirCerrarModalEliminar} disableBackdropClick >
+            onClose={(event, reason) => {
+               if (reason !== 'backdropClick') {
+                  abrirCerrarModalEliminar();
+               }
+            }}>
             {bodyEliminar}
          </Modal>
       </React.Fragment >

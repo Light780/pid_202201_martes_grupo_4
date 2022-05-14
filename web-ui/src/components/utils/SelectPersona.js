@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { FormHelperText, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
-import { listarParametro } from '../../actions/UtilsAction';
-const SelectParametro = ({ name, value, onChange, className, label, error, errorMessage, concepto, disabled=false }) => {
-    const [parametros, setParametros] = useState([])
+import { listarPersona } from '../../actions/PersonaAction';
+const SelectPersona = ({ name, value, onChange, className, error, errorMessage, label="Persona", disabled=false}) => {
+    const [personas, setPersonas] = useState([])
     const [isLoading, setLoading] = useState(true);
-    const listarParametrosSelect = () => {
-        listarParametro(concepto).then(respuesta => {
-            setParametros(respuesta.data)
+    const listarPersonasSelect = () => {
+        listarPersona({
+            filtroDepartamentoId:0,
+            filtroTipoPersonaId:0,
+            filtroEliminado:0     
+        }).then(respuesta => {
+            setPersonas(respuesta.data)
             setLoading(false)
         })
     }
     useEffect(() => {
-        listarParametrosSelect();
+        listarPersonasSelect();
     }, [])
     if (isLoading) {
         return <div className="App">Cargando...</div>;
@@ -23,8 +27,10 @@ const SelectParametro = ({ name, value, onChange, className, label, error, error
                 <MenuItem value="0" disabled={!disabled}>
                     <em>Seleccione una opción</em>
                 </MenuItem>
-                {parametros && parametros.map(parametro => (
-                    <MenuItem key={parametro.descripcion} value={parametro.paramId}>{parametro.descripcion}</MenuItem>
+                {personas && personas.map(persona => (
+                    <MenuItem key={persona.personaId} value={persona.personaId}>
+                        {persona.nombreCompleto} - Dep. {persona.departamento}
+                    </MenuItem>
                 ))}
             </Select>
             {error && <FormHelperText>{errorMessage}</FormHelperText>}
@@ -32,4 +38,4 @@ const SelectParametro = ({ name, value, onChange, className, label, error, error
     );
 };
 
-export default SelectParametro;
+export default SelectPersona;

@@ -20,9 +20,15 @@ export const actualizarMascota = (mascota) => {
     })
 }
 
-export const listarMascota = (departamentoId) => {
+export const listarMascota = (filtro) => {
     return new Promise((resolve, reject) => {
-        HttpClient.get(`Mascota/consulta`, {params: {departamentoId : departamentoId}}).then(response => {
+        HttpClient.get(`Mascota/consulta`, {params: 
+            {
+                departamentoId : filtro.filtroDepartamentoId,
+                especieId : filtro.filtroEspecieId,
+                eliminado : filtro.filtroEliminado
+            }
+        }).then(response => {
             resolve(response)
         }).catch(e => resolve(e,reject))
     })
