@@ -672,7 +672,8 @@ function Persona() {
                                     <TableCell size="small" align='center'>{persona.departamento}</TableCell>
                                     <TableCell size="small" align='center'>{persona.usuario}</TableCell>
                                     <TableCell size="small" align='center'>{persona.fechaRegistro}</TableCell>
-                                    <TableCell size="small" align='center'>{persona.estado}</TableCell>
+                                    <TableCell size="small" align='center'
+                                    style={persona.estado == "Activo"?  {color: "green", fontWeight: "bold"} : { color: "red", fontWeight: "bold"}}>{persona.estado}</TableCell>
                                     <TableCell size="small" align='center'>
                                        <IconButton color="primary" component="span" size="medium" onClick={async () => {
                                           limpiarForm();
