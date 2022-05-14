@@ -25,7 +25,8 @@ export const listarPersona = (filtro) => {
         HttpClient.get(`Persona/consulta`, {
             params: {
                 departamentoId : filtro.filtroDepartamentoId, 
-                tipoPersonaId : filtro.filtroTipoPersonaId
+                tipoPersonaId :  filtro.filtroTipoPersonaId,
+                eliminado     :  filtro.filtroEliminado
             }
         }).then(response => {
             resolve(response)

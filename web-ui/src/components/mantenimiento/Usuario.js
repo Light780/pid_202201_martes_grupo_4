@@ -1,5 +1,5 @@
 import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TableCell, TableBody, TableRow, Paper, Checkbox, FormControlLabel, Hidden, IconButton } from '@material-ui/core';
-import { Edit, Delete, Info } from '@material-ui/icons/';
+import { Edit, Delete, Info } from '@mui/icons-material';
 import React, { useState, useEffect } from 'react';
 import { style, styleModal } from '../tools/style'
 import { loginUsuario, obtenerUsuario, actualizarUsuario, eliminarUsuario, } from '../../actions/UsuarioAction';

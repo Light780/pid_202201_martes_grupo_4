@@ -1,6 +1,13 @@
-import { createTheme } from '@material-ui/core/styles'
-import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
-const breakpoints = createBreakpoints({})
+import { red } from '@mui/material/colors';
+import { createTheme } from '@mui/material/styles'
+import createBreakpoints from "@mui/system/createTheme/createBreakpoints";
+const breakpoints = createBreakpoints({
+    xs: 0,
+    sm: 600,
+    md: 900,
+    lg: 1200,
+    xl: 1536,
+});
 const theme = createTheme({
     palette: {
         primary: {
@@ -8,26 +15,47 @@ const theme = createTheme({
             main: "#1976d2",
             dark: "#004ba0",
             contrastText: "#ecfad8"
-        }
+        },
+        secondary: red            
     },
-    overrides: {
+    components: {
         MuiTableCell: {
-            root: {
-                [breakpoints.up('md')]: {
-                    fontSize: '13px'
+            styleOverrides: {
+                root: {
+                    [breakpoints.up('md')]: {
+                        fontSize: '13px'
+                    }
+                },
+                stickyHeader: {
+                    fontWeight: "bold"
                 }
-            },
-            stickyHeader: {
-                fontWeight: "bold"
             }
         },
         MuiTable: {
-            root: {
-                [breakpoints.down('md')]: {
-                    width: "max-content"
+            styleOverrides: {
+                root: {
+                    [breakpoints.down('md')]: {
+                        width: "max-content"
+                    }
                 }
             }
+        },
+        MuiTextField: {
+            defaultProps: {
+                variant: 'standard'
+            }
+        },
+        MuiSelect: {
+            defaultProps: {
+                variant: 'standard'
+            }
+        },
+        MuiFormControl: {
+            defaultProps: {
+                variant: 'standard'
+            }
         }
+
     }
 })
 export default theme;

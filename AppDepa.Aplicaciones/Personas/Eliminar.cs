@@ -32,7 +32,7 @@ namespace AppDepa.Aplicaciones.Personas
                 {
                     throw new ExceptionHandler(HttpStatusCode.NotFound, new { mensaje = "La Persona no existe" });
                 }
-                persona.Eliminado = true;
+                persona.Eliminado = !persona.Eliminado;
                 context.Persona.Update(persona);
                 var result = await context.SaveChangesAsync();
                 if (result > 0)
