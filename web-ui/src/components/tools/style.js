@@ -111,8 +111,8 @@ export const useStyles = makeStyles((theme) => ({
         marginBottom:10          
     },    
     paperBody:{
-        paddingLeft:5, 
-        paddingRight:5        
+        paddingLeft:10, 
+        paddingRight:10      
     },
     table:{        
         maxHeight: 650,

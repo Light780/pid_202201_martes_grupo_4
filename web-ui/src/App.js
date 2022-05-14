@@ -14,6 +14,8 @@ import PerfilUsuario from './components/security/PerfilUsuario';
 import Departamento from './components/mantenimiento/Departamento';
 import Persona from './components/mantenimiento/Persona';
 import Mascota from './components/mantenimiento/Mascota';
+import Visita from './components/mantenimiento/Visita';
+
 function App() {
   const [{sesionUsuario, openSnackBar}, dispatch] = useStateValue()
   const [iniciaApp, setIniciaApp] = useState(false);
@@ -50,6 +52,7 @@ function App() {
               <Route exact path='/mantenimiento/departamento' element= {<SecurePath><Departamento/></SecurePath>}/>
               <Route exact path='/mantenimiento/persona' element= {<SecurePath><Persona/></SecurePath>}/>      
               <Route exact path='/mantenimiento/mascota' element= {<SecurePath><Mascota/></SecurePath>}/>                          
+              <Route exact path='/mantenimiento/visita' element= {<SecurePath><Visita/></SecurePath>}/>                          
             </Routes>
           </Grid>
         </ThemeProvider>
