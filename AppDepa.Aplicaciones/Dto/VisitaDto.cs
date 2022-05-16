@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AppDepa.Aplicaciones.Dto
+﻿namespace AppDepa.Aplicaciones.Dto
 {
     public class VisitaDto
     {
@@ -16,8 +10,6 @@ namespace AppDepa.Aplicaciones.Dto
         public string FechaRegistro { get; set; }
         public string Usuario { get; set; }
         public string Comentario { get; set; }
-
-        public string Estado { get; set; }
 
     }
 }
