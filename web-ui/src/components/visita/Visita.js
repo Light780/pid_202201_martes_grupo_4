@@ -1,4 +1,4 @@
-import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, IconButton, Hidden } from '@material-ui/core';
+import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, IconButton, Hidden } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useStyles, style } from '../tools/style'
 import { listarVisita } from '../../actions/VisitaAction';
@@ -32,9 +32,7 @@ function Persona() {
       filtroDepartamentoId: false,
       filtroTipoPersonaId: 3
    })
-   const [errores, setErrores] = useState({})
 
-   const [modalDetalle, setModalDetalle] = useState(false);
    const handleChangePage = (event, newPage) => {
       setPage(newPage);
    };
@@ -46,7 +44,7 @@ function Persona() {
    const emptyRows = rowsPerPage - Math.min(rowsPerPage, listaVisita.length - page * rowsPerPage);
 
    const peticionGet = () => {
-        listarVisita(filtro).then(respuesta => {
+      listarVisita(filtro).then(respuesta => {
          if (respuesta.status === 200) {
             setListaVisita(respuesta.data)
          } else {
@@ -92,86 +90,9 @@ function Persona() {
       }))
    }
 
-//    const abrirCerrarModalDetalle = () => {
-//     setModalDetalle(!modalDetalle);
-// }
-
-
    useEffect(() => {
       peticionGet()
    }, [filtro])
-
-
-//    const bodyDetalle = (
-//       <div className={styles.modal}>
-//          <Container component="main" maxWidth="md" justifyContent="center">
-//             <Typography className={styles.modalTitle} component="h1" variant="h5">Detalle Persona</Typography>
-//             <div style={style.detail}>
-//                <Grid container spacing={2} justifyContent="center">
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>Nombre Completo </Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>{persona.nombreCompleto}</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>Tipo Documento</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>{persona.tipoDocumento}</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>Documento</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>{persona.documento}</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>Telefono</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>{persona.telefono}</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>Correo</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>{persona.correo}</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>Sexo</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>{persona.sexo}</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>Tipo Persona</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>{persona.tipoPersona}</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>Departamento</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>{persona.departamento}</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>Estado</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>{persona.estado}</Typography>
-//                   </Grid>
-//                </Grid>
-//                <Grid container spacing={2} justifyContent="center">
-//                   <Grid item xs={12} md={12}>
-//                      <Button type="button" fullWidth variant="contained" size="large" color="secondary" style={style.submit} onClick={abrirCerrarModalDetalle}>Cerrar</Button>
-//                   </Grid>
-//                </Grid>
-//             </div>
-//          </Container>
-//       </div>
-//    )
 
    return (
       <React.Fragment>
@@ -227,7 +148,7 @@ function Persona() {
                            <TableBody>
                               {listaVisita.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((persona, index) => (
                                  <TableRow key={persona.personaId} style={index % 2 ? { background: "#f5f5f5" } : { background: "white" }}>
-                                     
+
                                     <TableCell size="small" align='center' width="5%">{index + 1}</TableCell>
                                     <TableCell size="small" align='left' width="20%">{persona.nombreCompleto}</TableCell>
 
@@ -241,8 +162,8 @@ function Persona() {
                                     <TableCell size="small" align='center' width="10%">{persona.departamento}</TableCell>
                                     <TableCell size="small" align='center' width="15%">{persona.usuario}</TableCell>
                                     <TableCell size="small" align='center' width="15%">{persona.fechaRegistro}</TableCell>
-                                    <TableCell size="small" align='center' width="15%" 
-                                    style={persona.estado == "Activo"?  {color: "green", fontWeight: "bold"} : { color: "red", fontWeight: "bold"}}>{persona.estado}</TableCell>
+                                    <TableCell size="small" align='center' width="15%"
+                                       style={persona.estado == "Activo" ? { color: "green", fontWeight: "bold" } : { color: "red", fontWeight: "bold" }}>{persona.estado}</TableCell>
                                     {/* <TableCell size="small" align='center'>
                                        <IconButton color="primary" component="span" size="medium" onClick={async () => {
                                           limpiarForm();
