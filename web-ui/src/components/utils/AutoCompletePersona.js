@@ -7,15 +7,11 @@ const AutoCompletePersona = ({ onChange, className, error=false, errorMessage=""
     const listarPersonasSelect = () => {
         listarPersona({
             filtroDepartamentoId: 0,
-            filtroTipoPersonaId: 0,
+            filtroTipoPersonaId: 3,
             filtroEliminado: 0
         }).then(respuesta => {
-            let arrayPersona = []            
-            respuesta.data.map(persona => {                
-                if(persona.tipoPersona === "Posible Visita"){
-                    arrayPersona.push({personaId:persona.personaId, nombreCompleto:persona.nombreCompleto, documento:persona.documento})
-                }                
-            })
+            let arrayPersona = []
+            respuesta.data.map(persona => arrayPersona.push({personaId:persona.personaId, nombreCompleto:persona.nombreCompleto, documento:persona.documento}))
             setPersonas(arrayPersona);
             setLoading(false)
         })
