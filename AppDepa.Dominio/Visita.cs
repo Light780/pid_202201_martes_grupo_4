@@ -13,10 +13,8 @@ namespace AppDepa.Dominio
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int VisitaId { get; set; }
         public int PersonaVisitaId { get; set; }
-        [ForeignKey("PersonaVisitaId")]
         public Persona PersonaVisita { get; set; }
         public int PersonaId { get; set; }
-        [ForeignKey("PersonaId")]
         public Persona Persona { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime FechaEntrada { get; set; }
