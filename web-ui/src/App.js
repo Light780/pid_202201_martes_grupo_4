@@ -14,9 +14,9 @@ import PerfilUsuario from './components/security/PerfilUsuario';
 import Departamento from './components/mantenimiento/Departamento';
 import Persona from './components/mantenimiento/Persona';
 import Mascota from './components/mantenimiento/Mascota';
-import Visita from './components/mantenimiento/Visita';
+import Visita from './components/visita/Visita';
 import Prueba from './components/mantenimientos/Prueba';
-import RegistroVisita from './components/visitas/RegistroVisita';
+import RegistroVisita from './components/visita/RegistroVisita';
 
 function App() {
   const [{sesionUsuario, openSnackBar}, dispatch] = useStateValue()
@@ -52,12 +52,11 @@ function App() {
               <Route exact path='/' element= {<SecurePath><Inicio/></SecurePath>}/>              
               <Route exact path='/auth/perfil' element= {<SecurePath><PerfilUsuario/></SecurePath>}/>
               <Route exact path='/mantenimiento/departamento' element= {<SecurePath><Departamento/></SecurePath>}/>
-              <Route exact path='/mantenimiento/persona' element= {<SecurePath><Persona/></SecurePath>}/>      
-              <Route exact path='/mantenimiento/mascota' element= {<SecurePath><Mascota/></SecurePath>}/>                          
-              <Route exact path='/mantenimiento/visita' element= {<SecurePath><Visita/></SecurePath>}/>                          
-              <Route exact path='/mantenimiento/mascota' element= {<SecurePath><Mascota/></SecurePath>}/>
+              <Route exact path='/mantenimiento/persona' element= {<SecurePath><Persona/></SecurePath>}/>
+              <Route exact path='/mantenimiento/mascota' element= {<SecurePath><Mascota/></SecurePath>}/>              
               <Route exact path='/mantenimiento/prueba' element= {<SecurePath><Prueba/></SecurePath>}/>
-              <Route exact path='/visitas/registro' element= {<SecurePath><RegistroVisita/></SecurePath>}/>
+              <Route exact path='/visita/registro' element= {<SecurePath><RegistroVisita/></SecurePath>}/>
+              <Route exact path='/visita/consulta' element= {<SecurePath><Visita/></SecurePath>}/>
             </Routes>
           </Grid>
         </ThemeProvider>
