@@ -1,4 +1,4 @@
-import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, IconButton, Hidden } from '@material-ui/core';
+import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, IconButton, FormControlLabel } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useStyles, style } from '../tools/style'
 import { listarVisita } from '../../actions/VisitaAction';

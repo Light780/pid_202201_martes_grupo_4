@@ -78,10 +78,11 @@ export const LeftMenu = ({ classes, onClick }) => {
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Registro" />
                         </ListItem>
                         {/* Mbarreto - 10.05.2022 */}
-                        <ListItem component={Link} selected={selectedIndex === 3}
-                        onClick={(event) => handleListItemClick(event, 3)} button to='/mantenimiento/visita'>
-                            <i className='material-icons'>people</i>
-                            <ListItemText classes={{ primary: classes.listItemText }} primary="Visitas" />
+                        <ListItem component={Link} button to="/visitas/consulta"
+                        selected={selectedIndex === 5}
+                        onClick={(event) => handleListItemClick(event, 5)}>
+                            <i className='material-icons'>emoji_people</i>
+                            <ListItemText classes={{ primary: classes.listItemText }} primary="Consulta" />
                         </ListItem>
                     </List>
                 </Collapse>
