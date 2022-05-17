@@ -1,4 +1,8 @@
 import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, IconButton, FormControlLabel } from '@mui/material';
+import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, IconButton, Hidden, FormLabel } from '@mui/material';
+==========
+import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, IconButton, FormControlLabel } from '@mui/material';
+>>>>>>>>>> Temporary merge branch 2:web-ui/src/components/visitas/ConsultaVisita.js
 import React, { useState, useEffect } from 'react';
 import { useStyles, style } from '../tools/style'
 import { listarVisita } from '../../actions/VisitaAction';
