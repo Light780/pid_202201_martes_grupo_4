@@ -30,7 +30,7 @@ namespace AppDepa.Aplicaciones.Visitas
             {
                 RuleFor(x => x.Comentario)
                     .NotEmpty().WithMessage("Ingresar el Comentario es obligatorio")
-                    .MinimumLength(10).WithMessage("El Comentario debe tener mínino 10 caracteres");
+                    .MinimumLength(10).WithMessage("El Comentario debe tener mínimo 10 caracteres");
             }
         }
         public class Handler : IRequestHandler<Ejecuta>

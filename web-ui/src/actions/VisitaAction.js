@@ -20,3 +20,11 @@ export const registrarVisita = (visita) => {
         }).catch(e => resolve(e,reject));
     })
 }
+
+export const registrarSalida = (visita) => {
+    return new Promise((resolve, reject) => {
+        HttpClient.post('Visita/registrarSalida',visita).then(response => {
+            resolve(response)
+        }).catch(e => resolve(e,reject));
+    })
+}
