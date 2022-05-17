@@ -1,32 +1,32 @@
-import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, IconButton, FormControlLabel } from '@mui/material';
-import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, IconButton, Hidden, FormLabel } from '@mui/material';
-==========
-import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, IconButton, FormControlLabel } from '@mui/material';
->>>>>>>>>> Temporary merge branch 2:web-ui/src/components/visitas/ConsultaVisita.js
+import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, FormLabel } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useStyles, style } from '../tools/style'
-import { listarVisita } from '../../actions/VisitaAction';
+import { listarVisita, registrarSalida } from '../../actions/VisitaAction';
 import { useStateValue } from '../../context/store';
-import SelectDepartamento from '../utils/SelectDepartamento';
 
-function Persona() {
+function Visita() {
    const styles = useStyles();
    const [{ sesionUsuario }, dispatch] = useStateValue()
    const [page, setPage] = useState(0);
    const [rowsPerPage, setRowsPerPage] = useState(10);
    const [listaVisita, setListaVisita] = useState([])
    const [Visita, setVisita] = useState({
+      visitaId: 0,
       personaId: 0,
-      nombreCompleto: '',
+      nombrePersona: '',
+      nroDepartamento: '',
       documento: '',
       tipoDocumentoId: 0,
+      tipoDoc: '',
       telefono: '',
-      estadoId: 0,
+      estadoId: 2,
       correo: '',
       sexo: '',
       tipoPersonaId: 3,
-      departamentoId: 0
-
+      departamentoId: 0,
+      fechaSalida: '',
+      usuario: '',
+      comentario: ''
    })
    const [filtro, setFiltro] = useState({
       filtroDepartamentoId: 0,
@@ -66,7 +66,6 @@ function Persona() {
       })
    }
 
-
    const handleChangeFiltro = e => {
       const { name, value } = e.target
       setFiltro(anterior => ({
@@ -96,86 +95,118 @@ function Persona() {
       }))
    }
 
-//    const abrirCerrarModalDetalle = () => {
-//     setModalDetalle(!modalDetalle);
-// }
+   // Registrar hora de Salida
+   const limpiarForm = () => {
+      setVisita({
+         comentario: ''
+      })
+      setErrores({})
+   }
 
+   const peticionPostSalida = e => {
+      e.preventDefault()
+      validarForm(Visita)
+      if (Object.keys(errores).length === 0) {
+         registrarSalida(Visita).then(respuesta => {
+            if (respuesta.status === 200) {
+               dispatch({
+                  type: 'OPEN_SNACKBAR',
+                  openMensaje: {
+                     open: true,
+                     mensaje: "Salida registrada correctamente",
+                     severity: 'success'
+                  }
+               })
+               abrirCerrarModalInsertarHoraSalida()
+               limpiarForm()
+               peticionGet()
+            } else {
+               dispatch({
+                  type: 'OPEN_SNACKBAR',
+                  openMensaje: {
+                     open: true,
+                     mensaje: "Error al registrar salida de Visitante\n Detalles del error : " + Object.values(respuesta.response.data.errors),
+                     severity: 'error'
+                  }
+               })
+            }
+         })
+      }
+   }
+
+   const validarForm = (Visita) => {
+      const newErrors = { ...errores }
+
+      if (Visita.comentario === '') {
+         newErrors.comentario = 'El campo es obligatorio'
+      }
+      else if (Visita.comentario.trim().length < 10) {
+         newErrors.comentario = 'Debe tener mínimo 10 caracteres'
+      }
+      else {
+         delete newErrors.comentario
+      }
+   }
+
+   const [modalInsertarHoraSalida, setModalInsertarHoraSalida] = useState(false);
+    
+
+   const clock = () => {
+      const date = new Date();
+      const h =  date.toLocaleTimeString();
+      setVisita((anterior) => ({
+          ...anterior,
+          horaEntrada: h
+      }));
+  }
+  
+  const abrirCerrarModalInsertarHoraSalida = () => {
+     setModalInsertarHoraSalida(!modalInsertarHoraSalida);
+   }
 
    useEffect(() => {
+      setInterval(clock, 1000);
       peticionGet()
    }, [filtro])
 
 
-//    const bodyDetalle = (
-//       <div className={styles.modal}>
-//          <Container component="main" maxWidth="md" justifyContent="center">
-//             <Typography className={styles.modalTitle} component="h1" variant="h5">Detalle Persona</Typography>
-//             <div style={style.detail}>
-//                <Grid container spacing={2} justifyContent="center">
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>Nombre Completo </Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>{persona.nombreCompleto}</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>Tipo Documento</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>{persona.tipoDocumento}</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>Documento</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>{persona.documento}</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>Telefono</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>{persona.telefono}</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>Correo</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>{persona.correo}</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>Sexo</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>{persona.sexo}</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>Tipo Persona</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>{persona.tipoPersona}</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>Departamento</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>{persona.departamento}</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>Estado</Typography>
-//                   </Grid>
-//                   <Grid item xs={6} md={6}>
-//                      <Typography align="center" variant='h6' component='h2'>{persona.estado}</Typography>
-//                   </Grid>
-//                </Grid>
-//                <Grid container spacing={2} justifyContent="center">
-//                   <Grid item xs={12} md={12}>
-//                      <Button type="button" fullWidth variant="contained" size="large" color="secondary" style={style.submit} onClick={abrirCerrarModalDetalle}>Cerrar</Button>
-//                   </Grid>
-//                </Grid>
-//             </div>
-//          </Container>
-//       </div>
-//    )
+
+const bodyInsertarHoraSalida = (
+   <div className={styles.modal}>
+      <Container component="main" maxWidth="md" justifyContent="center">
+         <Typography className={styles.modalTitle} component="h1" variant="h5">Hora de Salida</Typography>
+         <form className={styles.modalForm} >
+            <Grid container spacing={2} justifyContent="center">
+
+               <Grid item xs={12} md={12}>
+                  <FormLabel class="lblHora">Hora</FormLabel>
+                  <TextField value={Visita.horaEntrada} disabled name="hora" className={styles.inputMaterial} onChange={handleChange}/>
+                  <TextField value={Visita.visitaId} disabled name="id" className={styles.inputMaterial} hidden="false"/>
+               </Grid>
+
+               <Grid item xs={12} md={12}>
+                  <TextField value={Visita.comentario} error={Boolean(errores?.comentario)}
+                     errorMessage={(errores?.comentario)}
+                     name="comentario" label="Comentario" className={styles.inputMaterial}
+                     onChange={handleChange} />
+               </Grid>
+            </Grid>
+            <Grid container spacing={2} justifyContent="center">
+               <Grid item xs={6} md={6}>
+                  <Button type="submit" fullWidth variant="contained" size="large" color="primary" style={style.submit} onClick={peticionPostSalida}>
+                     Registrar
+                  </Button>
+               </Grid>
+               <Grid item xs={6} md={6}>
+                  <Button type="button" fullWidth variant="contained" size="large" color="secondary" style={style.submit} onClick={abrirCerrarModalInsertarHoraSalida}>
+                     Cancelar
+                  </Button>
+               </Grid>
+            </Grid>
+         </form>
+      </Container>
+   </div>
+)
 
    return (
       <React.Fragment>
@@ -193,12 +224,16 @@ function Persona() {
                      <Grid container spacing={2} justifyContent="flex-start">
                         <Grid item container xs={4} md={2} >
                            <Grid item xs={10} md={10}>
-                              <SelectDepartamento value={filtro.filtroDepartamentoId}
+
+                           <FormLabel class="lblNombre">Nombre</FormLabel>
+                           <TextField name="nombreCompleto" 
+                        className={styles.inputMaterial} label="Nombre Completo" />
+                              {/* <SelectDepartamento value={filtro.filtroDepartamentoId}
                                  label="Filtro Depart."
                                  className={styles.inputMaterial}
                                  onChange={handleChangeFiltro}
                                  name="filtroDepartamentoId"
-                                 disabled={!checkFiltro.filtroDepartamentoId} />
+                                 disabled={!checkFiltro.filtroDepartamentoId} /> */}
                            </Grid>
                            <Grid item xs={2} md={2}>
                               <Checkbox checked={checkFiltro.filtroDepartamentoId} className={styles.inputMaterial} style={style.checkFiltro}
@@ -212,19 +247,15 @@ function Persona() {
                            <TableHead>
                               <TableRow>
 
-                                 <TableCell align='center'>#</TableCell>
-                                 <TableCell align='left'>Nombre</TableCell>
-                                 {/* <TableCell align='center'>Tipo Doc.</TableCell>
-                                 <TableCell align='center'>N° Doc</TableCell>
-                                 <Hidden mdDown>
-                                    <TableCell align='center'>Sexo</TableCell>
-                                 </Hidden>
-                                 <TableCell align='center'>Tipo Persona</TableCell> */}
-                                 <TableCell align='center'>Departamento</TableCell>
-                                 <TableCell align='center'>Usuario</TableCell>
-                                 <TableCell align='center'>Hora de Ingreso</TableCell>
-                                 <TableCell align='center'>Estado</TableCell>
-                                 <TableCell align='center'>Acciones</TableCell>
+                                 <TableCell align='center' style={{ fontSize:"20px"}}>#</TableCell>
+                                 <TableCell align='left' style={{ fontSize:"14px"}}>Nombre</TableCell>
+                                 <TableCell align='center' style={{ fontSize:"14px"}}>Tipo documento</TableCell>
+                                 <TableCell align='center' style={{ fontSize:"14px"}}>N° documento</TableCell>
+                                 <TableCell align='center' style={{ fontSize:"14px"}}>Departamento</TableCell>
+                                 <TableCell align='center' style={{ fontSize:"14px"}}>Usuario registro</TableCell>
+                                 <TableCell align='center' style={{ fontSize:"14px"}}>Hora de Ingreso</TableCell>
+                                 <TableCell align='center' style={{ fontSize:"14px"}}>Estado</TableCell>
+                                 <TableCell align='center' style={{ fontSize:"14px"}}>Registrar salida</TableCell>
                               </TableRow>
                            </TableHead>
 
@@ -233,42 +264,30 @@ function Persona() {
                                  <TableRow key={persona.personaId} style={index % 2 ? { background: "#f5f5f5" } : { background: "white" }}>
                                      
                                     <TableCell size="small" align='center' width="5%">{index + 1}</TableCell>
-                                    <TableCell size="small" align='left' width="20%">{persona.nombreCompleto}</TableCell>
-
-                                    {/* <TableCell size="small" align='center'>{persona.tipoDocumento}</TableCell>
-
-                                    <TableCell size="small" align='center'>{persona.documento}</TableCell> */}
-                                    {/* <Hidden mdDown>
-                                       <TableCell size="small" align='center'>{persona.sexo}</TableCell>
-                                    </Hidden>
-                                    <TableCell size="small" align='center'>{persona.tipoPersona}</TableCell> */}
-                                    <TableCell size="small" align='center' width="10%">{persona.departamento}</TableCell>
-                                    <TableCell size="small" align='center' width="15%">{persona.usuario}</TableCell>
+                                    <TableCell size="small" align='left' width="15%">{persona.nombrePersona}</TableCell>
+                                    <TableCell size="small" align='center' width="10%">{persona.tipoDoc}</TableCell>
+                                    <TableCell size="small" align='center' width="10%">{persona.documento}</TableCell>
+                                    <TableCell size="small" align='center' width="10%">{persona.nroDepartamento}</TableCell>
+                                    <TableCell size="small" align='center' width="10%">{persona.usuario}</TableCell>
                                     <TableCell size="small" align='center' width="15%">{persona.fechaRegistro}</TableCell>
-                                    <TableCell size="small" align='center' width="15%" 
-                                    style={persona.estado == "Activo"?  {color: "green", fontWeight: "bold"} : { color: "red", fontWeight: "bold"}}>{persona.estado}</TableCell>
-                                    {/* <TableCell size="small" align='center'>
-                                       <IconButton color="primary" component="span" size="medium" onClick={async () => {
-                                          limpiarForm();
-                                          await peticionUnico(persona);
-                                          abrirCerrarModalEditar();
+                                    <TableCell size="small" align='center' width="10%" 
+                                    style={persona.fechaSalida == "" ? {color: "red", fontWeight: "bold", fontSize: "15px"} : 
+                                    { color: "green", fontWeight: "bold", fontSize: "15px"}}>{persona.fechaSalida == "" ? "NO SALIÓ" : "SALIÓ"}</TableCell>
+                                    <TableCell size="small" align='center'>
+                                       
+                                        <Button variant="contained" style={{background : "orange", marginRight:"20px"}}>
+                                           Ver
+                                        </Button>
+                                        <Button variant="contained" disabled={persona.fechaSalida == "" ? false : true} onClick={async () => {
+                                             limpiarForm();
+                                             //await peticionUnico(departamento);
+                                             setVisita(persona);
+                                             abrirCerrarModalInsertarHoraSalida();
                                        }}>
-                                          <Edit />
-                                       </IconButton>
-                                       <IconButton color="default" component="span" size="medium" onClick={() => {
-                                          limpiarForm(); setVisita(persona); abrirCerrarModalDetalle()
-                                       }}>
-                                          <Info />
-                                       </IconButton>
-                                       <IconButton color="secondary" component="span" size="medium" onClick={() => {
-                                          limpiarForm();
-                                          setVisita(persona);
-                                          abrirCerrarModalEliminar()
-                                       }}
-                                       >
-                                          <Delete />
-                                       </IconButton>
-                                    </TableCell> */}
+                                           Salir
+                                        </Button>
+                                        
+                                    </TableCell>
                                  </TableRow>
                               ))}
                               {emptyRows > 0 && (
@@ -291,14 +310,14 @@ function Persona() {
                </Paper>
             </div>
          </Container>
-         {/* <Modal
-            open={modalDetalle}
-            onClose={abrirCerrarModalDetalle} disableBackdropClick >
-            {bodyDetalle}
-         </Modal> */}
+         <Modal
+            open={modalInsertarHoraSalida}
+            onClose={abrirCerrarModalInsertarHoraSalida} disableBackdropClick >
+            {bodyInsertarHoraSalida}
+         </Modal>
       </React.Fragment >
    );
 }
 
-export default Persona;
+export default Visita;
 
