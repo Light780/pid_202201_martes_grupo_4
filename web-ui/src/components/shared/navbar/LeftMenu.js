@@ -56,7 +56,6 @@ export const LeftMenu = ({ classes, onClick }) => {
                             <i className='material-icons'>pets</i>
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Mascota" />
                         </ListItem>
-
                         <ListItem component={Link} selected={selectedIndex === 4}
                             onClick={(event) => handleListItemClick(event, 4)} button to='/mantenimiento/prueba'>
                             <i className='material-icons'>pets</i>
@@ -79,9 +78,15 @@ export const LeftMenu = ({ classes, onClick }) => {
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Registro" />
                         </ListItem>
                         {/* Mbarreto - 10.05.2022 */}
+                        <ListItem component={Link} button to="/visitas/consulta"
+                        selected={selectedIndex === 5}
+                        onClick={(event) => handleListItemClick(event, 5)}>
+                            <i className='material-icons'>emoji_people</i>
+
                         <ListItem component={Link} selected={selectedIndex === 3}
                             onClick={(event) => handleListItemClick(event, 3)} button to='/visita/consulta'>
                             <i className='material-icons'>people</i>
+
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Consulta" />
                         </ListItem>
                     </List>
