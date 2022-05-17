@@ -8,6 +8,7 @@ import SelectParametro from '../utils/SelectParametro';
 import SelectDepartamento from '../utils/SelectDepartamento';
 import SelectSexo from '../utils/SelectSexo';
 import ResponsiveButton from '../utils/ResponsiveButton';
+
 function Persona() {
    const styles = useStyles();
    const [{ sesionUsuario }, dispatch] = useStateValue()
