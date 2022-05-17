@@ -1,5 +1,5 @@
-﻿using AppDepa.Aplicaciones.Exceptions;
-using AppDepa.Aplicaciones.Dto;
+﻿using AppDepa.Aplicaciones.Dto;
+using AppDepa.Aplicaciones.Exceptions;
 using AppDepa.Aplicaciones.Utils;
 using AppDepa.Dominio;
 using AppDepa.Infraestructura.Datos.Context;
@@ -21,10 +21,7 @@ namespace AppDepa.Aplicaciones.Visitas
         public class Ejecuta : IRequest
         {
             public int VisitaId { get; set; }
-            public int PersonaVisitaId { get; set; }
-            public int PersonaId { get; set; }
             public string Comentario { get; set; }
-            public int EstadoId { get; set; }
         }
 
         public class EjecutaValidator : AbstractValidator<Ejecuta>
@@ -33,7 +30,7 @@ namespace AppDepa.Aplicaciones.Visitas
             {
                 RuleFor(x => x.Comentario)
                     .NotEmpty().WithMessage("Ingresar el Comentario es obligatorio")
-                    .MinimumLength(10).WithMessage("El Comentario debe tener mínino 10 caracteres");
+                    .MinimumLength(10).WithMessage("El Comentario debe tener mínimo 10 caracteres");
             }
         }
         public class Handler : IRequestHandler<Ejecuta>
@@ -53,18 +50,15 @@ namespace AppDepa.Aplicaciones.Visitas
                     throw new ExceptionHandler(HttpStatusCode.NotFound, new { mensaje = "La Visita no existe" });
                 }
                 visita.VisitaId = request.VisitaId;
-                visita.PersonaVisitaId = request.PersonaVisitaId;
-                visita.PersonaId = request.PersonaId;
                 visita.FechaSalida = utils.ObtenerFecha();
                 visita.Comentario = request.Comentario;
-                visita.EstadoId = request.EstadoId;
                 context.Visita.Update(visita);
                 var result = await context.SaveChangesAsync();
                 if (result > 0)
                 {
                     return Unit.Value;
                 }
-                throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al registrar salida de la Visita" });
+                throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al registrar salida de Visita" });
             }
 
         }

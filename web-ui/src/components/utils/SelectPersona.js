@@ -10,7 +10,7 @@ const SelectPersona = ({ name, value, onChange, className, error, errorMessage, 
             filtroTipoPersonaId:0,
             filtroEliminado:0     
         }).then(respuesta => {
-            setPersonas(respuesta.data)
+            setPersonas(respuesta.data.filter(persona => persona.tipoPersonaId !== 3))
             setLoading(false)
         })
     }
