@@ -24,9 +24,24 @@ namespace AppDepa.Infraestructura.Datos.Context
             modelBuilder.Entity<Incidencia>().HasKey(c => c.IncidenciaId);
             modelBuilder.Entity<PagoServicio>().HasKey(c => c.PagoServicioId);
             modelBuilder.Entity<Parametro>().HasNoKey();
+
             modelBuilder.Entity<Visita>().HasKey(c => c.VisitaId);
-            modelBuilder.Entity<Visita>().HasOne(c => c.Persona).WithMany(c => c.Visitas).HasForeignKey(c => c.PersonaId);
-            modelBuilder.Entity<Visita>().HasOne(c => c.PersonaVisita).WithMany(c => c.VisitasPersona).HasForeignKey(c => c.PersonaVisitaId);
+            modelBuilder.Entity<Visita>()
+                .HasOne(c => c.Persona)
+                .WithMany(c => c.Visitas)
+                .HasForeignKey(c => c.PersonaId)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Visita>()
+                .HasOne(c => c.PersonaVisita)
+                .WithMany(c => c.VisitasPersona)
+                .HasForeignKey(c => c.PersonaVisitaId)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Visita>()
+                .HasOne(c => c.Usuario)
+                .WithMany(c => c.Visitas)
+                .HasForeignKey(c => c.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<HistorialIncidencia>().HasKey(c => c.HistorialIncidenciaId);
             base.OnModelCreating(modelBuilder);
         }

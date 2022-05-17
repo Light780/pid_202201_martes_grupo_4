@@ -13,26 +13,18 @@ namespace AppDepa.Dominio
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int VisitaId { get; set; }
         public int PersonaVisitaId { get; set; }
-        [ForeignKey("PersonaVisitaId")]
         public Persona PersonaVisita { get; set; }
         public int PersonaId { get; set; }
-        [ForeignKey("PersonaId")]
         public Persona Persona { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime FechaEntrada { get; set; }
         [DataType(DataType.DateTime)]
-        public DateTime FechaSalida { get; set; }
+        public DateTime? FechaSalida { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime FechaRegistro { get; set; }
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
         [Column(TypeName = "varchar(300)")]
-
-        //
-        public int EstadoId { get; set; }
-
-        public Departamento Departamento { get; set; }
-        //
         public string Comentario { get; set; }
     }
 }
