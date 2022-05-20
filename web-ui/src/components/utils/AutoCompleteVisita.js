@@ -1,12 +1,12 @@
 import React from 'react';
 import {Autocomplete, TextField } from '@mui/material'
-const AutoCompletePersona = ({ onChange, className, error=false, errorMessage, label = "Persona", disabled = false, options, value }) => {        
+const AutoCompleteVisita = ({ onChange, className, error=false, errorMessage, label = "Persona", disabled = false, options, value }) => {        
     return (
         <Autocomplete            
             disabled={disabled}
             fullWidth
             value={value}
-            getOptionLabel={(option) => option.documento || ""}
+            getOptionLabel={(option) => option.nombreCompleto || ""}
             onChange={onChange}
             options={options}
             clearOnBlur={false}
@@ -16,4 +16,4 @@ const AutoCompletePersona = ({ onChange, className, error=false, errorMessage, l
     );
 };
 
-export default AutoCompletePersona;
+export default AutoCompleteVisita;

@@ -117,7 +117,8 @@ export const useStyles = makeStyles((theme) => ({
     },
     table:{        
         color: theme.palette.primary.contrastText,
-        marginBottom: 15
+        marginBottom: 15,
+        marginTop:40
     },
     paperBody: {
         paddingLeft: 5,
