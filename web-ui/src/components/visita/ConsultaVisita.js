@@ -157,13 +157,11 @@ function Visita() {
   //$ END: Evento autocompletado del campo DNI
 
   const Filtrar = (e) => {
-    //e.preventDefault();
     setFiltro({
       filtroDocumento: visita.documentoVisitante,
       filtroNombreCompleto: visita.nombreCompletoVisitante,
       filtroEstadoId: visita.estado,
     });
-    //setVisita('');
   };
 
   //? BEGIN: Limpiar formulario al registrar la salida
@@ -403,13 +401,6 @@ function Visita() {
               <Grid container spacing={2} justifyContent="flex-start">
                 <Grid item container xs={3} md={2}>
                   <Grid item xs={10} md={10}>
-                    {/* <AutoCompleteVisitaNombre
-                                    onChange={(event,selectedValue) => autoCompleteChange(selectedValue)}
-                                    options={listaComboVisita}
-                                    value={valueAutoComplete}                              
-                                    label="Nombre"                                                
-                                    className={styles.inputMaterial}                              
-                                 /> */}
                     <TextField
                       name="nombreCompletoVisitante"
                       className={styles.inputMaterial}
