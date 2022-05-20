@@ -39,8 +39,8 @@ namespace AppDepa.Aplicaciones.Visitas
                             join p in context.Persona on v.PersonaId equals p.PersonaId
                             join pv in context.Persona on v.PersonaVisitaId equals pv.PersonaId
                             join u in context.Usuario on v.UsuarioId equals u.UsuarioId
-                            orderby v.VisitaId                            
-                            where (string.IsNullOrEmpty(request.Documento) || v.PersonaVisita.Documento == request.Documento)                            
+                            orderby v.VisitaId
+                            where (string.IsNullOrEmpty(request.Documento) || v.PersonaVisita.Documento == request.Documento)
                             where (string.IsNullOrEmpty(request.NombreCompleto) || pv.NombreCompleto.Contains(request.NombreCompleto))
                             where (request.EstadoId == 0 || request.EstadoId == 1 && v.FechaSalida != null || request.EstadoId == 2 && v.FechaSalida == null)
                             select new VisitaDto
@@ -49,8 +49,7 @@ namespace AppDepa.Aplicaciones.Visitas
                                 PersonaVisitaId = pv.PersonaId,
                                 NombreCompletoVisitante = pv.NombreCompleto,
                                 TipoDocVisitante = utils.BuscarParametro(pv.TipoDocumentoId, "TIPO_DOCUMENTO_PERSONA"),
-                                DocumentoVisitante = pv.Documento,
-
+                                DocumentoVisitante = pv.Documento,                                
                                 PersonaId = p.PersonaId,
                                 NombreCompletoAnfitrion = p.NombreCompleto,
                                 TipoDocAnfitrion = utils.BuscarParametro(p.TipoDocumentoId, "TIPO_DOCUMENTO_PERSONA"),
@@ -60,7 +59,7 @@ namespace AppDepa.Aplicaciones.Visitas
 
                                 UsuarioRegistro = u.UserName,
                                 FechaRegistro = v.FechaRegistro.ToString("dd/MM/yyyy HH:mm"),
-                                Comentario = v.Comentario,
+                                Comentario = v.Comentario                                
                             };
 
                 return await query.ToListAsync();
