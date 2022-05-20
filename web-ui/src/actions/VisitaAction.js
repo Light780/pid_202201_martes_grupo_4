@@ -5,8 +5,9 @@ export const listarVisita = (filtro) => {
     return new Promise((resolve, reject) => {
         HttpClient.get(`Visita/consulta`, {
             params: {
-                departamentoId : filtro.filtroDepartamentoId, 
-                tipoPersonaId : filtro.filtroTipoPersonaId
+                nombreCompleto : filtro.filtroNombreCompleto, 
+                documento : filtro.filtroDocumento,
+                estadoId : filtro.filtroEstadoId
             }
         }).then(response => {
             resolve(response)
@@ -26,5 +27,13 @@ export const registrarSalida = (visita) => {
         HttpClient.post('Visita/registrarSalida',visita).then(response => {
             resolve(response)
         }).catch(e => resolve(e,reject));
+    })
+}
+
+export const consultarUnico = (id) => {
+    return new Promise((resolve,reject) => {
+        HttpClient.get(`Visita/${id}`).then(response => {
+            resolve(response)
+        }).catch(e => resolve(e,reject))
     })
 }

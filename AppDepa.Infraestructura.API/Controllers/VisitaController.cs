@@ -1,5 +1,6 @@
 ﻿using AppDepa.Aplicaciones.Dto;
 using AppDepa.Aplicaciones.Visitas;
+using AppDepa.Dominio;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -23,6 +24,12 @@ namespace AppDepa.Infraestructura.API.Controllers
         public async Task<ActionResult<Unit>> RegistrarSalida(RegistrarSalida.Ejecuta data)
         {
             return await mediator.Send(data);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Visita>> ObtenerVisita(int id)
+        {
+            return await mediator.Send(new ConsultarUnico.Ejecuta() { VisitaId = id });
         }
     }
 }
