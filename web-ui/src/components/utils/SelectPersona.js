@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FormHelperText, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 import { listarPersona } from '../../actions/PersonaAction';
-const SelectPersona = ({ name, value, onChange, className, error, errorMessage, label="Persona", disabled=false}) => {
+const SelectPersona = ({ name, value, onChange, className, error, errorMessage, label="Persona", disabled=false, excluirTipo="Posible Visita"}) => {
     const [personas, setPersonas] = useState([])
     const [isLoading, setLoading] = useState(true);
     const listarPersonasSelect = () => {
@@ -10,7 +10,8 @@ const SelectPersona = ({ name, value, onChange, className, error, errorMessage, 
             filtroTipoPersonaId:0,
             filtroEliminado:0     
         }).then(respuesta => {
-            setPersonas(respuesta.data.filter(persona => persona.tipoPersonaId !== 3))
+            let array = respuesta.data.filter(persona => persona.tipoPersona !== excluirTipo)
+            setPersonas(array)
             setLoading(false)
         })
     }

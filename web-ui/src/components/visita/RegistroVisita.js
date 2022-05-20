@@ -1,4 +1,4 @@
-import { TextField, Container, Grid, Paper, Typography, Button } from '@mui/material';
+import { TextField, Container, Grid, Paper, Typography, Button, FormLabel } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { listarPersona } from '../../actions/PersonaAction';
 import { registrarVisita } from '../../actions/VisitaAction';
@@ -167,8 +167,8 @@ function RegistroVisita() {
                                             />
                                         </Grid>
                                         <Grid item xs={6} md={6}>
-                                            <TextField fullWidth
-                                                label="Fecha y Hora de Ingreso"
+                                            <FormLabel class="lblHora">Fecha y Hora de Entrada</FormLabel>
+                                            <TextField fullWidth                                                
                                                 aria-readonly="true"
                                                 value={visita.horaEntrada}
                                                 disabled={true}
