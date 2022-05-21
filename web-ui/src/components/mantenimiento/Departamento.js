@@ -612,7 +612,7 @@ function Departamento() {
                                     </Hidden>
                                     <TableCell size="small" align='center'>{departamento.usuario}</TableCell>
                                     <TableCell size="small" align='center'>{departamento.fechaRegistro}</TableCell>
-                                    <TableCell size="small" align='center'>{departamento.estado}</TableCell>
+                                    <TableCell size="small" align='center' style={departamento.estado == "Activo"?  {color: "green", fontWeight: "bold"} : { color: "red", fontWeight: "bold"}}>{departamento.estado}</TableCell>
                                     <TableCell size="small" align='center'>
                                        <IconButton color="primary" component="span" size="medium" onClick={async () => {
                                           limpiarForm();

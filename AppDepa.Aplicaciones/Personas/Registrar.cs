@@ -76,6 +76,10 @@ namespace AppDepa.Aplicaciones.Personas
                 }
                 public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
                 {
+                    if (utils.GetUsuarioSession() == 0)
+                    {
+                        throw new ExceptionHandler(HttpStatusCode.Unauthorized, new { mensaje = "Se perdió la sesión, vuelva a iniciar por favor" });
+                    }
                     var existeDocumento = await context.Persona.Where(x => x.Documento.Equals(request.Documento)).AnyAsync();
                     if (existeDocumento)
                     {
@@ -96,6 +100,7 @@ namespace AppDepa.Aplicaciones.Personas
                         UsuarioId = utils.GetUsuarioSession()
                     };
                     context.Persona.Add(persona);
+
                     var result = await context.SaveChangesAsync();
                     if (result > 0)
                     {
