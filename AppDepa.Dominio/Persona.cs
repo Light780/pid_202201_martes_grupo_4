@@ -31,8 +31,11 @@ namespace AppDepa.Dominio
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
 
+        public ICollection<Incidencia> Incidencias { get; set; }
+        public ICollection<HistorialIncidencia> HistorialIncidencias { get; set; }
         public ICollection<Visita> Visitas { get; set; }
         public ICollection<Visita> VisitasPersona { get; set; }
+
     }
 }
 

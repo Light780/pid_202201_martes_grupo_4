@@ -23,6 +23,8 @@ namespace AppDepa.Dominio
         public bool Eliminado { get; set; }
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
+        public int PersonaId { get; set; }
+        public Persona Persona { get; set; }
         public ICollection<HistorialIncidencia> HistorialIncidencias { get; set; }
     }
 }

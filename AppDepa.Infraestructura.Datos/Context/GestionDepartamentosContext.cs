@@ -42,7 +42,7 @@ namespace AppDepa.Infraestructura.Datos.Context
                 .HasForeignKey(c => c.UsuarioId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<HistorialIncidencia>().HasKey(c => c.HistorialIncidenciaId);
+            modelBuilder.Entity<HistorialIncidencia>().HasKey(c => new { c.HistorialIncidenciaId, c.IncidenciaId });
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<Usuario> Usuario { get; set; }

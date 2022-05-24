@@ -73,8 +73,8 @@ function Mascota() {
    }
    const peticionPost = e => {
       e.preventDefault()
-      validarForm(mascota)
-      if (Object.keys(errores).length === 0) {
+      const formErrors = validarForm(mascota)
+      if (Object.keys(formErrors).length === 0) {
          registrarMascota(mascota).then(respuesta => {
             if (respuesta.status === 200) {
                dispatch({
@@ -99,13 +99,15 @@ function Mascota() {
                })
             }
          })
+      }else{
+         setErrores(formErrors)
       }
 
    }
    const peticionPut = e => {
       e.preventDefault()
-      validarForm(mascota)
-      if (Object.keys(errores).length === 0) {
+      const formErrors = validarForm(mascota)
+      if (Object.keys(formErrors).length === 0) {
          actualizarMascota(mascota).then(respuesta => {
             if (respuesta.status === 200) {
                dispatch({
@@ -130,6 +132,8 @@ function Mascota() {
                })
             }
          })
+      }else{
+         setErrores(formErrors)
       }
    }
    const peticionDelete = e => {
@@ -180,7 +184,7 @@ function Mascota() {
       })
    }
    const validarForm = (mascota) => {
-      const newErrors = { ...errores }
+      const newErrors = {}
       if (mascota.nombreMascota === '') {
          newErrors.nombreMascota = 'El campo es obligatorio'
       }
@@ -190,32 +194,20 @@ function Mascota() {
       else if (!/^[A-Za-z ]+$/.test(mascota.nombreMascota)) {
          newErrors.nombreMascota = 'Debe contener solo letras'
       }
-      else {
-         delete newErrors.nombreMascota
-      }
-
+      
       if (mascota.sexo === '') {
          newErrors.sexo = 'El campo es obligatorio'
-      }
-      else {
-         delete newErrors.sexo
-      }
+      }      
 
       if (mascota.especieId <= 0) {
          newErrors.especieId = 'Debe seleccionar una especie'
-      }
-      else {
-         delete newErrors.especieId
-      }
+      }      
 
       if (mascota.departamentoId <= 0) {
          newErrors.departamentoId = 'Debe seleccionar un departamento'
-      }
-      else {
-         delete newErrors.departamentoId
-      }
+      }      
 
-      setErrores(newErrors)
+      return newErrors
    }
    const handleChange = e => {
       const { name, value } = e.target

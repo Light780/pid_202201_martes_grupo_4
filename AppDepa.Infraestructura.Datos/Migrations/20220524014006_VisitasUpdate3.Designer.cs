@@ -4,14 +4,16 @@ using AppDepa.Infraestructura.Datos.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppDepa.Infraestructura.Datos.Migrations
 {
     [DbContext(typeof(GestionDepartamentosContext))]
-    partial class GestionDepartamentosContextModelSnapshot : ModelSnapshot
+    [Migration("20220524014006_VisitasUpdate3")]
+    partial class VisitasUpdate3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,9 +115,6 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("IncidenciaId")
-                        .HasColumnType("int");
-
                     b.Property<int>("DepartamentoId")
                         .HasColumnType("int");
 
@@ -131,7 +130,7 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Property<DateTime>("FechaRegistro")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PersonaId")
+                    b.Property<int>("IncidenciaId")
                         .HasColumnType("int");
 
                     b.Property<int>("TipoIncidenciaId")
@@ -140,13 +139,11 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
-                    b.HasKey("HistorialIncidenciaId", "IncidenciaId");
+                    b.HasKey("HistorialIncidenciaId");
 
                     b.HasIndex("DepartamentoId");
 
                     b.HasIndex("IncidenciaId");
-
-                    b.HasIndex("PersonaId");
 
                     b.HasIndex("UsuarioId");
 
@@ -178,9 +175,6 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Property<DateTime>("FechaRegistro")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PersonaId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TipoIncidenciaId")
                         .HasColumnType("int");
 
@@ -190,8 +184,6 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.HasKey("IncidenciaId");
 
                     b.HasIndex("DepartamentoId");
-
-                    b.HasIndex("PersonaId");
 
                     b.HasIndex("UsuarioId");
 
@@ -451,12 +443,6 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AppDepa.Dominio.Persona", "Persona")
-                        .WithMany("HistorialIncidencias")
-                        .HasForeignKey("PersonaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("AppDepa.Dominio.Usuario", "Usuario")
                         .WithMany("HistorialIncidencias")
                         .HasForeignKey("UsuarioId")
@@ -466,8 +452,6 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                     b.Navigation("Departamento");
 
                     b.Navigation("Incidencia");
-
-                    b.Navigation("Persona");
 
                     b.Navigation("Usuario");
                 });
@@ -480,12 +464,6 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AppDepa.Dominio.Persona", "Persona")
-                        .WithMany("Incidencias")
-                        .HasForeignKey("PersonaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("AppDepa.Dominio.Usuario", "Usuario")
                         .WithMany("Incidencias")
                         .HasForeignKey("UsuarioId")
@@ -493,8 +471,6 @@ namespace AppDepa.Infraestructura.Datos.Migrations
                         .IsRequired();
 
                     b.Navigation("Departamento");
-
-                    b.Navigation("Persona");
 
                     b.Navigation("Usuario");
                 });
@@ -601,10 +577,6 @@ namespace AppDepa.Infraestructura.Datos.Migrations
 
             modelBuilder.Entity("AppDepa.Dominio.Persona", b =>
                 {
-                    b.Navigation("HistorialIncidencias");
-
-                    b.Navigation("Incidencias");
-
                     b.Navigation("Visitas");
 
                     b.Navigation("VisitasPersona");

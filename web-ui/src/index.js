@@ -12,8 +12,8 @@ const root = ReactDOM.createRoot(container);
 root.render(  
     <React.StrictMode>
         <StateProvider initialState={initialState} reducer={mainReducer}>
-            <StyledEngineProvider injectFirst>
-                <App />    
+            <StyledEngineProvider injectFirst>                
+                <App />                    
             </StyledEngineProvider>
         </StateProvider>
     </React.StrictMode>
