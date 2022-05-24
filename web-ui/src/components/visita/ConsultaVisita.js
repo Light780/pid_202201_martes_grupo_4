@@ -208,9 +208,9 @@ function Visita() {
   //$ BEGIN: Validar campos al registrar Salida (Formulario Registro Salida)
   const validarForm = (visita) => {
     const newErrors = {};
-    if (visita.comentario === "") {
+    if (visita.comentario === "" || visita.comentario == null) {
       newErrors.comentario = "El campo es obligatorio";
-    } else if (visita.comentario.trim().length < 10) {
+    } else if (visita.comentario != null && visita.comentario.trim().length < 10) {
       newErrors.comentario = "Debe tener mínimo 10 caracteres";
     } 
     return newErrors;
