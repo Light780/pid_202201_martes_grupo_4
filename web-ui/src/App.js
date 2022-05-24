@@ -17,6 +17,8 @@ import Mascota from './components/mantenimiento/Mascota';
 import Prueba from './components/mantenimientos/Prueba';
 import RegistroVisita from './components/visita/RegistroVisita';
 import ConsultaVisita from './components/visita/ConsultaVisita';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 function App() {
   const [{sesionUsuario, openSnackBar}, dispatch] = useStateValue()
@@ -46,6 +48,7 @@ function App() {
       <Router>
         <ThemeProvider theme={theme}>
           <AppNavBar/>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Grid container>
             <Routes>
               <Route exact path='/auth/login' element= {<Login/>}/>
@@ -59,6 +62,7 @@ function App() {
               <Route exact path='/visita/ConsultaVisita' element= {<SecurePath><ConsultaVisita/></SecurePath>}/>
             </Routes>
           </Grid>
+          </LocalizationProvider>
         </ThemeProvider>
       </Router>
     </React.Fragment>

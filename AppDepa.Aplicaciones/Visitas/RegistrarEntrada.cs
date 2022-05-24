@@ -4,6 +4,7 @@ using AppDepa.Dominio;
 using AppDepa.Infraestructura.Datos.Context;
 using FluentValidation;
 using MediatR;
+using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace AppDepa.Aplicaciones.Visitas
         {
             public int PersonaVisitaId { get; set; }
             public int PersonaId { get; set; }
+            public DateTime FechaPosibleSalida { get; set; }
 
         }
         public class EjecutaValidator : AbstractValidator<Ejecuta>
@@ -43,6 +45,7 @@ namespace AppDepa.Aplicaciones.Visitas
                     PersonaId = request.PersonaId,
                     FechaEntrada = utils.ObtenerFecha(),
                     FechaRegistro = utils.ObtenerFecha(),
+                    FechaPosibleSalida = request.FechaPosibleSalida,
                     UsuarioId = utils.GetUsuarioSession()
                 };
                 context.Visita.Add(visita);

@@ -82,8 +82,8 @@ function Departamento() {
    }
    const peticionPost = e => {
       e.preventDefault()
-      validarForm(departamento)
-      if (Object.keys(errores).length === 0) {
+      const formErrors = validarForm(departamento)
+      if (Object.keys(formErrors).length === 0) {
          registrarDepartamento(departamento).then(respuesta => {
             if (respuesta.status === 200) {
                dispatch({
@@ -108,13 +108,15 @@ function Departamento() {
                })
             }
          })
+      }else{
+         setErrores(formErrors)
       }
 
    }
    const peticionPut = e => {
       e.preventDefault()
-      validarForm(departamento)
-      if (Object.keys(errores).length === 0) {
+      const formErrors = validarForm(departamento)
+      if (Object.keys(formErrors).length === 0) {
          actualizarDepartamento(departamento).then(respuesta => {
             if (respuesta.status === 200) {
                dispatch({
@@ -139,6 +141,8 @@ function Departamento() {
                })
             }
          })
+      }else{
+         setErrores(formErrors)
       }
 
    }
@@ -189,7 +193,7 @@ function Departamento() {
       })
    }
    const validarForm = (departamento) => {
-      const newErrors = { ...errores }
+      const newErrors = {}
 
       if (departamento.nroDepartamento === '') {
          newErrors.nroDepartamento = 'El campo es obligatorio'
@@ -199,10 +203,7 @@ function Departamento() {
       }
       else if (departamento.nroDepartamento.trim().length !== 3) {
          newErrors.nroDepartamento = 'Debe tener 3 caracteres'
-      }
-      else {
-         delete newErrors.nroDepartamento
-      }
+      }      
 
       if (departamento.tamano === '') {
          newErrors.tamano = 'El campo es obligatorio'
@@ -213,32 +214,20 @@ function Departamento() {
       else if (departamento.tamano <= 0) {
          newErrors.tamano = 'Debe ser mayor a 0'
       }
-      else {
-         delete newErrors.tamano
-      }
 
       if (departamento.tipoDepaId <= 0) {
          newErrors.tipoDepaId = 'Debe seleccionar un tipo'
       }
-      else {
-         delete newErrors.tipoDepaId
-      }
-
+      
       if (departamento.estadoId <= 0) {
          newErrors.estadoId = 'Debe seleccionar un estado'
       }
-      else {
-         delete newErrors.estadoId
-      }
-
+      
       if (departamento.cantidadHabitaciones <= 0) {
          newErrors.cantidadHabitaciones = 'Debe ser mayor a 0'
       }
-      else {
-         delete newErrors.cantidadHabitaciones
-      }
 
-      setErrores(newErrors)
+      return newErrors
    }
    const handleChange = e => {
       const { name, value } = e.target

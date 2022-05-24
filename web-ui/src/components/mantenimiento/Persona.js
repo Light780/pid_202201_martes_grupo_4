@@ -85,8 +85,8 @@ function Persona() {
    }
    const peticionPost = e => {
       e.preventDefault()
-      validarForm(persona)
-      if (Object.keys(errores).length === 0) {
+      const formErrors = validarForm(persona)
+      if (Object.keys(formErrors).length === 0) {
          registrarPersona(persona).then(respuesta => {
             if (respuesta.status === 200) {
                dispatch({
@@ -111,6 +111,8 @@ function Persona() {
                })
             }
          })
+      }else{
+         setErrores(formErrors)
       }
 
    }
@@ -133,8 +135,8 @@ function Persona() {
 
    const peticionPut = e => {
       e.preventDefault()
-      validarForm(persona)
-      if (Object.keys(errores).length === 0) {
+      const formErrors = validarForm(persona)
+      if (Object.keys(formErrors).length === 0) {
          actualizarPersona(persona).then(respuesta => {
             if (respuesta.status === 200) {
                dispatch({
@@ -159,6 +161,8 @@ function Persona() {
                })
             }
          })
+      }else{
+         setErrores(formErrors)
       }
    }
    const peticionDelete = e => {
@@ -218,106 +222,80 @@ function Persona() {
    }
    const validarForm = (persona) => {
 
-      const newErrors = { ...errores }
-
-      if (persona.nombreCompleto === '') {
-         newErrors.nombreCompleto = 'El campo es obligatorio'
-      }
-      else if (persona.nombreCompleto.trim().length < 3) {
-         newErrors.nombreCompleto = 'Debe tener almenos 3 caracteres'
-      }
-      else if (!/^[A-Za-z ]+$/.test(persona.nombreCompleto)) {
-         newErrors.nombreCompleto = 'Debe contener solo letras'
-      }
-      else {
-         delete newErrors.nombreCompleto
-      }
-
-      if (persona.documento === '') {
-         newErrors.documento = 'El campo es obligatorio'
-      }
-      else if (!/^[0-9]+$/.test(persona.documento)) {
-         newErrors.documento = 'Debe ser numérico'
-      }
-      else if (persona.tipoDocumentoId === 0) {
-         newErrors.documento = 'Debe seleccionar un tipo de documento'
-      }
-      else if (persona.documento.trim().length >= 0) {
-         let longitud = persona.documento.length;
-         if (persona.tipoDocumentoId === 1) {
-            if (longitud !== 8) {
-               newErrors.documento = 'Debe tener 8 caracteres'
-            } else {
-               delete newErrors.documento
-            }
-         } else {
-            if (longitud !== 12) {
-               newErrors.documento = 'Debe tener 12 caracteres'
-            } else {
-               delete newErrors.documento
-            }
-         }
-      }
-
-      if (persona.telefono === '') {
-         newErrors.telefono = 'El campo es obligatorio'
-      }
-      else if (!/^[0-9]+$/.test(persona.telefono)) {
-         newErrors.telefono = 'Debe ser numérico'
-      }
-      else if (persona.telefono.trim().length !== 9 && persona.telefono.trim().length !== 7) {
-         newErrors.telefono = 'Debe tener 9 o 7 caracteres'
-      }
-      else {
-         delete newErrors.telefono
-      }
-
-      if (persona.tipoDocumentoId <= 0) {
-         newErrors.tipoDocumentoId = 'Debe seleccionar un tipo de documento'
-      }
-      else {
-         delete newErrors.tipoDocumentoId
-      }
-
-      if (persona.estadoId <= 0) {
-         newErrors.estadoId = 'Debe seleccionar un estado'
-      }
-      else {
-         delete newErrors.estadoId
-      }
-
-      if (persona.tipoPersonaId <= 0) {
-         newErrors.tipoPersonaId = 'Debe seleccionar un estado'
-      }
-      else {
-         delete newErrors.tipoPersonaId
-      }
-
-      if (persona.sexo === '') {
-         newErrors.sexo = 'El campo es obligatorio'
-      }
-      else {
-         delete newErrors.sexo
-      }
-
-      if (persona.correo === '') {
-         newErrors.correo = 'El campo es obligatorio'
-      }
-      else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(persona.correo)) {
-         newErrors.correo = 'Debe ser un correo valido'
-      }
-      else {
-         delete newErrors.correo
-      }
-
-      if (persona.departamentoId <= 0) {
-         newErrors.departamentoId = 'Debe seleccionar un departamento'
-      }
-      else {
-         delete newErrors.departamentoId
-      }
-
-      setErrores(newErrors)
+      const newErrors = {}
+  
+        if (persona.nombreCompleto === '') {
+           newErrors.nombreCompleto = 'El campo es obligatorio'
+        }
+        else if (persona.nombreCompleto.trim().length < 3) {
+           newErrors.nombreCompleto = 'Debe tener almenos 3 caracteres'
+        }
+        else if (!/^[A-Za-z ]+$/.test(persona.nombreCompleto)) {
+           newErrors.nombreCompleto = 'Debe contener solo letras'
+        }        
+  
+        if (persona.documento === '') {
+           newErrors.documento = 'El campo es obligatorio'
+        }
+        else if (!/^[0-9]+$/.test(persona.documento)) {
+           newErrors.documento = 'Debe ser numérico'
+        }
+        else if (persona.tipoDocumentoId === 0) {
+           newErrors.documento = 'Debe seleccionar un tipo de documento'
+        }
+        else if (persona.documento.trim().length >= 0) {
+           let longitud = persona.documento.length;
+           if (persona.tipoDocumentoId === 1) {
+              if (longitud !== 8) {
+                 newErrors.documento = 'Debe tener 8 caracteres'
+              } else {
+                 delete newErrors.documento
+              }
+           } else {
+              if (longitud !== 12) {
+                 newErrors.documento = 'Debe tener 12 caracteres'
+              }
+           }
+        }
+  
+        if (persona.telefono === '') {
+           newErrors.telefono = 'El campo es obligatorio'
+        }
+        else if (!/^[0-9]+$/.test(persona.telefono)) {
+           newErrors.telefono = 'Debe ser numérico'
+        }
+        else if (persona.telefono.trim().length !== 9 && persona.telefono.trim().length !== 7) {
+           newErrors.telefono = 'Debe tener 9 o 7 caracteres'
+        }
+          
+        if (persona.tipoDocumentoId <= 0) {
+           newErrors.tipoDocumentoId = 'Debe seleccionar un tipo de documento'
+        }
+          
+        if (persona.estadoId <= 0) {
+           newErrors.estadoId = 'Debe seleccionar un estado'
+        }
+          
+        if (persona.tipoPersonaId <= 0) {
+           newErrors.tipoPersonaId = 'Debe seleccionar un estado'
+        }
+          
+        if (persona.sexo === '') {
+           newErrors.sexo = 'El campo es obligatorio'
+        }
+        
+        if (persona.correo === '') {
+           newErrors.correo = 'El campo es obligatorio'
+        }
+        else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(persona.correo)) {
+           newErrors.correo = 'Debe ser un correo valido'
+        }
+          
+        if (persona.departamentoId <= 0) {
+           newErrors.departamentoId = 'Debe seleccionar un departamento'
+        }        
+  
+        return newErrors;
    }
    const handleChange = e => {
       const { name, value } = e.target

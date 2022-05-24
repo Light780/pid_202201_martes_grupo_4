@@ -13,9 +13,9 @@ import {
   TableBody,
   TableRow,
   Paper,
-  Checkbox,
   FormLabel,
   Hidden,
+  Stack
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useStyles, style } from "../tools/style";
@@ -26,7 +26,6 @@ import {
 } from "../../actions/VisitaAction";
 import { useStateValue } from "../../context/store";
 import AutoCompleteVisitaDni from "../utils/AutoCompletePersona";
-import AutoCompleteVisitaNombre from "../utils/AutoCompleteVisita";
 import { listarPersona } from "../../actions/PersonaAction";
 import SelectParametro from "../utils/SelectParametro";
 
@@ -38,8 +37,6 @@ function Visita() {
   const [listaComboVisita, setVisitas] = useState([]);
   const [listaVisita, setListaVisita] = useState([]);
   const [valueAutoComplete, setValueAutoComplete] = useState(null);
-  const [errors, setErrors] = useState({});
-  const [visitante, setVisitante] = useState("");
   const [modalInsertarHoraSalida, setModalInsertarHoraSalida] = useState(false);
   const [modalVerDetalleVisita, setModalVerDetalleVisita] = useState(false);
   const [errores, setErrores] = useState({});
@@ -65,9 +62,6 @@ function Visita() {
     usuarioRegistro: "",
     fechaRegistro: "",
     comentario: "",
-
-    //* Hora de ingreso
-    HoraEntrada: "",
   });
 
   //? Estos son los filtros de los campos nombres y documento
@@ -229,7 +223,7 @@ function Visita() {
     const h = date.toLocaleDateString() + " " + date.toLocaleTimeString();
     setVisita((anterior) => ({
       ...anterior,
-      HoraEntrada: h,
+      fechaSalida: h,
     }));
   };
   //? END: Método que muestra la hora asíncrona en el Formulario (Registrar Salida)
@@ -274,7 +268,7 @@ function Visita() {
             <Grid item xs={12} md={12}>
               <FormLabel class="lblHora">Fecha y Hora de Salida</FormLabel>
               <TextField
-                value={visita.HoraEntrada}
+                value={visita.fechaSalida}
                 disabled
                 name="hora"
                 className={styles.inputMaterial}
@@ -334,35 +328,12 @@ function Visita() {
     <div className={styles.modal}>
       <Container component="main" maxWidth="md" justifyContent="center">
         <Typography className={styles.modalTitle} component="h1" variant="h5">
-          Detalle de la salida
+          Comentario de la salida
         </Typography>
         <form className={styles.modalForm}>
           <Grid container spacing={2} justifyContent="center">
             <Grid item xs={12} md={12}>
-              <FormLabel class="lblHora">Hora</FormLabel>
-              <TextField
-                value={visita.fechaEntrada}
-                InputProps={{ readOnly: true, disableUnderline: true }}
-                name="hora"
-                className={styles.inputMaterial}
-                onChange={handleChange}
-                disabled
-              />
-              <Hidden mdUp>{visita.visitaId}</Hidden>
-            </Grid>
-
-            <Grid item xs={12} md={12}>
-              <TextField
-                value={visita.comentario}
-                error={Boolean(errores?.comentario)}
-                errorMessage={errores?.comentario}
-                name="comentario"
-                label="Comentario"
-                className={styles.inputMaterial}
-                onChange={handleChange}
-                InputProps={{ readOnly: true, disableUnderline: true }}
-                disabled
-              />
+              <Typography align="left" variant='h6' component='h2'>{visita.comentario}</Typography>
             </Grid>
           </Grid>
           <Grid container spacing={2} justifyContent="center">
@@ -658,7 +629,7 @@ function Visita() {
                                   : { background: "#7ed6df" }
                               }
                             >
-                              {visita.fechaSalida == ""
+                              {visita.fechaSalida === ""
                                 ? "=============="
                                 : visita.fechaSalida}
                             </TableCell>
@@ -693,21 +664,31 @@ function Visita() {
                               style={
                                 visita.fechaSalida === ""
                                   ? {
-                                      color: "red",
-                                      fontWeight: "bold",
-                                      fontSize: "15px",
-                                    }
+                                    color: "red",
+                                    fontWeight: "bold",
+                                    fontSize: "15px",
+                                  }
                                   : {
-                                      color: "green",
-                                      fontWeight: "bold",
-                                      fontSize: "15px",
-                                    }
+                                    color: "green",
+                                    fontWeight: "bold",
+                                    fontSize: "15px",
+                                  }
                               }
                             >
                               {visita.fechaSalida === "" ? "NO SALIÓ" : "SALIÓ"}
                             </TableCell>
-                            <TableCell size="small" align="center" width="10%">
-                              
+                            <TableCell size="small" align="center">
+                              <Stack spacing={1} direction="row">
+                              <Button
+                                variant="contained"
+                                onClick={async () => {
+                                  limpiarForm();
+                                  setVisita(visita);
+                                  abrirCerrarModalVerDetalleVisita();
+                                }}                                
+                              >
+                                Comentario
+                              </Button>
                               <Button
                                 variant="contained"
                                 disabled={
@@ -721,6 +702,7 @@ function Visita() {
                               >
                                 Salir
                               </Button>
+                              </Stack>
                             </TableCell>
                           </TableRow>
                         ))}
@@ -756,6 +738,16 @@ function Visita() {
         }}
       >
         {bodyInsertarHoraSalida}
+      </Modal>
+      <Modal
+        open={modalVerDetalleVisita}
+        onClose={(event, reason) => {
+          if (reason !== "backdropClick") {
+            abrirCerrarModalVerDetalleVisita();
+          }
+        }}
+      >
+        {bodyDetalleVisita}
       </Modal>
     </React.Fragment>
   );

@@ -10,6 +10,8 @@ import SelectPersona from '../utils/SelectPersona';
 import SelectParametro from '../utils/SelectParametro';
 import SelectDepartamento from '../utils/SelectDepartamento';
 import SelectSexo from '../utils/SelectSexo';
+import {parse} from 'date-fns'
+import { DateTimePicker } from '@mui/x-date-pickers';
 
 function RegistroVisita() {
     const styles = useStyles()
@@ -19,11 +21,12 @@ function RegistroVisita() {
     const [errors, setErrors] = useState({})
     const [errores, setErrores] = useState({})
     const [modalInsertar, setModalInsertar] = useState(false);
-    const [visitante, setVisitante] = useState('')
+    const [visitante, setVisitante] = useState('')    
     const [visita, setVisita] = useState({
         personaVisitaId: 0,
         personaId: 0,
-        fechaEntrada: ''
+        fechaEntrada: '',
+        fechaPosibleSalida:  null
     });
 
     const [visitaForm, setVisitaForm] = useState({
@@ -50,24 +53,104 @@ function RegistroVisita() {
             setPersonas(arrayPersona);            
         })
     }
+
+    const validarFormPersona = (persona) => {
+
+        const newErrors = {}
+  
+        if (persona.nombreCompleto === '') {
+           newErrors.nombreCompleto = 'El campo es obligatorio'
+        }
+        else if (persona.nombreCompleto.trim().length < 3) {
+           newErrors.nombreCompleto = 'Debe tener almenos 3 caracteres'
+        }
+        else if (!/^[A-Za-z ]+$/.test(persona.nombreCompleto)) {
+           newErrors.nombreCompleto = 'Debe contener solo letras'
+        }        
+  
+        if (persona.documento === '') {
+           newErrors.documento = 'El campo es obligatorio'
+        }
+        else if (!/^[0-9]+$/.test(persona.documento)) {
+           newErrors.documento = 'Debe ser numérico'
+        }
+        else if (persona.tipoDocumentoId === 0) {
+           newErrors.documento = 'Debe seleccionar un tipo de documento'
+        }
+        else if (persona.documento.trim().length >= 0) {
+           let longitud = persona.documento.length;
+           if (persona.tipoDocumentoId === 1) {
+              if (longitud !== 8) {
+                 newErrors.documento = 'Debe tener 8 caracteres'
+              } else {
+                 delete newErrors.documento
+              }
+           } else {
+              if (longitud !== 12) {
+                 newErrors.documento = 'Debe tener 12 caracteres'
+              }
+           }
+        }
+  
+        if (persona.telefono === '') {
+           newErrors.telefono = 'El campo es obligatorio'
+        }
+        else if (!/^[0-9]+$/.test(persona.telefono)) {
+           newErrors.telefono = 'Debe ser numérico'
+        }
+        else if (persona.telefono.trim().length !== 9 && persona.telefono.trim().length !== 7) {
+           newErrors.telefono = 'Debe tener 9 o 7 caracteres'
+        }
+          
+        if (persona.tipoDocumentoId <= 0) {
+           newErrors.tipoDocumentoId = 'Debe seleccionar un tipo de documento'
+        }
+          
+        if (persona.estadoId <= 0) {
+           newErrors.estadoId = 'Debe seleccionar un estado'
+        }
+          
+        if (persona.tipoPersonaId <= 0) {
+           newErrors.tipoPersonaId = 'Debe seleccionar un estado'
+        }
+          
+        if (persona.sexo === '') {
+           newErrors.sexo = 'El campo es obligatorio'
+        }
+        
+        if (persona.correo === '') {
+           newErrors.correo = 'El campo es obligatorio'
+        }
+        else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(persona.correo)) {
+           newErrors.correo = 'Debe ser un correo valido'
+        }
+          
+        if (persona.departamentoId <= 0) {
+           newErrors.departamentoId = 'Debe seleccionar un departamento'
+        }        
+  
+        return newErrors;
+     }
+
     const validarFormVisita = (visita) => {
-        const newErrors = { ...errors }
+        const newErrors = {}
         if (visita.personaVisitaId === 0) {
             newErrors.personaVisitaId = 'Debe seleccionar un visitante'
-        } else {
-            delete newErrors.personaVisitaId
         }
         if (visita.personaId === 0) {
             newErrors.personaId = 'Debe seleccionar un anfitrion'
-        } else {
-            delete newErrors.personaId
         }
-        setErrors(newErrors);
+        if(visita.fechaPosibleSalida === ""){
+            newErrors.fechaPosibleSalida = 'La fecha de la posible salida es obligatoria'            
+        }else if(visita.fechaPosibleSalida < parse(visita.fechaEntrada, "dd/MM/yyyy HH:mm:ss", new Date())){
+            newErrors.fechaPosibleSalida = 'La fecha de la posible salida debe ser menor a la fecha de entrada'
+        }
+        return newErrors;
     }
     const peticionPost = (e) => {
         e.preventDefault()
-        validarFormVisita(visita)
-        if (Object.keys(errors).length === 0) {
+        const formErrors = validarFormVisita(visita)
+        if (Object.keys(formErrors).length === 0) {            
             registrarVisita(visita).then(respuesta => {
                 if (respuesta.status === 200) {
                     dispatch({
@@ -90,15 +173,17 @@ function RegistroVisita() {
                     })
                 }
             })
+        }else{
+            setErrors(formErrors);
         }
     }
 
 
     const peticionPostForm = (e) => {
         e.preventDefault()
-        //validarFormVisita(visitaForm)
-        if (Object.keys(errors).length === 0) {
-            registrarPersona(visitaForm).then(respuesta => {
+        const formVisitaErrors = validarFormPersona(visitaForm)
+        if (Object.keys(formVisitaErrors).length === 0) {
+            registrarPersona(visitaForm).then(respuesta => {                
                 if (respuesta.status === 200) {
                     dispatch({
                         type: 'OPEN_SNACKBAR',
@@ -122,6 +207,8 @@ function RegistroVisita() {
                     })
                 }
             })
+        }else{
+            setErrores(formVisitaErrors);
         }
     }
 
@@ -129,17 +216,19 @@ function RegistroVisita() {
         setVisita({
             personaVisitaId: 0,
             personaId: 0,
-            fechaEntrada: ''
+            fechaEntrada: '',
+            fechaPosibleSalida: null
         })
         setVisitante('')
-        setValueAutoComplete(null)
+        setErrors({})
+        setValueAutoComplete('')
     }
     const clock = () => {
         const date = new Date();
-        const h = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+        const fechaHora = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
         setVisita((anterior) => ({
             ...anterior,
-            horaEntrada: h
+            fechaEntrada: fechaHora
         }));
     }
     const handleChange = (e) => {
@@ -157,7 +246,8 @@ function RegistroVisita() {
             [name]: value
         }))
     }
-    
+        
+
     const autoCompleteChange = (selectedPersona) => {
         if (selectedPersona != null) {
             setVisita((anterior) => ({
@@ -185,11 +275,10 @@ function RegistroVisita() {
            estadoId: 0,
            correo: '',
            sexo: '',
-           tipoPersonaId: 0,
+           tipoPersonaId: 3,
            departamentoId: 0
         })
-        setErrores({})
-        //setValueAutoComplete(null)
+        setErrores({})        
      }
 
     const abrirCerrarModalInsertar = () => {
@@ -203,7 +292,7 @@ function RegistroVisita() {
     }, []);
 
 
-    //? Modal registrar visita
+    //? Modal registrar visitante
 
     const bodyInsertar = (
         <div className={styles.modal}>
@@ -300,7 +389,7 @@ function RegistroVisita() {
                                             <AutoCompletePersona
                                                 onChange={(event, selectedValue) => autoCompleteChange(selectedValue)}
                                                 options={personas}
-                                                value={valueAutoComplete}                                                
+                                                value={valueAutoComplete}
                                                 label="Documento"                                                
                                                 className={styles.inputMaterial}
                                                 error={Boolean(errors?.personaVisitaId)} 
@@ -337,7 +426,7 @@ function RegistroVisita() {
                                             <FormLabel class="lblHora">Fecha y Hora de Entrada</FormLabel>
                                             <TextField fullWidth                                                
                                                 aria-readonly="true"
-                                                value={visita.horaEntrada}
+                                                value={visita.fechaEntrada}
                                                 disabled={true}
                                                 InputProps={{
                                                     inputProps: {
@@ -346,12 +435,34 @@ function RegistroVisita() {
                                                 }}
                                             />
                                         </Grid>
+                                        <Grid item xs={6} md={6}>                                            
+                                            <DateTimePicker                                             
+                                            label="Fecha y Hora de Posible Salida"                                            
+                                            value={visita.fechaPosibleSalida}
+                                            inputFormat="dd/MM/yyyy HH:mm:ss"
+                                            mask='__/__/____ __:__:__'
+                                            onChange={(e) => {
+                                                setVisita((anterior) => ({
+                                                    ...anterior,
+                                                    fechaPosibleSalida:e
+                                                }));
+                                            }}                                            
+                                            renderInput={(params) => 
+                                                <TextField {...params} 
+                                                name="fechaPosibleSalida" 
+                                                fullWidth 
+                                                error={Boolean(errors?.fechaPosibleSalida)}
+                                                helperText={(errors?.fechaPosibleSalida)}
+                                                />
+                                            }
+                                            />
+                                        </Grid>
                                     </Grid>
                                     <Grid container spacing={2} justifyContent="center">
                                         <Grid item xs={6} md={6}>
                                             <Button type="submit" fullWidth variant="contained" 
                                                 size="large" color="primary" style={style.submit} 
-                                                onClick={ (e) => {peticionPost(e)}}>
+                                                onClick={peticionPost}>
                                                 Registrar
                                             </Button>
                                         </Grid>
