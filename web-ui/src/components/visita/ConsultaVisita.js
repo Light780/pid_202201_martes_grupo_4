@@ -171,8 +171,8 @@ function Visita() {
   //? BEGIN: Evento que registra la salida de un visitante (Formulario Registro Salida)
   const peticionPostSalida = (e) => {
     e.preventDefault();
-    validarForm(visita);
-    if (Object.keys(errores).length === 0) {
+    const formErrors = validarForm(visita);
+    if (Object.keys(formErrors).length === 0) {
       registrarSalida(visita).then((respuesta) => {
         if (respuesta.status === 200) {
           dispatch({
@@ -199,21 +199,21 @@ function Visita() {
           });
         }
       });
-    }
+    } else{
+      setErrores(formErrors);
+    }  
   };
   //? END: Evento que registra la salida de un visitante (Formulario Registro Salida)
 
   //$ BEGIN: Validar campos al registrar Salida (Formulario Registro Salida)
   const validarForm = (visita) => {
-    const newErrors = { ...errores };
-
+    const newErrors = {};
     if (visita.comentario === "") {
       newErrors.comentario = "El campo es obligatorio";
     } else if (visita.comentario.trim().length < 10) {
       newErrors.comentario = "Debe tener mínimo 10 caracteres";
-    } else {
-      delete newErrors.comentario;
-    }
+    } 
+    return newErrors;
   };
   //$ END: Validar campos al registrar Salida (Formulario Registro Salida)
 
@@ -281,7 +281,7 @@ function Visita() {
               <TextField
                 value={visita.comentario}
                 error={Boolean(errores?.comentario)}
-                errorMessage={errores?.comentario}
+                helperText={errores?.comentario}
                 rows={2}
                 multiline
                 name="comentario"
