@@ -140,7 +140,7 @@ function RegistroVisita() {
         if (visita.personaId === 0) {
             newErrors.personaId = 'Debe seleccionar un anfitrion'
         }
-        if(visita.fechaPosibleSalida === ""){
+        if(visita.fechaPosibleSalida === null){
             newErrors.fechaPosibleSalida = 'La fecha de la posible salida es obligatoria'            
         }else if(visita.fechaPosibleSalida < parse(visita.fechaEntrada, "dd/MM/yyyy HH:mm:ss", new Date())){
             newErrors.fechaPosibleSalida = 'La fecha de la posible salida debe ser menor a la fecha de entrada'
@@ -419,7 +419,7 @@ function RegistroVisita() {
                                                 onChange={handleChange}
                                                 name="personaId"
                                                 error={Boolean(errors?.personaId)}
-                                                errorMessage={(errors?.personaVisitaId)}
+                                                errorMessage={(errors?.personaId)}
                                             />
                                         </Grid>
                                         <Grid item xs={6} md={6}>

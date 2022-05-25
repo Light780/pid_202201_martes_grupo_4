@@ -13,6 +13,7 @@
         public string FechaSalida { get; set; }
         public string UsuarioRegistro { get; set; }
         public string FechaRegistro { get; set; }
+        public string FechaPosibleSalida { get; set; }
 
         // Datos Anfitrión
         public int PersonaId { get; set; }
