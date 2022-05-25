@@ -698,6 +698,7 @@ function Visita() {
                             <TableCell size="small" align="center">
                               <Stack spacing={1} direction="row">
                               <Button
+                                disabled= {visita.fechaSalida !== "" ? false : true}
                                 variant="contained"                                
                                 onClick={async () => {
                                   limpiarForm();
@@ -741,8 +742,8 @@ function Visita() {
                 count={listaVisita.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
               />
             </Paper>
           </Paper>

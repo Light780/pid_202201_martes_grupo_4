@@ -135,7 +135,7 @@ function RegistroVisita() {
     const validarFormVisita = (visita) => {
         const newErrors = {}
         if (visita.personaVisitaId === 0) {
-            newErrors.personaVisitaId = 'Debe seleccionar un propietario'
+            newErrors.personaVisitaId = 'Debe seleccionar un visitante'
         }
         if (visita.personaId === 0) {
             newErrors.personaId = 'Debe seleccionar un anfitrion'
