@@ -4,7 +4,9 @@ using AppDepa.Dominio;
 using AppDepa.Infraestructura.Datos.Context;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,6 +28,7 @@ namespace AppDepa.Aplicaciones.Visitas
             {
                 RuleFor(x => x.PersonaVisitaId).GreaterThan(0).WithMessage("Debe seleccionar una Posible Visita");
                 RuleFor(x => x.PersonaId).GreaterThan(0).WithMessage("Debe seleccionar un Anfritrion");
+                RuleFor(x => x.FechaPosibleSalida).NotNull().WithMessage("La fecha de la posible salida es obligatoria");
             }
         }
         public class Handler : IRequestHandler<Ejecuta>
@@ -39,6 +42,11 @@ namespace AppDepa.Aplicaciones.Visitas
             }
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
+                bool validarSalida = await context.Visita.Where(x => x.PersonaVisitaId == request.PersonaVisitaId && x.FechaSalida == null).AnyAsync();
+                if (validarSalida)
+                {
+                    throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "El visitante tiene visitas pendientes por finalizar" });
+                }
                 Visita visita = new Visita()
                 {
                     PersonaVisitaId = request.PersonaVisitaId,

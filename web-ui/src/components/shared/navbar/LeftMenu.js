@@ -56,11 +56,11 @@ export const LeftMenu = ({ classes, onClick }) => {
                             <i className='material-icons'>pets</i>
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Mascota" />
                         </ListItem>
-                        <ListItem component={Link} selected={selectedIndex === 4}
+                        {/* <ListItem component={Link} selected={selectedIndex === 4}
                             onClick={(event) => handleListItemClick(event, 4)} button to='/mantenimiento/prueba'>
                             <i className='material-icons'>pets</i>
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Prueba" />
-                        </ListItem>
+                        </ListItem> */}
                     </List>
                 </Collapse>
 

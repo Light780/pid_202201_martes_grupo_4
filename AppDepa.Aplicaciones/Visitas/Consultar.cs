@@ -49,17 +49,17 @@ namespace AppDepa.Aplicaciones.Visitas
                                 PersonaVisitaId = pv.PersonaId,
                                 NombreCompletoVisitante = pv.NombreCompleto,
                                 TipoDocVisitante = utils.BuscarParametro(pv.TipoDocumentoId, "TIPO_DOCUMENTO_PERSONA"),
-                                DocumentoVisitante = pv.Documento,                                
+                                DocumentoVisitante = pv.Documento,
                                 PersonaId = p.PersonaId,
                                 NombreCompletoAnfitrion = p.NombreCompleto,
                                 TipoDocAnfitrion = utils.BuscarParametro(p.TipoDocumentoId, "TIPO_DOCUMENTO_PERSONA"),
                                 DocumentoAnfitrion = p.Documento,
                                 FechaIngreso = v.FechaEntrada.ToString("dd/MM/yyyy HH:mm"),
                                 FechaSalida = v.FechaSalida.HasValue ? v.FechaSalida.Value.ToString("dd/MM/yyyy HH:mm") : "",
-
+                                FechaPosibleSalida = v.FechaPosibleSalida.ToString("dd/MM/yyyy HH:mm"),
                                 UsuarioRegistro = u.UserName,
                                 FechaRegistro = v.FechaRegistro.ToString("dd/MM/yyyy HH:mm"),
-                                Comentario = v.Comentario                                
+                                Comentario = v.Comentario
                             };
 
                 return await query.ToListAsync();

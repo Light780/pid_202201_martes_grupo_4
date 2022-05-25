@@ -491,6 +491,12 @@ function Visita() {
                           align="center"
                           style={{ fontSize: "14px", background: "#22a6b3" }}
                         >
+                          Fecha de Posible Salida
+                        </TableCell>
+                        <TableCell
+                          align="center"
+                          style={{ fontSize: "14px", background: "#22a6b3" }}
+                        >
                           Usuario
                         </TableCell>
                         <TableCell
@@ -636,6 +642,18 @@ function Visita() {
                             <TableCell
                               size="small"
                               align="center"
+                              width="8%"
+                              style={
+                                index % 2
+                                  ? { background: "#22a6b3" }
+                                  : { background: "#7ed6df" }
+                              }
+                            >
+                              {visita.fechaPosibleSalida}
+                            </TableCell>
+                            <TableCell
+                              size="small"
+                              align="center"
                               width="6%"
                               style={
                                 index % 2
@@ -666,12 +684,12 @@ function Visita() {
                                   ? {
                                     color: "red",
                                     fontWeight: "bold",
-                                    fontSize: "15px",
+                                    fontSize:"12px"
                                   }
                                   : {
                                     color: "green",
                                     fontWeight: "bold",
-                                    fontSize: "15px",
+                                    fontSize:"12px"                                    
                                   }
                               }
                             >
@@ -680,7 +698,7 @@ function Visita() {
                             <TableCell size="small" align="center">
                               <Stack spacing={1} direction="row">
                               <Button
-                                variant="contained"
+                                variant="contained"                                
                                 onClick={async () => {
                                   limpiarForm();
                                   setVisita(visita);
@@ -691,6 +709,7 @@ function Visita() {
                               </Button>
                               <Button
                                 variant="contained"
+                                color="warning"
                                 disabled={
                                   visita.fechaSalida === "" ? false : true
                                 }
