@@ -9,8 +9,8 @@ function Login(){
     const navigate = useNavigate()
     const [{sesionUsuario, openSnackBar},dispatch] = useStateValue();    
     const [usuario, setUsuario] = useState({
-        Email:'',        
-        Password:''
+        email:'',        
+        password:''
     })    
     const ingresarValores = e => {
         const {name, value} = e.target;
@@ -47,8 +47,8 @@ function Login(){
                     Login
                 </Typography>
                 <form style={style.form}>
-                    <TextField variant="outlined" value={usuario.Email} onChange={ingresarValores} label="Ingrese email" name="Email" fullWidth margin="normal"/>
-                    <TextField type="password"variant="outlined" value={usuario.Password} onChange={ingresarValores} label="Ingrese contraseña" name="Password" fullWidth margin="normal"/>
+                    <TextField variant="outlined" value={usuario.email} onChange={ingresarValores} label="Ingrese email" name="email" fullWidth margin="normal"/>
+                    <TextField type="password"variant="outlined" value={usuario.password} onChange={ingresarValores} label="Ingrese contraseña" name="password" fullWidth margin="normal"/>
                     <Button type="submit" fullWidth variant="contained" color="primary" style={style.submit} onClick={loginClick}>Iniciar Sesion</Button>
                 </form>
             </div>

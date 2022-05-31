@@ -17,7 +17,7 @@ namespace AppDepa.Infraestructura.API.Infraestructura
         {
             services.AddCors(opt => opt.AddPolicy("corsApp", builder =>
             {
-                builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000").AllowCredentials();
+                builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200").AllowCredentials();
             }));
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
