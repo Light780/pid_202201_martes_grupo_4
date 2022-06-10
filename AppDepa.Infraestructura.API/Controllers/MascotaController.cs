@@ -11,12 +11,12 @@ namespace AppDepa.Infraestructura.API.Controllers
     public class MascotaController : CustomController
     {
         [HttpPost]
-        public async Task<ActionResult<Unit>> RegistrarMascota(Registrar.Ejecuta data)
+        public async Task<ActionResult<Unit>> RegistrarMascota([FromBody] Registrar.Ejecuta data)
         {
             return await mediator.Send(data);
         }
         [HttpPut]
-        public async Task<ActionResult<Unit>> EditarMascotas(Editar.Ejecuta data)
+        public async Task<ActionResult<Unit>> EditarMascotas([FromBody] Editar.Ejecuta data)
         {
             return await mediator.Send(data);
         }

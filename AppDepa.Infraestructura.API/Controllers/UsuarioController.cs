@@ -9,7 +9,7 @@ namespace AppDepa.Infraestructura.API.Controllers
     public class UsuarioController : CustomController
     {
         [HttpPost]
-        public async Task<ActionResult<Unit>> RegistrarUsuario(Registrar.Ejecuta data)
+        public async Task<ActionResult<Unit>> RegistrarUsuario([FromBody] Registrar.Ejecuta data)
         {
             return await mediator.Send(data);
         }
@@ -19,7 +19,7 @@ namespace AppDepa.Infraestructura.API.Controllers
             return await mediator.Send(new Consultar.UsuarioUnico() { UsuarioId = id });
         }
         [HttpPut]
-        public async Task<ActionResult<UsuarioDto>> EditarUsuario(Editar.Ejecuta data)
+        public async Task<ActionResult<UsuarioDto>> EditarUsuario([FromBody] Editar.Ejecuta data)
         {
             return await mediator.Send(data);
         }
@@ -29,7 +29,7 @@ namespace AppDepa.Infraestructura.API.Controllers
             return await mediator.Send(new Eliminar.Ejecuta { Id = id });
         }
         [HttpPost("login")]
-        public async Task<ActionResult<UsuarioDto>> Login(Login.Ejecuta data)
+        public async Task<ActionResult<UsuarioDto>> Login([FromBody] Login.Ejecuta data)
         {
             return await mediator.Send(data);
         }

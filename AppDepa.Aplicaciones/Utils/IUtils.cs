@@ -9,5 +9,6 @@ namespace AppDepa.Aplicaciones.Utils
         void SetUsuarioSession(int usuarioId);
         int GetUsuarioSession();
         void DeleteUsuarioSession();
+        string GenerarCodigoAleatorio(int longitud);
     }
 }
