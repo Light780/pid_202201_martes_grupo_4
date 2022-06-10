@@ -11,6 +11,7 @@ namespace AppDepa.Dominio
         public int IncidenciaId { get; set; }
         public int DepartamentoId { get; set; }
         public Departamento Departamento { get; set; }
+        public string CodigoIncidencia { get; set; }
         public int TipoIncidenciaId { get; set; }
         [Column(TypeName = "varchar(300)")]
         public string DescripcionIncidencia { get; set; }

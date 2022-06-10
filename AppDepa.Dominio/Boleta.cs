@@ -13,7 +13,7 @@ namespace AppDepa.Dominio
         public string Periodo { get; set; }
         [Column(TypeName = "varchar(8)")]
         public string CodigoPago { get; set; }
-        [Column(TypeName = "decimal(18,2)")]
+        [Column(TypeName = "decimal(9,2)")]
         public decimal Monto { get; set; }
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
