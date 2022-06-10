@@ -11,12 +11,12 @@ namespace AppDepa.Infraestructura.API.Controllers
     public class DepartamentoController : CustomController
     {
         [HttpPost]
-        public async Task<ActionResult<Unit>> RegistrarDepartamento(Registrar.Ejecuta data)
+        public async Task<ActionResult<Unit>> RegistrarDepartamento([FromBody] Registrar.Ejecuta data)
         {
             return await mediator.Send(data);
         }
         [HttpPut]
-        public async Task<ActionResult<Unit>> ActualizarDepartamento(Editar.Ejecuta data)
+        public async Task<ActionResult<Unit>> ActualizarDepartamento([FromBody] Editar.Ejecuta data)
         {
             return await mediator.Send(data);
         }

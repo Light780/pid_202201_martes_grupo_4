@@ -36,6 +36,14 @@ namespace AppDepa.Aplicaciones.Utils
                         fecha.Hour, fecha.Minute, fecha.Second);
         }
 
+        public string GenerarCodigoAleatorio(int longitud)
+        {
+            Random random = new Random();
+            const string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(characters, longitud)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
         public void SetUsuarioSession(int usuarioId)
         {
             httpContextAccessor.HttpContext.Session.SetInt32("usuarioId", usuarioId);

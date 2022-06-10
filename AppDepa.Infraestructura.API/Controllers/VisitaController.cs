@@ -16,12 +16,12 @@ namespace AppDepa.Infraestructura.API.Controllers
             return await mediator.Send(data);
         }
         [HttpPost("registrar")]
-        public async Task<ActionResult<Unit>> RegistrarVisita(RegistrarEntrada.Ejecuta data)
+        public async Task<ActionResult<Unit>> RegistrarVisita([FromBody] RegistrarEntrada.Ejecuta data)
         {
             return await mediator.Send(data);
         }
         [HttpPost("registrarSalida")]
-        public async Task<ActionResult<Unit>> RegistrarSalida(RegistrarSalida.Ejecuta data)
+        public async Task<ActionResult<Unit>> RegistrarSalida([FromBody] RegistrarSalida.Ejecuta data)
         {
             return await mediator.Send(data);
         }

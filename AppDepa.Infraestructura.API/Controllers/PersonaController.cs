@@ -11,7 +11,7 @@ namespace AppDepa.Infraestructura.API.Controllers
     public class PersonaController : CustomController
     {
         [HttpPost]
-        public async Task<ActionResult<Unit>> RegistrarPersonas(Registrar.Ejecuta data)
+        public async Task<ActionResult<Unit>> RegistrarPersonas([FromBody] Registrar.Ejecuta data)
         {
             return await mediator.Send(data);
         }
@@ -23,7 +23,7 @@ namespace AppDepa.Infraestructura.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Unit>> ActualizarPersona(Editar.Ejecuta data)
+        public async Task<ActionResult<Unit>> ActualizarPersona([FromBody] Editar.Ejecuta data)
         {
             return await mediator.Send(data);
         }
