@@ -39,7 +39,7 @@ namespace AppDepa.Aplicaciones.Personas
                 {
                     return Unit.Value;
                 }
-                throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Erroe al eliminar Persona" });
+                throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al eliminar Persona" });
             }
         }
     }
