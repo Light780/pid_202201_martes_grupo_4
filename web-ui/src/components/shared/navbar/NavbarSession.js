@@ -21,15 +21,15 @@ function NavbarSession() {
     const openCloseRightMenu = () => {
         setOpenRightMenu(!openRightMenu)
     }
-    const closeSession = () => {
-        cerrarSesion(dispatch).then(response => {
-            if (response.status === 200) {
-                window.localStorage.removeItem('id');
-                window.localStorage.removeItem('open');
-                window.localStorage.removeItem('indiceMenu');
-                navigate('/auth/login')
-            }
-        })
+    const closeSession = () => {        
+        window.localStorage.removeItem('open');
+        window.localStorage.removeItem('indiceMenu');
+        dispatch({
+            type: "SALIR_SESION",
+            nuevoUsuario: null,
+            autenticado: false
+        })        
+        navigate('/auth/login')        
     }
     return (
         <React.Fragment>

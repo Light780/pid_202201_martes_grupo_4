@@ -44,21 +44,9 @@ namespace AppDepa.Aplicaciones.Utils
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        public void SetUsuarioSession(int usuarioId)
+        public DateTime ObtenerUltimoDiaFecha(DateTime fechaInicial)
         {
-            httpContextAccessor.HttpContext.Session.SetInt32("usuarioId", usuarioId);
-        }
-        public int GetUsuarioSession()
-        {
-            return httpContextAccessor.HttpContext.Session.GetInt32("usuarioId") ?? 0;
-        }
-
-        public void DeleteUsuarioSession()
-        {
-            if (httpContextAccessor.HttpContext.Session.GetInt32("usuarioId") != 0)
-            {
-                httpContextAccessor.HttpContext.Session.Clear();
-            }
+            return new DateTime(fechaInicial.Year, fechaInicial.Month, DateTime.DaysInMonth(fechaInicial.Year, fechaInicial.Month));
         }
     }
 }

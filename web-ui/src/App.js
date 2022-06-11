@@ -59,7 +59,7 @@ function App() {
               <Route exact path='/mantenimiento/mascota' element= {<SecurePath><Mascota/></SecurePath>}/>      
               <Route exact path='/mantenimiento/prueba' element= {<SecurePath><Prueba/></SecurePath>}/>
               <Route exact path='/visita/registro' element= {<SecurePath><RegistroVisita/></SecurePath>}/>
-              <Route exact path='/visita/ConsultaVisita' element= {<SecurePath><ConsultaVisita/></SecurePath>}/>
+              <Route exact path='/visita/consultaVisita' element= {<SecurePath><ConsultaVisita/></SecurePath>}/>
             </Routes>
           </Grid>
           </LocalizationProvider>

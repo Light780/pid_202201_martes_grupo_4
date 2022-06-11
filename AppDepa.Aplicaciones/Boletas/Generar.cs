@@ -5,6 +5,7 @@ using AppDepa.Infraestructura.Datos.Context;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -21,6 +22,7 @@ namespace AppDepa.Aplicaciones.Boletas
             public int DepartamentoId { get; set; }
             public string Anio { get; set; }
             public decimal Monto { get; set; }
+            public int UsuarioId { get; set; }
         }
         public class EjecutaValidator : AbstractValidator<Ejecuta>
         {
@@ -53,14 +55,17 @@ namespace AppDepa.Aplicaciones.Boletas
                 List<Boleta> listado = new List<Boleta>();
                 Enumerable.Range(1, 12).ToList().ForEach(x =>
                 {
+                    var periodo = string.Concat(request.Anio, x.ToString("D2"));
+                    var fechaPago = utils.ObtenerUltimoDiaFecha(DateTime.ParseExact(periodo, "yyyyMM", null));
                     listado.Add(new Boleta
                     {
-                        UsuarioId = utils.GetUsuarioSession(),
+                        UsuarioId = request.UsuarioId,
                         ServicioId = request.ServicioId,
                         DepartamentoId = request.DepartamentoId,
-                        Periodo = string.Concat(request.Anio, x.ToString("D2")),
+                        Periodo = periodo,
                         Monto = request.Monto,
-                        CodigoPago = utils.GenerarCodigoAleatorio(8)
+                        CodigoPago = utils.GenerarCodigoAleatorio(8),
+                        FechaPago = fechaPago
                     });
                 });
                 context.Boleta.AddRange(listado);

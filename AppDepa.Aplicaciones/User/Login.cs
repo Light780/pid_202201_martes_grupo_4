@@ -47,7 +47,6 @@ namespace AppDepa.Aplicaciones.User
                 {
                     throw new ExceptionHandler(HttpStatusCode.BadRequest, "Credenciales incorrectas");
                 }
-                utils.SetUsuarioSession(usuario.UsuarioId);
                 return new UsuarioDto()
                 {
                     UsuarioId = usuario.UsuarioId,

@@ -26,6 +26,7 @@ namespace AppDepa.Aplicaciones.Departamentos
             public bool IndLavanderia { get; set; }
             public bool IndPiscina { get; set; }
             public bool IndPatio { get; set; }
+            public int UsuarioId { get; set; }
         }
         public class EjecutaValidator : AbstractValidator<Ejecuta>
         {
@@ -74,7 +75,7 @@ namespace AppDepa.Aplicaciones.Departamentos
                     IndPiscina = request.IndPiscina,
                     IndPatio = request.IndPatio,
                     FechaRegistro = utils.ObtenerFecha(),
-                    UsuarioId = utils.GetUsuarioSession()
+                    UsuarioId = request.UsuarioId
                 };
                 context.Departamento.Add(dep);
                 var result = await context.SaveChangesAsync();

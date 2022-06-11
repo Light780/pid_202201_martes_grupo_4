@@ -20,6 +20,7 @@ namespace AppDepa.Aplicaciones.Visitas
             public int PersonaVisitaId { get; set; }
             public int PersonaId { get; set; }
             public DateTime FechaPosibleSalida { get; set; }
+            public int UsuarioId { get; set; }
 
         }
         public class EjecutaValidator : AbstractValidator<Ejecuta>
@@ -54,7 +55,7 @@ namespace AppDepa.Aplicaciones.Visitas
                     FechaEntrada = utils.ObtenerFecha(),
                     FechaRegistro = utils.ObtenerFecha(),
                     FechaPosibleSalida = request.FechaPosibleSalida,
-                    UsuarioId = utils.GetUsuarioSession()
+                    UsuarioId = request.UsuarioId
                 };
                 context.Visita.Add(visita);
                 var result = await context.SaveChangesAsync();

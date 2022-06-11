@@ -25,8 +25,8 @@ function Persona() {
       correo: '',
       sexo: '',
       tipoPersonaId: 0,
-      departamentoId: 0
-
+      departamentoId: 0,
+      usuarioId: sesionUsuario.usuario.usuarioId
    })
    const [filtro, setFiltro] = useState({
       filtroDepartamentoId: 0,
@@ -79,7 +79,8 @@ function Persona() {
          correo: '',
          sexo: '',
          tipoPersonaId: 0,
-         departamentoId: 0
+         departamentoId: 0,
+         usuarioId: sesionUsuario.usuario.usuarioId
       })
       setErrores({})
    }
@@ -87,6 +88,7 @@ function Persona() {
       e.preventDefault()
       const formErrors = validarForm(persona)
       if (Object.keys(formErrors).length === 0) {
+         persona.usuarioId = sesionUsuario.usuarioId;
          registrarPersona(persona).then(respuesta => {
             if (respuesta.status === 200) {
                dispatch({
@@ -652,7 +654,7 @@ function Persona() {
                                     <TableCell size="small" align='center'>{persona.usuario}</TableCell>
                                     <TableCell size="small" align='center'>{persona.fechaRegistro}</TableCell>
                                     <TableCell size="small" align='center'
-                                    style={persona.estado == "Activo"?  {color: "green", fontWeight: "bold"} : { color: "red", fontWeight: "bold"}}>{persona.estado}</TableCell>
+                                    style={persona.estado === "Activo"?  {color: "green", fontWeight: "bold"} : { color: "red", fontWeight: "bold"}}>{persona.estado}</TableCell>
                                     <TableCell size="small" align='center'>
                                        <IconButton color="primary" component="span" size="medium" onClick={async () => {
                                           limpiarForm();

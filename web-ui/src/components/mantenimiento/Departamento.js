@@ -31,7 +31,8 @@ function Departamento() {
       indBalcon: false,
       indLavanderia: false,
       indPiscina: false,
-      indPatio: false
+      indPatio: false,
+      usuarioId: sesionUsuario.usuario.usuarioId
 
    })
    const [errores, setErrores] = useState({})
@@ -76,14 +77,15 @@ function Departamento() {
          indBalcon: false,
          indLavanderia: false,
          indPiscina: false,
-         indPatio: false
+         indPatio: false,
+         usuarioId: sesionUsuario.usuario.usuarioId
       })
       setErrores({})
    }
    const peticionPost = e => {
       e.preventDefault()
       const formErrors = validarForm(departamento)
-      if (Object.keys(formErrors).length === 0) {
+      if (Object.keys(formErrors).length === 0) {         
          registrarDepartamento(departamento).then(respuesta => {
             if (respuesta.status === 200) {
                dispatch({
@@ -601,7 +603,7 @@ function Departamento() {
                                     </Hidden>
                                     <TableCell size="small" align='center'>{departamento.usuario}</TableCell>
                                     <TableCell size="small" align='center'>{departamento.fechaRegistro}</TableCell>
-                                    <TableCell size="small" align='center' style={departamento.estado == "Activo"?  {color: "green", fontWeight: "bold"} : { color: "red", fontWeight: "bold"}}>{departamento.estado}</TableCell>
+                                    <TableCell size="small" align='center' style={departamento.estado === "Activo"?  {color: "green", fontWeight: "bold"} : { color: "red", fontWeight: "bold"}}>{departamento.estado}</TableCell>
                                     <TableCell size="small" align='center'>
                                        <IconButton color="primary" component="span" size="medium" onClick={async () => {
                                           limpiarForm();
