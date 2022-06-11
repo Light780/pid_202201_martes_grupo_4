@@ -7,7 +7,7 @@ import {style} from '../tools/style'
 import { loginUsuario } from '../../actions/UsuarioAction';
 function Login(){
     const navigate = useNavigate()
-    const [{sesionUsuario, openSnackBar},dispatch] = useStateValue();    
+    const [{sesionUsuario},dispatch] = useStateValue();    
     const [usuario, setUsuario] = useState({
         email:'',        
         password:''

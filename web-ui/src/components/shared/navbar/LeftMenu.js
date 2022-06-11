@@ -96,13 +96,13 @@ export const LeftMenu = ({ classes, onClick }) => {
                 </ListItem>
                 <Collapse in={open.estadoColapsoBoletas} timeout="auto" unmountOnExit>
                     <List component="div">
-                        <ListItem component={Link} button to="/servicios/generarBoletas"
+                        <ListItem component={Link} button to="/servicio/generarBoletas"
                             selected={selectedIndex === 7}
                             onClick={(event) => handleListItemClick(event, 7)}>
                             <i className='material-icons'>receipt</i>
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Generar Boletas" />
                         </ListItem>                        
-                        <ListItem component={Link} button to="/servicios/consultarBoletas"
+                        <ListItem component={Link} button to="/servicio/consultarBoletas"
                         selected={selectedIndex === 8}
                         onClick={(event) => handleListItemClick(event, 8)}>
                             <i className='material-icons'>description</i>
@@ -118,13 +118,13 @@ export const LeftMenu = ({ classes, onClick }) => {
                 </ListItem>
                 <Collapse in={open.estadoColapsoIncidencias} timeout="auto" unmountOnExit>
                     <List component="div">
-                        <ListItem component={Link} button to="/incidencias/mantIncidencia"
+                        <ListItem component={Link} button to="/incidencia/mantIncidencia"
                             selected={selectedIndex === 9}
                             onClick={(event) => handleListItemClick(event, 9)}>
                             <i className='material-icons'>report_problem</i>
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Mantenimiento Incidencia" />
                         </ListItem>                        
-                        <ListItem component={Link} button to="/incidencias/consultarHIncidencia"
+                        <ListItem component={Link} button to="/incidencia/consultarHIncidencia"
                         selected={selectedIndex === 10}
                         onClick={(event) => handleListItemClick(event, 11)}>
                             <i className='material-icons'>timeline</i>
