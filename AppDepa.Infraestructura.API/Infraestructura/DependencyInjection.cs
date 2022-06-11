@@ -25,7 +25,6 @@ namespace AppDepa.Infraestructura.API.Infraestructura
                 options.Cookie.SameSite = SameSiteMode.None;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             });
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddMediatR(typeof(Registrar.Handler).Assembly);
             services.AddDbContext<GestionDepartamentosContext>(options =>
                 options.UseSqlServer(configuracion.GetConnectionString("DefaultConnection"))

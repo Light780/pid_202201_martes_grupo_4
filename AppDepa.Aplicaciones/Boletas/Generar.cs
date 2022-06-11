@@ -30,7 +30,9 @@ namespace AppDepa.Aplicaciones.Boletas
             {
                 RuleFor(x => x.ServicioId).GreaterThan(0).WithMessage("El servicio es obligatorio");
                 RuleFor(x => x.DepartamentoId).GreaterThan(0).WithMessage("El departamento es obligatorio");
-                RuleFor(x => x.Anio).NotEmpty().WithMessage("El año es obligatorio");
+                RuleFor(x => x.Anio)
+                    .NotEmpty().WithMessage("El año es obligatorio")
+                    .Length(4).WithMessage("El año no es valido");
                 RuleFor(x => x.Monto)
                     .GreaterThan(0).WithMessage("El monto debe ser mayor a 0")
                     .NotEmpty().WithMessage("El monto es obligatorio");

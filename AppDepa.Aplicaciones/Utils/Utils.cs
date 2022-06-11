@@ -11,12 +11,10 @@ namespace AppDepa.Aplicaciones.Utils
     {
         private List<Parametro> ListaParametros;
         private readonly GestionDepartamentosContext context;
-        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public Utils(GestionDepartamentosContext _context, IHttpContextAccessor _httpContextAccessor)
+        public Utils(GestionDepartamentosContext _context)
         {
             this.context = _context;
-            this.httpContextAccessor = _httpContextAccessor;
             InicializarVariables();
         }
         private void InicializarVariables()
