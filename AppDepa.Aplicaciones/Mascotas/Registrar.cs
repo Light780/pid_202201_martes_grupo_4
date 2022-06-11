@@ -18,6 +18,7 @@ namespace AppDepa.Aplicaciones.Mascotas
             public string Sexo { get; set; }
             public int EspecieId { get; set; }
             public int DepartamentoId { get; set; }
+            public int UsuarioId { get; set; }
         }
         public class EjecutaValidatior : AbstractValidator<Ejecuta>
         {
@@ -47,7 +48,7 @@ namespace AppDepa.Aplicaciones.Mascotas
                     EspecieId = request.EspecieId,
                     DepartamentoId = request.DepartamentoId,
                     FechaRegistro = utils.ObtenerFecha(),
-                    UsuarioId = utils.GetUsuarioSession()
+                    UsuarioId = request.UsuarioId
                 };
                 context.Mascota.Add(masc);
                 var result = await context.SaveChangesAsync();

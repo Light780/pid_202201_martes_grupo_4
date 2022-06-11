@@ -33,11 +33,5 @@ namespace AppDepa.Infraestructura.API.Controllers
         {
             return await mediator.Send(data);
         }
-        [HttpDelete]
-        public async Task<ActionResult<Unit>> CerrarSesion()
-        {
-            return await mediator.Send(new CerrarSesion.Ejecuta());
-        }
-
     }
 }

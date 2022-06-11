@@ -42,18 +42,3 @@ export const actualizarUsuario = (usuario, dispatch) => {
         })
     })
 }
-
-export const cerrarSesion = (dispatch) => {
-    return new Promise((resolve, reject) => {
-        HttpClient.delete(`Usuario`).then(response => {            
-            dispatch({
-                type: "SALIR_SESION",
-                nuevoUsuario: null,
-                autenticado: false
-            })            
-            resolve(response)
-        }).catch(error => {
-            resolve(error,reject)
-        })
-    })
-}

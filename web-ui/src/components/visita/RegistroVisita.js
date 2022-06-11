@@ -26,7 +26,8 @@ function RegistroVisita() {
         personaVisitaId: 0,
         personaId: 0,
         fechaEntrada: '',
-        fechaPosibleSalida:  null
+        fechaPosibleSalida:  null,
+        usuarioId: sesionUsuario.usuario.usuarioId
     });
 
     const [visitaForm, setVisitaForm] = useState({
@@ -39,7 +40,8 @@ function RegistroVisita() {
         correo: '',
         sexo: '',
         tipoPersonaId: 3,
-        departamentoId: 0
+        departamentoId: 0,
+        usuarioId: sesionUsuario.usuario.usuarioId
     });
 
     const listarPersonas = () => {
@@ -217,7 +219,8 @@ function RegistroVisita() {
             personaVisitaId: 0,
             personaId: 0,
             fechaEntrada: '',
-            fechaPosibleSalida: null
+            fechaPosibleSalida: null,
+            usuarioId: sesionUsuario.usuario.usuarioId
         })
         setVisitante('')
         setErrors({})
@@ -276,7 +279,8 @@ function RegistroVisita() {
            correo: '',
            sexo: '',
            tipoPersonaId: 3,
-           departamentoId: 0
+           departamentoId: 0,
+           usuarioId: sesionUsuario.usuario.usuarioId
         })
         setErrores({})        
      }

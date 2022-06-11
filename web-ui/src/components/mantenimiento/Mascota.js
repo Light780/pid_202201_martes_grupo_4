@@ -20,7 +20,8 @@ function Mascota() {
       nombreMascota: '',
       sexo: '',
       especieId: 0,
-      departamentoId: 0
+      departamentoId: 0,
+      usuarioId: sesionUsuario.usuario.usuarioId
    })
    const [filtro, setFiltro] = useState({
       filtroDepartamentoId: 0,
@@ -67,14 +68,15 @@ function Mascota() {
          nombreMascota: '',
          sexo: '',
          especieId: 0,
-         departamentoId: 0
+         departamentoId: 0,
+         usuarioId: sesionUsuario.usuario.usuarioId
       })
       setErrores({})
    }
    const peticionPost = e => {
       e.preventDefault()
       const formErrors = validarForm(mascota)
-      if (Object.keys(formErrors).length === 0) {
+      if (Object.keys(formErrors).length === 0) {         
          registrarMascota(mascota).then(respuesta => {
             if (respuesta.status === 200) {
                dispatch({

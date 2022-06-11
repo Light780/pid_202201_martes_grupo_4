@@ -1,5 +1,5 @@
 import axios from 'axios'
-axios.defaults.baseURL='http://localhost:5001/api'
+axios.defaults.baseURL='https://localhost:5001/api'
 axios.defaults.withCredentials = true
 const requestGenerico = {
     get:(url, params) => axios.get(url, params),

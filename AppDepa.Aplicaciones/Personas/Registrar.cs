@@ -25,6 +25,7 @@ namespace AppDepa.Aplicaciones.Personas
             public string Sexo { get; set; }
             public int TipoPersonaId { get; set; }
             public int DepartamentoId { get; set; }
+            public int UsuarioId { get; set; }
         }
         public class EjecutaValidacion : AbstractValidator<Ejecuta>
         {
@@ -76,10 +77,6 @@ namespace AppDepa.Aplicaciones.Personas
                 }
                 public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
                 {
-                    if (utils.GetUsuarioSession() == 0)
-                    {
-                        throw new ExceptionHandler(HttpStatusCode.Unauthorized, new { mensaje = "Se perdió la sesión, vuelva a iniciar por favor" });
-                    }
                     var existeDocumento = await context.Persona.Where(x => x.Documento.Equals(request.Documento)).AnyAsync();
                     if (existeDocumento)
                     {
@@ -97,7 +94,7 @@ namespace AppDepa.Aplicaciones.Personas
                         TipoPersonaId = request.TipoPersonaId,
                         EstadoId = request.EstadoId,
                         FechaRegistro = utils.ObtenerFecha(),
-                        UsuarioId = utils.GetUsuarioSession()
+                        UsuarioId = request.UsuarioId
                     };
                     context.Persona.Add(persona);
 

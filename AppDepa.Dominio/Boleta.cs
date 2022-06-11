@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppDepa.Dominio
 {
@@ -17,6 +18,6 @@ namespace AppDepa.Dominio
         public decimal Monto { get; set; }
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
-
+        public DateTime FechaPago { get; set; }
     }
 }

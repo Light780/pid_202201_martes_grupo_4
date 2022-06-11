@@ -6,9 +6,7 @@ namespace AppDepa.Aplicaciones.Utils
     {
         string BuscarParametro(int param, string reporte);
         DateTime ObtenerFecha();
-        void SetUsuarioSession(int usuarioId);
-        int GetUsuarioSession();
-        void DeleteUsuarioSession();
+        DateTime ObtenerUltimoDiaFecha(DateTime fechaInicial);
         string GenerarCodigoAleatorio(int longitud);
     }
 }
