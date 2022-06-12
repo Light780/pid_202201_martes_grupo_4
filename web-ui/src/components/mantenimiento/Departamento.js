@@ -571,7 +571,7 @@ function Departamento() {
 
                         <Grid item container xs={6} md={8}>
                            <Grid container justifyContent="flex-end">
-                              <ResponsiveButton style={style.submit} onClick={abrirCerrarModalInsertar} />
+                              <ResponsiveButton onClick={abrirCerrarModalInsertar} />
                            </Grid>
                         </Grid>
                      </Grid>
