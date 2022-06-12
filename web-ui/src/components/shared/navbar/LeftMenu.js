@@ -8,7 +8,7 @@ export const LeftMenu = ({ classes, onClick }) => {
         estadoColapsoMantenimiento: false,
         estadoColapsoVisitas: false,
         estadoColapsoBoletas: false,
-        estadoColapsoIncidencias:false
+        estadoColapsoIncidencias: false
     });
     const [selectedIndex, setSelectedIndex] = useState(0);
     const handleClick = (name) => {
@@ -35,6 +35,12 @@ export const LeftMenu = ({ classes, onClick }) => {
     return (
         <div className={classes.list}>
             <List>
+                <ListItem component={Link} button to="/"
+                    selected={selectedIndex === 0}
+                    onClick={(event) => handleListItemClick(event, 0)}>
+                    <i className='material-icons'>home</i>
+                    <ListItemText classes={{ primary: classes.listItemText }} primary="Dashboard" />
+                </ListItem>
                 <ListItem button onClick={() => handleClick("estadoColapsoMantenimiento")} selected={open.estadoColapsoMantenimiento}>
                     <Build color='black' className={classes.iconMenu} />
                     <ListItemText classes={{ primary: classes.listItemText }} primary="Modulo Mantenimiento" />
@@ -58,11 +64,6 @@ export const LeftMenu = ({ classes, onClick }) => {
                             <i className='material-icons'>pets</i>
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Mascota" />
                         </ListItem>
-                        {/* <ListItem component={Link} selected={selectedIndex === 4}
-                            onClick={(event) => handleListItemClick(event, 4)} button to='/mantenimiento/prueba'>
-                            <i className='material-icons'>pets</i>
-                            <ListItemText classes={{ primary: classes.listItemText }} primary="Prueba" />
-                        </ListItem> */}
                     </List>
                 </Collapse>
 
@@ -79,10 +80,9 @@ export const LeftMenu = ({ classes, onClick }) => {
                             <i className='material-icons'>emoji_people</i>
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Registro" />
                         </ListItem>
-                        {/* Mbarreto - 10.05.2022 */}
                         <ListItem component={Link} button to="/visita/consultaVisita"
-                        selected={selectedIndex === 6}
-                        onClick={(event) => handleListItemClick(event, 6)}>
+                            selected={selectedIndex === 6}
+                            onClick={(event) => handleListItemClick(event, 6)}>
                             <i className='material-icons'>emoji_people</i>
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Consulta" />
                         </ListItem>
@@ -101,10 +101,10 @@ export const LeftMenu = ({ classes, onClick }) => {
                             onClick={(event) => handleListItemClick(event, 7)}>
                             <i className='material-icons'>receipt</i>
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Generar Boletas" />
-                        </ListItem>                        
+                        </ListItem>
                         <ListItem component={Link} button to="/servicio/consultarBoletas"
-                        selected={selectedIndex === 8}
-                        onClick={(event) => handleListItemClick(event, 8)}>
+                            selected={selectedIndex === 8}
+                            onClick={(event) => handleListItemClick(event, 8)}>
                             <i className='material-icons'>description</i>
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Consultar Boletas" />
                         </ListItem>
@@ -123,10 +123,10 @@ export const LeftMenu = ({ classes, onClick }) => {
                             onClick={(event) => handleListItemClick(event, 9)}>
                             <i className='material-icons'>report_problem</i>
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Mantenimiento Incidencia" />
-                        </ListItem>                        
+                        </ListItem>
                         <ListItem component={Link} button to="/incidencia/consultarHIncidencia"
-                        selected={selectedIndex === 10}
-                        onClick={(event) => handleListItemClick(event, 11)}>
+                            selected={selectedIndex === 10}
+                            onClick={(event) => handleListItemClick(event, 11)}>
                             <i className='material-icons'>timeline</i>
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Consultar Historial Incidencia" />
                         </ListItem>

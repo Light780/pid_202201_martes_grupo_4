@@ -25,7 +25,7 @@ import {
   consultarUnico,
 } from "../../actions/VisitaAction";
 import { useStateValue } from "../../context/store";
-import AutoCompleteVisitaDni from "../utils/AutoCompletePersona";
+import AutoCompletePersona from "../utils/AutoCompletePersona";
 import { listarPersona } from "../../actions/PersonaAction";
 import SelectParametro from "../utils/SelectParametro";
 
@@ -383,7 +383,7 @@ function Visita() {
                 </Grid>
 
                 <Grid item container xs={3} md={2}>
-                  <AutoCompleteVisitaDni
+                  <AutoCompletePersona
                     onChange={(event, selectedValue) =>
                       autoCompleteChange(selectedValue)
                     }
