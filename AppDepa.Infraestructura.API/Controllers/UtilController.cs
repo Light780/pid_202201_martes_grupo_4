@@ -9,12 +9,17 @@ using System.Threading.Tasks;
 
 namespace AppDepa.Infraestructura.API.Controllers
 {
-    public class ParametroController : CustomController
+    public class UtilController : CustomController
     {
         [HttpGet("{parametroId}")]
         public async Task<ActionResult<List<Parametro>>> ListarParametros(string parametroId)
-        {            
+        {
             return await mediator.Send(new Consultar.ListaParametros() { ParametroId = parametroId });
+        }
+        [HttpGet]
+        public async Task<ActionResult<object>> ListaCantidades()
+        {
+            return await mediator.Send(new ConsultarCantidades.Dashboard());
         }
     }
 }
