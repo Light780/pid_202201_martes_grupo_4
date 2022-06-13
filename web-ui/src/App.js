@@ -71,6 +71,9 @@ function App() {
       </Router>
     </React.Fragment>
   );
+    </React.Fragment>
+  );
+>>>>>>>>> Temporary merge branch 2
 }
 
 export default App;
