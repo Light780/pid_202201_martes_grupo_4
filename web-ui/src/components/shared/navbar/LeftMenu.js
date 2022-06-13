@@ -1,7 +1,7 @@
 import { List, ListItem, ListItemText, Collapse } from '@mui/material';
 import { Link } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
-import { Build, ExpandLess, ExpandMore, MiscellaneousServices, People, Receipt, ReportProblem } from '@mui/icons-material';
+import { Build, ExpandLess, ExpandMore, MiscellaneousServices, People, ReportProblem } from '@mui/icons-material';
 
 export const LeftMenu = ({ classes, onClick }) => {
     const [open, setOpen] = useState({
@@ -122,9 +122,9 @@ export const LeftMenu = ({ classes, onClick }) => {
                             selected={selectedIndex === 9}
                             onClick={(event) => handleListItemClick(event, 9)}>
                             <i className='material-icons'>report_problem</i>
-                            <ListItemText classes={{ primary: classes.listItemText }} primary="Registrar Incidencia" />
+                            <ListItemText classes={{ primary: classes.listItemText }} primary="Mantenimiento Incidencia" />
                         </ListItem>                        
-                        <ListItem component={Link} button to="/incidencias/consultarHIncidencia"
+                        <ListItem component={Link} button to="/incidencia/consultarHIncidencia"
                         selected={selectedIndex === 10}
                         onClick={(event) => handleListItemClick(event, 11)}>
                             <i className='material-icons'>timeline</i>
