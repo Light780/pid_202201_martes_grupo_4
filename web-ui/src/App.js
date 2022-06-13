@@ -20,6 +20,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import GenerarBoleta from './components/servicios/GenerarBoleta';
 
+import RegistrarIncidencia from './components/incidencias/RegistrarIncidencia';
+
 function App() {
   const [{ sesionUsuario, openSnackBar }, dispatch] = useStateValue()
   const [iniciaApp, setIniciaApp] = useState(false);
@@ -35,6 +37,40 @@ function App() {
   }, [iniciaApp])
 
   return iniciaApp === false ? null :
+  (
+    <React.Fragment>
+      <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={openSnackBar ? openSnackBar.open : false}
+        autoHideDuration={3000}
+        onClose={() => dispatch({ type: "OPEN_SNACKBAR", openMensaje: { open: false, mensaje: '', severity: '' } })}>
+        <Alert variant="filled" severity={openSnackBar ? openSnackBar.severity : ''}>
+          {openSnackBar ? openSnackBar.mensaje : ''}
+        </Alert>
+      </Snackbar>
+      <Router>
+        <ThemeProvider theme={theme}>
+          <AppNavBar/>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <Grid container>
+            <Routes>
+              <Route exact path='/auth/login' element= {<Login/>}/>
+              <Route exact path='/' element= {<SecurePath><Inicio/></SecurePath>}/>              
+              <Route exact path='/auth/perfil' element= {<SecurePath><PerfilUsuario/></SecurePath>}/>
+              <Route exact path='/mantenimiento/departamento' element= {<SecurePath><Departamento/></SecurePath>}/>
+              <Route exact path='/mantenimiento/persona' element= {<SecurePath><Persona/></SecurePath>}/>      
+              <Route exact path='/mantenimiento/mascota' element= {<SecurePath><Mascota/></SecurePath>}/>      
+              <Route exact path='/mantenimiento/prueba' element= {<SecurePath><Prueba/></SecurePath>}/>
+              <Route exact path='/visita/registro' element= {<SecurePath><RegistroVisita/></SecurePath>}/>
+              <Route exact path='/visita/consultaVisita' element= {<SecurePath><ConsultaVisita/></SecurePath>}/>
+              <Route exact path='/servicio/generarBoletas' element= {<SecurePath><GenerarBoleta/></SecurePath>}/>
+              <Route exact path='/incidencia/registrarIncidencia' element= {<SecurePath><RegistrarIncidencia/></SecurePath>}/>
+            </Routes>
+          </Grid>
+          </LocalizationProvider>
+        </ThemeProvider>
+      </Router>
+    </React.Fragment>
+  );
     (
       <React.Fragment>
         <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "center" }}

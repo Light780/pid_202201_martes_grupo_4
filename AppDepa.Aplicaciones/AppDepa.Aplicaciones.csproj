@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="HistorialIncidencia\**" />
+    <Compile Remove="PagoServicios\**" />
+    <EmbeddedResource Remove="HistorialIncidencia\**" />
+    <EmbeddedResource Remove="PagoServicios\**" />
+    <None Remove="HistorialIncidencia\**" />
+    <None Remove="PagoServicios\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.4.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
   </ItemGroup>
@@ -16,13 +25,7 @@
 
   <ItemGroup>
 
-    <Folder Include="Incidencias\" />
-
     <Folder Include="Mascotas\" />
-
-    <Folder Include="HistorialIncidencia\" />
-
-    <Folder Include="PagoServicios\" />
 
   </ItemGroup>
 
