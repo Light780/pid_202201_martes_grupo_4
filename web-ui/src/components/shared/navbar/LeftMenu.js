@@ -118,13 +118,13 @@ export const LeftMenu = ({ classes, onClick }) => {
                 </ListItem>
                 <Collapse in={open.estadoColapsoIncidencias} timeout="auto" unmountOnExit>
                     <List component="div">
-                        <ListItem component={Link} button to="/incidencia/mantIncidencia"
+                        <ListItem component={Link} button to="/incidencia/registrarIncidencia"
                             selected={selectedIndex === 9}
                             onClick={(event) => handleListItemClick(event, 9)}>
                             <i className='material-icons'>report_problem</i>
-                            <ListItemText classes={{ primary: classes.listItemText }} primary="Mantenimiento Incidencia" />
+                            <ListItemText classes={{ primary: classes.listItemText }} primary="Registrar Incidencia" />
                         </ListItem>                        
-                        <ListItem component={Link} button to="/incidencia/consultarHIncidencia"
+                        <ListItem component={Link} button to="/incidencias/consultarHIncidencia"
                         selected={selectedIndex === 10}
                         onClick={(event) => handleListItemClick(event, 11)}>
                             <i className='material-icons'>timeline</i>
