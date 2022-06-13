@@ -1,9 +1,9 @@
-import React, { useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { Grid, Snackbar, ThemeProvider } from '@mui/material';
 import theme from './theme/theme'
-import AppNavBar from './components/shared/AppNavbar'
+import AppNavbar from './components/shared/AppNavbar'
 import Inicio from './components/Inicio';
 import Login from './components/security/Login';
 import SecurePath from './components/shared/SecurePath'
@@ -14,7 +14,6 @@ import PerfilUsuario from './components/security/PerfilUsuario';
 import Departamento from './components/mantenimiento/Departamento';
 import Persona from './components/mantenimiento/Persona';
 import Mascota from './components/mantenimiento/Mascota';
-import Prueba from './components/mantenimientos/Prueba';
 import RegistroVisita from './components/visita/RegistroVisita';
 import ConsultaVisita from './components/visita/ConsultaVisita';
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -24,11 +23,11 @@ import GenerarBoleta from './components/servicios/GenerarBoleta';
 import RegistrarIncidencia from './components/incidencias/RegistrarIncidencia';
 
 function App() {
-  const [{sesionUsuario, openSnackBar}, dispatch] = useStateValue()
+  const [{ sesionUsuario, openSnackBar }, dispatch] = useStateValue()
   const [iniciaApp, setIniciaApp] = useState(false);
   useEffect(() => {
     if (!iniciaApp) {
-       obtenerUsuario(window.localStorage.getItem("id"),dispatch).then(() => {
+      obtenerUsuario(window.localStorage.getItem("id"), dispatch).then(() => {
         setIniciaApp(true);
       }).catch(error => {
         setIniciaApp(true);

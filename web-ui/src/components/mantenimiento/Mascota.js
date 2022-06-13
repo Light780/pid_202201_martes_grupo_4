@@ -422,7 +422,7 @@ function Mascota() {
                         </Grid>
                         <Grid item container xs={3} md={6}>
                            <Grid container justifyContent="flex-end">
-                              <ResponsiveButton style={style.submit} onClick={abrirCerrarModalInsertar}/>
+                              <ResponsiveButton onClick={abrirCerrarModalInsertar}/>
                            </Grid>
                         </Grid>
                      </Grid>
