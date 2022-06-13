@@ -1,7 +1,7 @@
 import { List, ListItem, ListItemText, Collapse } from '@mui/material';
 import { Link } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
-import { Build, ExpandLess, ExpandMore, MiscellaneousServices, People, Receipt, ReportProblem } from '@mui/icons-material';
+import { Build, ExpandLess, ExpandMore, MiscellaneousServices, People, ReportProblem } from '@mui/icons-material';
 
 export const LeftMenu = ({ classes, onClick }) => {
     const [open, setOpen] = useState({

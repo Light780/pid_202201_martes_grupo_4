@@ -47,9 +47,9 @@ function App() {
           {openSnackBar ? openSnackBar.mensaje : ''}
         </Alert>
       </Snackbar>
-      <Router>
+      <BrowserRouter>
         <ThemeProvider theme={theme}>
-          <AppNavBar/>
+          <AppNavbar/>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Grid container>
             <Routes>
@@ -58,8 +58,7 @@ function App() {
               <Route exact path='/auth/perfil' element= {<SecurePath><PerfilUsuario/></SecurePath>}/>
               <Route exact path='/mantenimiento/departamento' element= {<SecurePath><Departamento/></SecurePath>}/>
               <Route exact path='/mantenimiento/persona' element= {<SecurePath><Persona/></SecurePath>}/>      
-              <Route exact path='/mantenimiento/mascota' element= {<SecurePath><Mascota/></SecurePath>}/>      
-              <Route exact path='/mantenimiento/prueba' element= {<SecurePath><Prueba/></SecurePath>}/>
+              <Route exact path='/mantenimiento/mascota' element= {<SecurePath><Mascota/></SecurePath>}/>    
               <Route exact path='/visita/registro' element= {<SecurePath><RegistroVisita/></SecurePath>}/>
               <Route exact path='/visita/consultaVisita' element= {<SecurePath><ConsultaVisita/></SecurePath>}/>
               <Route exact path='/servicio/generarBoletas' element= {<SecurePath><GenerarBoleta/></SecurePath>}/>
@@ -68,7 +67,7 @@ function App() {
           </Grid>
           </LocalizationProvider>
         </ThemeProvider>
-      </Router>
+      </BrowserRouter>
     </React.Fragment>
   );
 }
