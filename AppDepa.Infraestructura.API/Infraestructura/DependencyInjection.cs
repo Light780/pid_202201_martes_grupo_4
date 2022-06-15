@@ -5,6 +5,7 @@ using AppDepa.Infraestructura.Datos.Dapper;
 using AppDepa.Infraestructura.Datos.Dapper.Boleta;
 using AppDepa.Infraestructura.Datos.Dapper.Departamento;
 using AppDepa.Infraestructura.Datos.Dapper.Mascota;
+using AppDepa.Infraestructura.Datos.Dapper.PagoServicio;
 using AppDepa.Infraestructura.Datos.Dapper.Persona;
 using AppDepa.Infraestructura.Datos.Dapper.Visita;
 using MediatR;
@@ -44,6 +45,7 @@ namespace AppDepa.Infraestructura.API.Infraestructura
             services.AddScoped<IDepartamento, DepartamentoRepository>();
             services.AddScoped<IMascota, MascotaRepository>();
             services.AddScoped<IVisita, VisitaRepository>();
+            services.AddScoped<IPagoServicio, PagoServicioRepository>();
             return services;
         }
     }
