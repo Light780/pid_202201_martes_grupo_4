@@ -17,9 +17,11 @@ namespace AppDepa.Aplicaciones.Boletas
 
         public class ListaBoleta : IRequest<List<BoletaDto>>
         {
-            public string FechaPago { get; set; }
+            public string Anio { get; set; }
 
-            public string Departamento { get; set; }
+            public int DepartamentoId { get; set; }
+
+            public int EstadoId { get; set; }
         }
 
         public class Handler : IRequestHandler<ListaBoleta, List<BoletaDto>>
@@ -34,24 +36,42 @@ namespace AppDepa.Aplicaciones.Boletas
 
             public async Task<List<BoletaDto>> Handle(ListaBoleta request, CancellationToken cancellationToken)
             {
-                var query = from b in context.Boleta
-                            join d in context.Departamento on b.DepartamentoId equals d.DepartamentoId
-                            join u in context.Usuario on b.UsuarioId equals u.UsuarioId
-                            orderby b.BoletaId
-                            select new BoletaDto
-                            {
-                                BoletaId = b.BoletaId,
-                                Servicio= utils.BuscarParametro(b.ServicioId, "TIPO_SERVICIO"),
-                                Departamento = d.NroDepartamento,
-                                Periodo = b.Periodo,
-                                CodigoPago = b.CodigoPago,
-                                Monto = b.Monto,
-                                Usuario = u.UserName,
-                                FechaPago = b.FechaPago.ToString("dd/MM/yyyy HH:mm")
-                            };
+                //0 TODOS //1 Cancelado //2 Pendiente
+                var queryPagos = from p in context.PagoServicio
+                                 group p by p.BoletaId into g
+                                 select new
+                                 {
+                                     BoletaId = g.Key,
+                                     Pagado = (decimal?)g.Sum(x => x.Monto)
+                                 };
+
+                var queryDto = from b in context.Boleta
+                               join p in queryPagos on b.BoletaId equals p.BoletaId into boletaPagos
+                               from bp in boletaPagos.DefaultIfEmpty()
+                               join d in context.Departamento on b.DepartamentoId equals d.DepartamentoId
+                               join u in context.Usuario on b.UsuarioId equals u.UsuarioId
+                               where (string.IsNullOrEmpty(request.Anio) || b.Periodo.Substring(0, 4).Equals(request.Anio))
+                               where (request.DepartamentoId == 0 || b.DepartamentoId == request.DepartamentoId)
+                               where (request.EstadoId == 0 ||
+                                      request.EstadoId == 1 && b.Monto - (bp.Pagado ?? 0) == 0 ||
+                                      request.EstadoId == 2 && b.Monto - (bp.Pagado ?? 0) != 0)
+                               orderby b.BoletaId
+                               select new BoletaDto
+                               {
+                                   BoletaId = b.BoletaId,
+                                   Servicio = utils.BuscarParametro(b.ServicioId, "SERVICIO_ID"),
+                                   Departamento = d.NroDepartamento,
+                                   Periodo = b.Periodo,
+                                   CodigoPago = b.CodigoPago,
+                                   Monto = b.Monto,
+                                   Usuario = u.UserName,
+                                   FechaPago = b.FechaPago.ToString("dd/MM/yyyy HH:mm"),
+                                   Estado = b.Monto - (bp.Pagado ?? 0) == 0 ? "Cancelado" : "Pendiente",
+                                   Saldo = b.Monto - (bp.Pagado ?? 0)
+                               };
 
 
-                return await query.ToListAsync();
+                return await queryDto.ToListAsync();
 
             }
 

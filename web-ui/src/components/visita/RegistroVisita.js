@@ -443,8 +443,8 @@ function RegistroVisita() {
                                             <DateTimePicker                                             
                                             label="Fecha y Hora de Posible Salida"                                            
                                             value={visita.fechaPosibleSalida}
-                                            inputFormat="dd/MM/yyyy HH:mm:ss"
-                                            mask='__/__/____ __:__:__'
+                                            inputFormat="dd/MM/yyyy HH:mm"
+                                            mask='__/__/____ __:__'
                                             onChange={(e) => {
                                                 setVisita((anterior) => ({
                                                     ...anterior,
