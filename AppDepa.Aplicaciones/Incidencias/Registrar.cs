@@ -52,8 +52,8 @@ namespace AppDepa.Aplicaciones.Incidencias
             {
                 try
                 {
+                    #region "Registro Incidencia"
                     var ultimaIncidencia = await context.Incidencia.OrderByDescending(x => x.IncidenciaId).FirstOrDefaultAsync();
-
                     int incidenciaId = 0;
 
                     if (ultimaIncidencia != null)
@@ -78,15 +78,35 @@ namespace AppDepa.Aplicaciones.Incidencias
                     };
 
                     context.Incidencia.Add(incidencia);
-
                     var result = await context.SaveChangesAsync(cancellationToken);
-
+                    #endregion
+                    
                     if (result > 0)
                     {
-                        return Unit.Value;
+                        #region "Registro Historial Incidencia"                        
+                        HistorialIncidencia historialIncidencia = new HistorialIncidencia()
+                        {
+                            IncidenciaId = incidencia.IncidenciaId,
+                            DepartamentoId = incidencia.DepartamentoId,
+                            TipoIncidenciaId = incidencia.TipoIncidenciaId,
+                            DescripcionIncidencia = incidencia.DescripcionIncidencia,
+                            EstadoIncidenciaId = incidencia.EstadoIncidenciaId,
+                            FechaIncidencia = incidencia.FechaIncidencia,
+                            FechaRegistro = incidencia.FechaRegistro,
+                            UsuarioId = incidencia.UsuarioId,
+                            PersonaId = incidencia.PersonaId
+                        };
+                        context.HistorialIncidencia.Add(historialIncidencia);
+                        result = await context.SaveChangesAsync();
+                        
+                        if (result > 0)
+                        {
+                            return Unit.Value;
+                        }
+                        throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al registrar Historial Incidencia" });  
+                        #endregion
                     }
-
-                    throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al registrar Incidencia" });
+                    throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al registrar Incidencia" });  
                 }
                 catch (Exception ex)
                 {
