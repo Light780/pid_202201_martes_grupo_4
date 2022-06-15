@@ -9,3 +9,15 @@ export const generarBoletas = (boleta) => {
         })
     })
 }
+
+export const listarBoleta = (filtro) =>{
+    return new Promise((resolve, reject) =>{
+        HttpClient.get('Boleta/consulta', {params:{
+           Departament : filtro.filtroDepartamento,
+           fechaPago   : filtro.filtroFechaPago
+        }
+        }).then(response =>{
+            resolve(response)
+        }).catch(e => resolve(e,reject)) 
+    })         
+}
