@@ -1,5 +1,5 @@
-﻿using AppDepa.Aplicaciones.Dto;
-using AppDepa.Aplicaciones.User;
+﻿using AppDepa.Aplicaciones.User;
+using AppDepa.Infraestructura.Datos.Dapper.Usuario;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

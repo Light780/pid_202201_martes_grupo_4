@@ -1,5 +1,4 @@
-﻿using AppDepa.Aplicaciones.Dto;
-using AppDepa.Aplicaciones.Exceptions;
+﻿using AppDepa.Aplicaciones.Exceptions;
 using AppDepa.Aplicaciones.Utils;
 using AppDepa.Dominio;
 using AppDepa.Infraestructura.Datos.Context;

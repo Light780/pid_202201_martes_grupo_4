@@ -1,4 +1,4 @@
-﻿namespace AppDepa.Aplicaciones.Dto
+﻿namespace AppDepa.Infraestructura.Datos.Dapper.Mascota
 {
     public class MascotaDto
     {

@@ -1,31 +1,29 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AppDepa.Dominio;
-using System.Threading;
+﻿using AppDepa.Aplicaciones.Exceptions;
 using AppDepa.Infraestructura.Datos.Context;
+using AppDepa.Infraestructura.Datos.Dapper.Usuario;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 using System.Net;
-using AppDepa.Aplicaciones.Dto;
-using AppDepa.Aplicaciones.Exceptions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AppDepa.Aplicaciones.User
 {
     public class Consultar
     {
-        public class UsuarioUnico : IRequest<UsuarioDto> {
+        public class UsuarioUnico : IRequest<UsuarioDto>
+        {
             public int UsuarioId { get; set; }
         }
 
         public class Handler : IRequestHandler<UsuarioUnico, UsuarioDto>
         {
-            private readonly GestionDepartamentosContext context;            
+            private readonly GestionDepartamentosContext context;
             public Handler(GestionDepartamentosContext _context)
             {
-                this.context = _context;                
+                this.context = _context;
             }
             public async Task<UsuarioDto> Handle(UsuarioUnico request, CancellationToken cancellationToken)
             {

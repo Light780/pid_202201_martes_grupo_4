@@ -693,7 +693,7 @@ function Visita() {
                                   }
                               }
                             >
-                              {visita.fechaSalida === "" ? "NO SALIÓ" : "SALIÓ"}
+                              {visita.estado}
                             </TableCell>
                             <TableCell size="small" align="center">
                               <Stack spacing={1} direction="row">

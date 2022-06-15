@@ -1,6 +1,6 @@
-﻿using AppDepa.Aplicaciones.Dto;
-using AppDepa.Aplicaciones.Mascotas;
+﻿using AppDepa.Aplicaciones.Mascotas;
 using AppDepa.Dominio;
+using AppDepa.Infraestructura.Datos.Dapper.Mascota;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
