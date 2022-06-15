@@ -20,12 +20,12 @@ namespace AppDepa.Aplicaciones.Incidencias
         {
             public int IncidenciaId { get; set; }
             public int DepartamentoId { get; set; }
-            public string CodigoIncidencia { get; set; }
+            //public string CodigoIncidencia { get; set; }
             public int TipoIncidenciaId { get; set; }
             public string DescripcionIncidencia { get; set; }
-            public int EstadoIncidenciaId { get; set; }
-            public DateTime FechaIncidencia { get; set; }
             public int PersonaId { get; set; }
+            public DateTime FechaIncidencia { get; set; }
+            //public int EstadoIncidenciaId { get; set; }
         }
 
         public class EjecutaValidator : AbstractValidator<Ejecuta>
@@ -64,9 +64,9 @@ namespace AppDepa.Aplicaciones.Incidencias
                 incidencia.DepartamentoId = request.DepartamentoId;
                 incidencia.TipoIncidenciaId = request.TipoIncidenciaId;
                 incidencia.DescripcionIncidencia = request.DescripcionIncidencia;
-                incidencia.EstadoIncidenciaId = request.EstadoIncidenciaId;
-                incidencia.FechaIncidencia = request.FechaIncidencia;
                 incidencia.PersonaId = request.PersonaId;
+                incidencia.FechaIncidencia = request.FechaIncidencia;
+                //incidencia.EstadoIncidenciaId = request.EstadoIncidenciaId;
                 context.Incidencia.Update(incidencia);
                 var result = await context.SaveChangesAsync();
                 if (result > 0)
