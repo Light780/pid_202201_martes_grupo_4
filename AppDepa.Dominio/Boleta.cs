@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppDepa.Dominio
@@ -19,5 +20,7 @@ namespace AppDepa.Dominio
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
         public DateTime FechaPago { get; set; }
+
+        public ICollection<PagoServicio> PagoServicios { get; set; }
     }
 }

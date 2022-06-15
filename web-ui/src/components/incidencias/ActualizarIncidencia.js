@@ -7,38 +7,58 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import { registrarIncidencia } from "../../actions/IncidenciaAction";
+import { actualizarIncidencia, consultarUnico } from "../../actions/IncidenciaAction";
 import { useStateValue } from "../../context/store";
 import useStyles, { style } from "../tools/style";
 import SelectParametro from "../utils/SelectParametro";
 import SelectDepartamento from "../utils/SelectDepartamento";
 import SelectPersona from "../utils/SelectPersona";
-import { DateTimePicker } from "@mui/x-date-pickers";
+import { DatePicker } from "@mui/x-date-pickers";
 
-function RegistrarIncidencia() {
+function ActualizarIncidencia() {
   const styles = useStyles();
   const [{ sesionUsuario }, dispatch] = useStateValue();
   const [errors, setErrors] = useState({});
   const [incidencia, setIncidencia] = useState({
+    incidenciaId: 0,
     departamentoId: 0,
     tipoIncidenciaId: 0,
     descripcionIncidencia: "",
     personaId: 0,
-    fechaIncidencia: null,
-    usuarioId: sesionUsuario.usuario.usuarioId,
+    fechaIncidencia: "",
+    /*estadoIncidenciaId: 0,
+    usuarioId: sesionUsuario.usuario.usuarioId,*/
   });
 
-  const peticionPost = (e) => {
+
+  const peticionUnico = async (incidencia) => {
+    await consultarUnico(incidencia.incidenciaId).then(respuesta => {
+       if (respuesta.status === 200) {
+          setIncidencia(respuesta.data)
+       } else {
+          dispatch({
+             type: 'OPEN_SNACKBAR',
+             openMensaje: {
+                open: true,
+                mensaje: "Error al consultar la Incidencia",
+                severity: 'error'
+             }
+          })
+       }
+    })
+ }
+
+  const peticionPut = (e) => {
     e.preventDefault();
     const formErrors = validarForm(incidencia);
     if (Object.keys(formErrors).length === 0) {
-      registrarIncidencia(incidencia).then((response) => {
+      actualizarIncidencia(incidencia).then((response) => {
         if (response.status === 200) {
           dispatch({
             type: "OPEN_SNACKBAR",
             openMensaje: {
               open: true,
-              mensaje: "Incidencia creada correctamente.",
+              mensaje: "Incidencia actualizada correctamente.",
               severity: "success",
             },
           });
@@ -49,7 +69,7 @@ function RegistrarIncidencia() {
             openMensaje: {
               open: true,
               mensaje:
-                "Error al crear la incidencia\n Detalle del error : " +
+                "Error al actualizar la incidencia\n Detalle del error : " +
                 Object.values(response.response.data.errors),
               severity: "error",
             },
@@ -71,14 +91,15 @@ function RegistrarIncidencia() {
 
   const limpiarForm = () => {
     setIncidencia({
+      incidenciaId: 0,
       departamentoId: 0,
       tipoIncidenciaId: 0,
       descripcionIncidencia: "",
       personaId: 0,
-      fechaIncidencia: null,
-      usuarioId: sesionUsuario.usuario.usuarioId,
+      fechaIncidencia: "",
+     /* estadoIncidenciaId: 0,
+      usuarioId: sesionUsuario.usuario.usuarioId,*/
     });
-    setErrors({})
   };
 
   const validarForm = (incidencia) => {
@@ -115,7 +136,7 @@ function RegistrarIncidencia() {
             <Paper className={styles.paperTitle}>
               <Grid container justifyContent="flex-start">
                 <Typography component="h5" variant="h5" style={style.crudTitle}>
-                  Registrar Incidencia
+                  Actualizar Incidencia
                 </Typography>
               </Grid>
             </Paper>
@@ -123,6 +144,9 @@ function RegistrarIncidencia() {
               <Container component="main" maxWidth="md" justifyContent="center">
                 <form className={styles.modalForm}>
                   <Grid container spacing={2} justifyContent="center">
+                  <Grid item xs={12} md={12}>
+                     <TextField name="incidenciaId" className={styles.inputMaterial} label="incidenciaId" onChange={handleChange} value={incidencia.incidenciaId}></TextField>
+                  </Grid>
                     <Grid item xd={12} md={12}>
                       <SelectDepartamento
                         value={incidencia.departamentoId}
@@ -175,7 +199,7 @@ function RegistrarIncidencia() {
                     </Grid>
 
                     <Grid item xs={12} md={12}>
-                      <DateTimePicker
+                      <DatePicker
                         label="Fecha incidencia"
                         value={incidencia.fechaIncidencia}
                         inputFormat="dd/MM/yyyy HH:mm"
@@ -207,9 +231,9 @@ function RegistrarIncidencia() {
                         size="large"
                         color="primary"
                         style={style.submit}
-                        onClick={peticionPost}
+                        onClick={peticionPut}
                       >
-                        Generar
+                        Actualizar
                       </Button>
                     </Grid>
                   </Grid>
@@ -223,4 +247,4 @@ function RegistrarIncidencia() {
   );
 }
 
-export default RegistrarIncidencia;
+export default ActualizarIncidencia;

@@ -14,6 +14,7 @@ namespace AppDepa.Aplicaciones.Dto
         public string Periodo { get; set; }
         public string CodigoPago { get; set; }
         public decimal Monto { get; set; }
+        public decimal? Saldo { get; set; }
         public string Usuario { get; set; }
         public string FechaPago { get; set; }
         public string Estado { get; set; }

@@ -1,9 +1,9 @@
 ﻿using AppDepa.Aplicaciones.Boletas;
+using AppDepa.Aplicaciones.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using AppDepa.Aplicaciones.Dto;
+using System.Threading.Tasks;
 
 namespace AppDepa.Infraestructura.API.Controllers
 {
@@ -15,7 +15,7 @@ namespace AppDepa.Infraestructura.API.Controllers
             return await mediator.Send(data);
         }
         [HttpGet("consulta")]
-        public  async Task<ActionResult<List<BoletaDto>>> ListarBoleta([FromQuery] Consultar.ListaBoleta data)
+        public async Task<ActionResult<List<BoletaDto>>> ListarBoleta([FromQuery] Consultar.ListaBoleta data)
         {
             return await mediator.Send(data);
         }

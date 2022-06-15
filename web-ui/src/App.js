@@ -21,6 +21,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import GenerarBoleta from './components/servicios/GenerarBoleta';
 
 import RegistrarIncidencia from './components/incidencias/RegistrarIncidencia';
+import ActualizarIncidencia from './components/incidencias/ActualizarIncidencia';
 
 function App() {
   const [{ sesionUsuario, openSnackBar }, dispatch] = useStateValue()
@@ -63,6 +64,7 @@ function App() {
               <Route exact path='/visita/consultaVisita' element= {<SecurePath><ConsultaVisita/></SecurePath>}/>
               <Route exact path='/servicio/generarBoletas' element= {<SecurePath><GenerarBoleta/></SecurePath>}/>
               <Route exact path='/incidencia/registrarIncidencia' element= {<SecurePath><RegistrarIncidencia/></SecurePath>}/>
+              <Route exact path='/incidencia/actualizarIncidencia' element= {<SecurePath><ActualizarIncidencia/></SecurePath>}/>
             </Routes>
           </Grid>
           </LocalizationProvider>
