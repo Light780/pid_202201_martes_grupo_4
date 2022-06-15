@@ -13,7 +13,7 @@ import useStyles, { style } from "../tools/style";
 import SelectParametro from "../utils/SelectParametro";
 import SelectDepartamento from "../utils/SelectDepartamento";
 import SelectPersona from "../utils/SelectPersona";
-import { DatePicker } from "@mui/x-date-pickers";
+import { DateTimePicker } from "@mui/x-date-pickers";
 
 function RegistrarIncidencia() {
   const styles = useStyles();
@@ -24,7 +24,7 @@ function RegistrarIncidencia() {
     tipoIncidenciaId: 0,
     descripcionIncidencia: "",
     personaId: 0,
-    fechaIncidencia: "",
+    fechaIncidencia: null,
     usuarioId: sesionUsuario.usuario.usuarioId,
   });
 
@@ -75,9 +75,10 @@ function RegistrarIncidencia() {
       tipoIncidenciaId: 0,
       descripcionIncidencia: "",
       personaId: 0,
-      fechaIncidencia: "",
+      fechaIncidencia: null,
       usuarioId: sesionUsuario.usuario.usuarioId,
     });
+    setErrors({})
   };
 
   const validarForm = (incidencia) => {
@@ -174,7 +175,7 @@ function RegistrarIncidencia() {
                     </Grid>
 
                     <Grid item xs={12} md={12}>
-                      <DatePicker
+                      <DateTimePicker
                         label="Fecha incidencia"
                         value={incidencia.fechaIncidencia}
                         inputFormat="dd/MM/yyyy HH:mm"

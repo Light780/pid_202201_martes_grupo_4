@@ -125,8 +125,8 @@ export const LeftMenu = ({ classes, onClick }) => {
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Mantenimiento Incidencia" />
                         </ListItem> 
                         <ListItem component={Link} button to="/incidencia/actualizarIncidencia"
-                            selected={selectedIndex === 9}
-                            onClick={(event) => handleListItemClick(event, 9)}>
+                            selected={selectedIndex === 11}
+                            onClick={(event) => handleListItemClick(event, 10)}>
                             <i className='material-icons'>report_problem</i>
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Actualizar Incidencia" />
                         </ListItem>                        

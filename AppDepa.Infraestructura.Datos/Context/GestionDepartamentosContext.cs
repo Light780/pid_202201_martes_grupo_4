@@ -47,7 +47,11 @@ namespace AppDepa.Infraestructura.Datos.Context
                 .WithMany(c => c.PagoServicios)
                 .HasForeignKey(c => c.PersonaId)
                 .OnDelete(DeleteBehavior.Restrict);
-
+            modelBuilder.Entity<PagoServicio>()
+                .HasOne(c => c.Boleta)
+                .WithMany(c => c.PagoServicios)
+                .HasForeignKey(c => c.BoletaId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<HistorialIncidencia>().HasKey(c => new { c.HistorialIncidenciaId, c.IncidenciaId });
             base.OnModelCreating(modelBuilder);
