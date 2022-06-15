@@ -2,12 +2,16 @@
 using AppDepa.Aplicaciones.Utils;
 using AppDepa.Infraestructura.Datos.Context;
 using AppDepa.Infraestructura.Datos.Dapper;
+using AppDepa.Infraestructura.Datos.Dapper.Boleta;
+using AppDepa.Infraestructura.Datos.Dapper.Departamento;
+using AppDepa.Infraestructura.Datos.Dapper.Mascota;
+using AppDepa.Infraestructura.Datos.Dapper.Persona;
+using AppDepa.Infraestructura.Datos.Dapper.Visita;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace AppDepa.Infraestructura.API.Infraestructura
 {
@@ -33,6 +37,13 @@ namespace AppDepa.Infraestructura.API.Infraestructura
             services.AddTransient<IFactoryConnection, FactoryConnection>();
             services.AddScoped<IUtils, Utils>();
             services.AddOptions();
+
+            //Dapper
+            services.AddScoped<IBoleta, BoletaRepository>();
+            services.AddScoped<IPersona, PersonaRepository>();
+            services.AddScoped<IDepartamento, DepartamentoRepository>();
+            services.AddScoped<IMascota, MascotaRepository>();
+            services.AddScoped<IVisita, VisitaRepository>();
             return services;
         }
     }

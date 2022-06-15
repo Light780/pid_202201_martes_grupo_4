@@ -1,6 +1,4 @@
-﻿using AppDepa.Aplicaciones.Dto;
-using AppDepa.Aplicaciones.Utils;
-using AppDepa.Infraestructura.Datos.Context;
+﻿using AppDepa.Infraestructura.Datos.Dapper.Visita;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -22,47 +20,18 @@ namespace AppDepa.Aplicaciones.Visitas
 
         public class Handler : IRequestHandler<ListarVisitas, List<VisitaDto>>
         {
-            private readonly GestionDepartamentosContext context;
-            private readonly IUtils utils;
-
-            public Handler(GestionDepartamentosContext _context, IUtils _utils)
+            private readonly IVisita _visitaService;
+            public Handler(IVisita visitaService)
             {
-                this.context = _context;
-                this.utils = _utils;
+                this._visitaService = visitaService;
             }
             public async Task<List<VisitaDto>> Handle(ListarVisitas request, CancellationToken cancellationToken)
             {
                 //0 TODOS
                 //1 Finalizado
                 //2 No Finalizado
-                var query = from v in context.Visita
-                            join p in context.Persona on v.PersonaId equals p.PersonaId
-                            join pv in context.Persona on v.PersonaVisitaId equals pv.PersonaId
-                            join u in context.Usuario on v.UsuarioId equals u.UsuarioId
-                            orderby v.VisitaId
-                            where (string.IsNullOrEmpty(request.Documento) || v.PersonaVisita.Documento == request.Documento)
-                            where (string.IsNullOrEmpty(request.NombreCompleto) || pv.NombreCompleto.Contains(request.NombreCompleto))
-                            where (request.EstadoId == 0 || request.EstadoId == 1 && v.FechaSalida != null || request.EstadoId == 2 && v.FechaSalida == null)
-                            select new VisitaDto
-                            {
-                                VisitaId = v.VisitaId,
-                                PersonaVisitaId = pv.PersonaId,
-                                NombreCompletoVisitante = pv.NombreCompleto,
-                                TipoDocVisitante = utils.BuscarParametro(pv.TipoDocumentoId, "TIPO_DOCUMENTO_PERSONA"),
-                                DocumentoVisitante = pv.Documento,
-                                PersonaId = p.PersonaId,
-                                NombreCompletoAnfitrion = p.NombreCompleto,
-                                TipoDocAnfitrion = utils.BuscarParametro(p.TipoDocumentoId, "TIPO_DOCUMENTO_PERSONA"),
-                                DocumentoAnfitrion = p.Documento,
-                                FechaIngreso = v.FechaEntrada.ToString("dd/MM/yyyy HH:mm"),
-                                FechaSalida = v.FechaSalida.HasValue ? v.FechaSalida.Value.ToString("dd/MM/yyyy HH:mm") : "",
-                                FechaPosibleSalida = v.FechaPosibleSalida.ToString("dd/MM/yyyy HH:mm"),
-                                UsuarioRegistro = u.UserName,
-                                FechaRegistro = v.FechaRegistro.ToString("dd/MM/yyyy HH:mm"),
-                                Comentario = v.Comentario
-                            };
-
-                return await query.ToListAsync();
+                var lista = await _visitaService.ListarVisita(request.NombreCompleto, request.Documento, request.EstadoId);
+                return lista.ToList();
             }
         }
     }

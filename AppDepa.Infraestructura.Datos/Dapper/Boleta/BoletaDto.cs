@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AppDepa.Aplicaciones.Dto
+namespace AppDepa.Infraestructura.Datos.Dapper.Boleta
 {
     public class BoletaDto
     {

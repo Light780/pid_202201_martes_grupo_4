@@ -247,8 +247,7 @@ function Persona() {
                      <Grid container spacing={2} justifyContent="center">
                         <Grid  item xs={6} md={6}>
                            <Button type="submit" color="primary" component="span" size="medium" onClick={async () => {
-                                             limpiarForm();
-                                             //await peticionUnico(departamento);
+                                             limpiarForm();                                             
                                              abrirCerrarModalInsertarHoraSalida();
                         }}></Button>
                         </Grid>
@@ -259,13 +258,7 @@ function Persona() {
                               <TableRow>
 
                                  <TableCell align='center'>#</TableCell>
-                                 <TableCell align='left'>Nombre</TableCell>
-                                 {/* <TableCell align='center'>Tipo Doc.</TableCell>
-                                 <TableCell align='center'>N° Doc</TableCell>
-                                 <Hidden mdDown>
-                                    <TableCell align='center'>Sexo</TableCell>
-                                 </Hidden>
-                                 <TableCell align='center'>Tipo Persona</TableCell> */}
+                                 <TableCell align='left'>Nombre</TableCell>                                 
                                  <TableCell align='center'>Departamento</TableCell>
                                  <TableCell align='center'>Usuario</TableCell>
                                  <TableCell align='center'>Hora de Ingreso</TableCell>
@@ -280,41 +273,11 @@ function Persona() {
 
                                     <TableCell size="small" align='center' width="5%">{index + 1}</TableCell>
                                     <TableCell size="small" align='left' width="20%">{persona.nombreCompleto}</TableCell>
-
-                                    {/* <TableCell size="small" align='center'>{persona.tipoDocumento}</TableCell>
-
-                                    <TableCell size="small" align='center'>{persona.documento}</TableCell> */}
-                                    {/* <Hidden mdDown>
-                                       <TableCell size="small" align='center'>{persona.sexo}</TableCell>
-                                    </Hidden>
-                                    <TableCell size="small" align='center'>{persona.tipoPersona}</TableCell> */}
                                     <TableCell size="small" align='center' width="10%">{persona.departamento}</TableCell>
                                     <TableCell size="small" align='center' width="15%">{persona.usuario}</TableCell>
                                     <TableCell size="small" align='center' width="15%">{persona.fechaRegistro}</TableCell>
                                     <TableCell size="small" align='center' width="15%"
-                                       style={persona.estado == "Activo" ? { color: "green", fontWeight: "bold" } : { color: "red", fontWeight: "bold" }}>{persona.estado}</TableCell>
-                                    {/* <TableCell size="small" align='center'>
-                                       <IconButton color="primary" component="span" size="medium" onClick={async () => {
-                                          limpiarForm();
-                                          await peticionUnico(persona);
-                                          abrirCerrarModalEditar();
-                                       }}>
-                                          <Edit />
-                                       </IconButton>
-                                       <IconButton color="default" component="span" size="medium" onClick={() => {
-                                          limpiarForm(); setVisita(persona); abrirCerrarModalDetalle()
-                                       }}>
-                                          <Info />
-                                       </IconButton>
-                                       <IconButton color="secondary" component="span" size="medium" onClick={() => {
-                                          limpiarForm();
-                                          setVisita(persona);
-                                          abrirCerrarModalEliminar()
-                                       }}
-                                       >
-                                          <Delete />
-                                       </IconButton>
-                                    </TableCell> */}
+                                       style={persona.estado == "Activo" ? { color: "green", fontWeight: "bold" } : { color: "red", fontWeight: "bold" }}>{persona.estado}</TableCell>                                    
                                  </TableRow>
                               ))}
                               {emptyRows > 0 && (
