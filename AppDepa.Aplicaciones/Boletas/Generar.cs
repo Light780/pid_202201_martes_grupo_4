@@ -20,7 +20,7 @@ namespace AppDepa.Aplicaciones.Boletas
         {
             public int ServicioId { get; set; }
             public int DepartamentoId { get; set; }
-            public string Anio { get; set; }
+            public DateTime Anio { get; set; }
             public decimal Monto { get; set; }
             public int UsuarioId { get; set; }
         }
@@ -31,8 +31,7 @@ namespace AppDepa.Aplicaciones.Boletas
                 RuleFor(x => x.ServicioId).GreaterThan(0).WithMessage("El servicio es obligatorio");
                 RuleFor(x => x.DepartamentoId).GreaterThan(0).WithMessage("El departamento es obligatorio");
                 RuleFor(x => x.Anio)
-                    .NotEmpty().WithMessage("El año es obligatorio")
-                    .Length(4).WithMessage("El año no es valido");
+                    .NotNull().WithMessage("El año es obligatorio");
                 RuleFor(x => x.Monto)
                     .GreaterThan(0).WithMessage("El monto debe ser mayor a 0")
                     .NotEmpty().WithMessage("El monto es obligatorio");
@@ -54,10 +53,11 @@ namespace AppDepa.Aplicaciones.Boletas
                 {
                     throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "A este Departamento ya se le han generado boletas" });
                 }
+                string anioString = request.Anio.Year.ToString();
                 List<Boleta> listado = new List<Boleta>();
                 Enumerable.Range(1, 12).ToList().ForEach(x =>
                 {
-                    var periodo = string.Concat(request.Anio, x.ToString("D2"));
+                    var periodo = string.Concat(anioString, x.ToString("D2"));
                     var fechaPago = utils.ObtenerUltimoDiaFecha(DateTime.ParseExact(periodo, "yyyyMM", null));
                     listado.Add(new Boleta
                     {

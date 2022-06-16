@@ -10,12 +10,11 @@ import { DatePicker } from '@mui/x-date-pickers';
 function GenerarBoleta() {
     const styles = useStyles()
     const [{ sesionUsuario }, dispatch] = useStateValue()
-    const [year, setYear] = useState()
     const [errors, setErrors] = useState({})
     const [boleta, setBoleta] = useState({
         servicioId: 0,
         departamentoId: 0,
-        anio: "",
+        anio: null,
         monto: 0.00,
         usuarioId: sesionUsuario.usuario.usuarioId
     })
@@ -58,24 +57,16 @@ function GenerarBoleta() {
             ...anterior,
             [name]: value
         }));
-    }
-    const handleDate = (e) => {        
-        setBoleta(anterior => ({
-            ...anterior,
-            anio: e.getFullYear().toString()
-        }));
-        setYear(e)
-    }
+    }    
     const limpiarForm = () => {
         setBoleta({
             servicioId: 0,
             departamentoId: 0,
-            anio: "",
+            anio: null,
             monto: 0.00,
             usuarioId: sesionUsuario.usuario.usuarioId
         })
-        setErrors({})
-        setYear("")
+        setErrors({})        
     }
     const validarForm = (boleta) => {
         const newErrors = {}
@@ -93,10 +84,14 @@ function GenerarBoleta() {
             newErrors.monto = "El monto debe ser mayor a 0"
         }
 
-        if (boleta.anio === "") {
+        if (boleta.anio == null) {
             newErrors.anio = "El año es obligatorio"
-        } else if (boleta.anio.length !== 4) {
+        }        
+        else if(boleta.anio.getFullYear().toString().length !== 4){
             newErrors.anio = "Debe ingresar un año valido"
+        }
+        else if(boleta.anio.getFullYear() <= 1999){
+            newErrors.anio = "El minimo de año aceptable es de 2000 hacia adelante"
         }
         return newErrors;
     }
@@ -149,11 +144,18 @@ function GenerarBoleta() {
                                             <DatePicker
                                                 views={['year']}
                                                 label="Año"
-                                                value={year}
-                                                onChange={handleDate}
+                                                value={boleta.anio}
+                                                closeOnSelect={true}
+                                                minDate={new Date("2001-01-01")}
+                                                onChange={(e) => {
+                                                    setBoleta((anterior) => ({
+                                                        ...anterior,
+                                                        anio: e
+                                                    }))
+                                                }}
                                                 renderInput={(params) => <TextField {...params}
                                                     name="anio"
-                                                    fullWidth
+                                                    fullWidth                                                    
                                                     error={Boolean(errors?.anio)}
                                                     helperText={(errors?.anio)} />}
                                             />
