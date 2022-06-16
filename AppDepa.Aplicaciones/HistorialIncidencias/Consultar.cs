@@ -16,7 +16,6 @@ namespace AppDepa.Aplicaciones.HistorialIncidencias
         public class ListarHistorial : IRequest<List<HistorialIncidenciaDto>>
         {
             public int DepartamentoId { get; set; }
-            public int TipoIncidenciaId { get; set; }
         }
 
         public class Handler : IRequestHandler<ListarHistorial, List<HistorialIncidenciaDto>>
