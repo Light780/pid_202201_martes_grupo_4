@@ -2,56 +2,36 @@ import { Grid, Table, Button, Container, TextField, Typography, Modal, TableCont
 import { Edit, Delete, Info, CheckCircle } from '@mui/icons-material';
 import React, { useState, useEffect } from 'react';
 import { useStyles, style } from '../tools/style'
-import {listarBoleta} from '../../actions/BoletaAction'
+import { listarBoleta } from '../../actions/BoletaAction'
 import { useStateValue } from '../../context/store';
 import SelectParametro from '../utils/SelectParametro';
 import ResponsiveButton from '../utils/ResponsiveButton';
 import Departamento from '../mantenimiento/Departamento';
 
-function ListarBoleta(){
-    const styles = useStyles();
-    const [page, setPage] = useState(0)
-    const [{ sesionUsuario }, dispatch] = useStateValue()
-    const [rowsPerPage, setRowsPerPage] = useState(10)
-    const [listaBoleta, setListaBoleta] = useState([])
-    const [filtro, setFiltro] = useState({
-        filtroDepartamento: "",
-        filtroFechaPago: "",
-        filtroEstadoId:0
-    })
-    const [boleta, setBoleta] = useState({
-        boletaId: 0,
-        servicioId : 0,
-        Departamento : '',
-        Periodo:'',
-        codigoPago:'',
-        monto: 0.00,
-        usuarioId: sesionUsuario.usuario.usuarioId,
-        fechaPago:  '',
-        estado :0 
-    })
-    const Filtrar = (e) => {
-        setFiltro({
-          filtroDepartamento: boleta.Departamento,
-          filtroFechaPago: boleta.fechaPago,
-          filtroEstadoId: boleta.estado,
-        });
-      };
-    const [errores, setErrores] = useState({})
-    const peticionGet = () => {
-        listarBoleta(filtro).then(respuesta =>{
-            if (respuesta.status === 200) {
-                setListaBoleta(respuesta.data)
-            }else{
-                dispatch({
-                    type: 'OPEN_SNACKBAR',
-                    openMensaje: {
-                       open: true,
-                       mensaje: 'Error al listar las boletas',
-                       severity: 'error'
-                    }
-                 })
-            }
+function ListarBoleta() {
+  const styles = useStyles();
+  const [page, setPage] = useState(0)
+  const [{ sesionUsuario }, dispatch] = useStateValue()
+  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [listaBoleta, setListaBoleta] = useState([])
+  const [filtro, setFiltro] = useState({
+    filtroDepartamento: "",
+    filtroAnio: "",
+    filtroEstadoId: 0
+  })    
+  const [errores, setErrores] = useState({})
+  const peticionGet = () => {
+    listarBoleta(filtro).then(respuesta => {
+      if (respuesta.status === 200) {
+        setListaBoleta(respuesta.data)
+      } else {
+        dispatch({
+          type: 'OPEN_SNACKBAR',
+          openMensaje: {
+            open: true,
+            mensaje: 'Error al listar las boletas',
+            severity: 'error'
+          }
         })
     }
     return(
@@ -305,6 +285,8 @@ function ListarBoleta(){
             </Container>
             </React.Fragment>
     )
+},
+    )
+}
 }
 
-export default ListarBoleta;
