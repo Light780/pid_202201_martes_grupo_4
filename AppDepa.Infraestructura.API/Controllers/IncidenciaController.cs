@@ -27,11 +27,5 @@ namespace AppDepa.Infraestructura.API.Controllers
         {
             return await mediator.Send(new ConsultarUnico.Ejecuta() { IncidenciaId = id });
         }
-
-        [HttpGet("consultaHistorial")]
-        public async Task<ActionResult<List<HistorialIncidenciaDto>>> ListarVisita([FromQuery] ConsultarHistorialIncidencia.ListarHistorial data)
-        {
-            return await mediator.Send(data);
-        }
     }
 }
