@@ -13,32 +13,8 @@ function ListarPago(){
     const [page, setPage] = useState(0)
     const [{ sesionUsuario }, dispatch] = useStateValue()
     const [rowsPerPage, setRowsPerPage] = useState(10)
-    const [listaPago, setListaPago] = useState([])
-    const [filtro, setFiltro] = useState({
-        filtroBoleta:"",
-        filtroFechaPago:"",
-        filtroEstadoId:0
-    })
-    
-    const [pago,setPago] = useState({
-        pagoservicioId:0,
-        boletaId:0,
-        Boleta : '',
-        nroOperacion:'',
-        monto:0.00,
-        usuarioId: sesionUsuario.usuario.usuarioId,
-        fechaPago:'',
-        estado :0
-    })
-
-    const Filtrar = (e) => {
-        setFiltro({
-            filtroBoleta: pago.Departamento,
-            filtroFechaPago:pago.Departamento,
-            filtroEstadoId: pago.Departamento,
-        })
-    };
-    const [errores, setErrores] = useState({})
+    const [listaPago, setListaPago] = useState([])        
+        
     const peticionGet = ()=> {
         listarPago(filtro).then(respuesta =>{
             if(respuesta,status === 200){
