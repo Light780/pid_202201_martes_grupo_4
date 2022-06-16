@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Dapper\Incidencia\**" />
-    <EmbeddedResource Remove="Dapper\Incidencia\**" />
-    <None Remove="Dapper\Incidencia\**" />
+ 
   </ItemGroup>
 
   <ItemGroup>

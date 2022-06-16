@@ -1,5 +1,6 @@
 ﻿using AppDepa.Aplicaciones.Incidencias;
 using AppDepa.Dominio;
+using AppDepa.Infraestructura.Datos.Dapper.Incidencia;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -25,6 +26,12 @@ namespace AppDepa.Infraestructura.API.Controllers
         public async Task<ActionResult<Incidencia>> ObtenerPersona(int id)
         {
             return await mediator.Send(new ConsultarUnico.Ejecuta() { IncidenciaId = id });
+        }
+
+        [HttpGet("consulta")]
+        public async Task<ActionResult<List<IncidenciaDto>>> ListarIncidencias([FromQuery] Consultar.ListarIncidencias data)
+        {
+            return await mediator.Send(data);
         }
     }
 }
