@@ -1,6 +1,6 @@
-﻿using AppDepa.Aplicaciones.Dto;
-using AppDepa.Aplicaciones.Visitas;
+﻿using AppDepa.Aplicaciones.Visitas;
 using AppDepa.Dominio;
+using AppDepa.Infraestructura.Datos.Dapper.Visita;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;

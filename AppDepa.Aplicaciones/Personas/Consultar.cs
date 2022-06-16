@@ -1,9 +1,5 @@
-﻿using AppDepa.Aplicaciones.Dto;
-using AppDepa.Aplicaciones.Utils;
-using AppDepa.Infraestructura.Datos.Context;
+﻿using AppDepa.Infraestructura.Datos.Dapper.Persona;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -22,40 +18,16 @@ namespace AppDepa.Aplicaciones.Personas
 
         public class Handler : IRequestHandler<ListarPersonas, List<PersonaDto>>
         {
-            private readonly GestionDepartamentosContext context;
-            private readonly IUtils utils;
-            public Handler(GestionDepartamentosContext _context, IUtils _utils)
+            private readonly IPersona _personaService;
+            public Handler(IPersona personaService)
             {
-                this.context = _context;
-                this.utils = _utils;
+                this._personaService = personaService;
             }
 
             public async Task<List<PersonaDto>> Handle(ListarPersonas request, CancellationToken cancellationToken)
             {
-                var query = from p in context.Persona
-                            join d in context.Departamento on p.DepartamentoId equals d.DepartamentoId
-                            join u in context.Usuario on p.UsuarioId equals u.UsuarioId
-                            orderby p.PersonaId
-                            where (request.DepartamentoId == 0 || p.DepartamentoId == request.DepartamentoId)
-                            where (request.TipoPersonaId == 0 || p.TipoPersonaId == request.TipoPersonaId)
-                            where p.Eliminado == Convert.ToBoolean(request.Eliminado)
-                            select new PersonaDto
-                            {
-                                PersonaId = p.PersonaId,
-                                NombreCompleto = p.NombreCompleto,
-                                Documento = p.Documento,
-                                TipoDocumento = utils.BuscarParametro(p.TipoDocumentoId, "TIPO_DOCUMENTO_PERSONA"),
-                                Telefono = p.Telefono,
-                                Estado = utils.BuscarParametro(p.EstadoId, "ESTADO_ID"),
-                                Correo = p.Correo,
-                                Sexo = p.Sexo,
-                                TipoPersona = utils.BuscarParametro(p.TipoPersonaId, "TIPO_PERSONA_ID"),
-                                Departamento = d.NroDepartamento,
-                                Eliminado = p.Eliminado,
-                                FechaRegistro = p.FechaRegistro.ToString("dd/MM/yyyy HH:mm"),
-                                Usuario = u.UserName
-                            };
-                return await query.ToListAsync();
+                var lista = await _personaService.ListarPersona(request.DepartamentoId, request.TipoPersonaId, request.Eliminado);
+                return lista.ToList();
             }
         }
     }

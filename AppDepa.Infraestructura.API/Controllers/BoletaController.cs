@@ -1,5 +1,5 @@
 ﻿using AppDepa.Aplicaciones.Boletas;
-using AppDepa.Aplicaciones.Dto;
+using AppDepa.Infraestructura.Datos.Dapper.Boleta;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;

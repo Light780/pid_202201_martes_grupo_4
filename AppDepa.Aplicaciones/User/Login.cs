@@ -1,7 +1,7 @@
-﻿using AppDepa.Aplicaciones.Dto;
-using AppDepa.Aplicaciones.Exceptions;
+﻿using AppDepa.Aplicaciones.Exceptions;
 using AppDepa.Aplicaciones.Utils;
 using AppDepa.Infraestructura.Datos.Context;
+using AppDepa.Infraestructura.Datos.Dapper.Usuario;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
