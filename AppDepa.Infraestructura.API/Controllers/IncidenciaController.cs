@@ -1,5 +1,4 @@
-﻿using AppDepa.Aplicaciones.Dto;
-using AppDepa.Aplicaciones.Incidencias;
+﻿using AppDepa.Aplicaciones.Incidencias;
 using AppDepa.Dominio;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
