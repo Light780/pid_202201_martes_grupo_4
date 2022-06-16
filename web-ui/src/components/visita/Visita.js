@@ -1,4 +1,3 @@
-import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, IconButton, FormControlLabel } from '@mui/material';
 import { Grid, Table, Button, Container, TextField, Typography, Modal, TableContainer, TableHead, TablePagination, TableCell, TableBody, TableRow, Paper, Checkbox, IconButton, Hidden, FormLabel } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useStyles, style } from '../tools/style'
@@ -277,7 +276,7 @@ function Persona() {
                                     <TableCell size="small" align='center' width="15%">{persona.usuario}</TableCell>
                                     <TableCell size="small" align='center' width="15%">{persona.fechaRegistro}</TableCell>
                                     <TableCell size="small" align='center' width="15%"
-                                       style={persona.estado == "Activo" ? { color: "green", fontWeight: "bold" } : { color: "red", fontWeight: "bold" }}>{persona.estado}</TableCell>                                    
+                                       style={persona.estado === "Activo" ? { color: "green", fontWeight: "bold" } : { color: "red", fontWeight: "bold" }}>{persona.estado}</TableCell>                                    
                                  </TableRow>
                               ))}
                               {emptyRows > 0 && (
