@@ -4,6 +4,8 @@ using AppDepa.Infraestructura.Datos.Context;
 using AppDepa.Infraestructura.Datos.Dapper;
 using AppDepa.Infraestructura.Datos.Dapper.Boleta;
 using AppDepa.Infraestructura.Datos.Dapper.Departamento;
+using AppDepa.Infraestructura.Datos.Dapper.HistorialIncidencia;
+using AppDepa.Infraestructura.Datos.Dapper.Incidencia;
 using AppDepa.Infraestructura.Datos.Dapper.Mascota;
 using AppDepa.Infraestructura.Datos.Dapper.PagoServicio;
 using AppDepa.Infraestructura.Datos.Dapper.Persona;
@@ -46,6 +48,8 @@ namespace AppDepa.Infraestructura.API.Infraestructura
             services.AddScoped<IMascota, MascotaRepository>();
             services.AddScoped<IVisita, VisitaRepository>();
             services.AddScoped<IPagoServicio, PagoServicioRepository>();
+            services.AddScoped<IIncidencia, IncidenciaRepository>();
+            services.AddScoped<IHistorialIncidencias, HistorialIncidenciaRepository>();
             return services;
         }
     }
