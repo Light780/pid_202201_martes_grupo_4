@@ -1,5 +1,4 @@
-﻿using AppDepa.Aplicaciones.Dto;
-using AppDepa.Aplicaciones.Utils;
+﻿using AppDepa.Aplicaciones.Utils;
 using AppDepa.Infraestructura.Datos.Context;
 using AppDepa.Infraestructura.Datos.Dapper.HistorialIncidencia;
 using MediatR;
