@@ -18,7 +18,7 @@ namespace AppDepa.Infraestructura.Datos.Dapper.Incidencia
         public async Task<IEnumerable<IncidenciaDto>> ListarIncidencia(int departamentoId, int tipoIncidenciaId, int estadoIncidenciaId)
         {
             IEnumerable<IncidenciaDto> listado = null;
-            string sp = "UPS_ListarIncidencias";
+            string sp = "USP_ListarIncidencias";
             try
             {
                 var connection = factoryConnection.GetConnection();
