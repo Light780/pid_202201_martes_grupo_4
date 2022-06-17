@@ -5,19 +5,25 @@ import { useStyles, style } from '../tools/style'
 import { listarBoleta } from '../../actions/BoletaAction'
 import { useStateValue } from '../../context/store';
 import SelectParametro from '../utils/SelectParametro';
+import SelectDepartamento from '../utils/SelectDepartamento';
 import ResponsiveButton from '../utils/ResponsiveButton';
 import Departamento from '../mantenimiento/Departamento';
+import { DatePicker } from '@mui/x-date-pickers';
 
 function ConsultaBoleta() {
   const styles = useStyles();
   const [page, setPage] = useState(0)
   const [{ sesionUsuario }, dispatch] = useStateValue()
+  const [errors, setErrors] = useState({})
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [listaBoleta, setListaBoleta] = useState([])
   const [filtro, setFiltro] = useState({
-    filtroDepartamento: "",
+    filtroDepartamentoId: 0,
     filtroAnio: "",
     filtroEstadoId: 0
+  })
+  const [checkFiltro, setCheckFiltro] = useState({
+    filtroDepartamentoId: false,
   })
   const [errores, setErrores] = useState({})
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, listaBoleta.length - page * rowsPerPage)
@@ -40,10 +46,10 @@ function ConsultaBoleta() {
 
   const handleChange = e => {
     const { name, value } = e.target
-    // setMascota(anterior => ({
-    //   ...anterior,
-    //   [name]: value
-    // }))
+    setListaBoleta(anterior => ({
+      ...anterior,
+   [name]: value
+    }))
   }
   const handleChangeFiltro = e => {
     const { name, value } = e.target
@@ -93,26 +99,39 @@ function ConsultaBoleta() {
               <Grid container spacing={2} justifyContent="flex-start">
                 <Grid item container xs={3} md={2}>
                   <Grid item xs={10} md={10}>
-                    <TextField
-                      name="Departamento"
-                      className={styles.inputMaterial}
-                      label="Departamento"
-                      onChange={handleChange}
-                      //value={boleta.Departamento}
-                    />
+                  <SelectDepartamento value={filtro.filtroDepartamentoId}
+                       label="Filtro Depart."
+                       className={styles.inputMaterial}
+                       onChange={handleChangeFiltro}
+                       name="filtroDepartamentoId"
+                       disabled={!checkFiltro.filtroDepartamentoId} />
                   </Grid>
+                  <Grid item xs={2} md={2}>
+                       <Checkbox checked={checkFiltro.filtroDepartamentoId} className={styles.inputMaterial} style={style.checkFiltro}
+                       onChange={handleCheckFiltro} color='primary' value={checkFiltro.filtroDepartamentoId}
+                       name="filtroDepartamentoId" />
+                   </Grid>
                 </Grid>
-                <Grid item container xs={3} md={2}>
-                  <Grid item xs={10} md={10}>
-                    <TextField
-                      name="Año"
-                      className={styles.inputMaterial}
-                      label="Año"
-                      onChange={handleChange}
-                      //value={boleta.filtroFechaPago}
+                <Grid item xs={12} md={12}>
+                       <DatePicker
+                             views={['year']}
+                             label="Año"
+                             value={boleta.anio}
+                             closeOnSelect={true}
+                             minDate={new Date("2001-01-01")}
+                            onChange={(e) => {
+                          setBoleta((anterior) => ({
+                           ...anterior,
+                          anio: e
+                             }))
+                     }}
+                    renderInput={(params) => <TextField {...params}
+                         name="anio"
+                         fullWidth                                                    
+                         error={Boolean(errors?.anio)}
+                         helperText={(errors?.anio)} />}
                     />
-                  </Grid>
-                </Grid>
+                    </Grid>
                 <Grid item container xs={3} md={2}>
                   <SelectParametro
                     concepto="ESTADO_SALIO"
@@ -125,118 +144,43 @@ function ConsultaBoleta() {
                     onChange={handleChange}
                   />
                 </Grid>
-                <Grid item container xs={3} md={2}>
-                  <Button
-                    variant="contained"
-                    style={{
-                      background: "green",
-                      marginRight: "20px",
-                      width: "100px",
-                      marginLeft: "25px",
-                    }}
-                    onClick={(e) => {
-                      //Filtrar(e);
-                    }}
-                  >
-                    Filtrar
-                  </Button>
-                </Grid>
               </Grid>
               <Paper className={styles.paperBody} style={{ marginTop: "25px" }}>
                 <TableContainer className={styles.table}>
                   <Table stickyHeader>
                     <TableHead>
                       <TableRow>
-                        <TableCell align="left"
-                          style={{ fontSize: "14px", background: "#2e86de" }} >
-                          Boleta
-                        </TableCell>
-                        <TableCell align="left" style={{ fontSize: "14px", background: "#2e86de" }} >
-                          Propietario
-                        </TableCell>
-                        <TableCell align="left" style={{ fontSize: "14px", background: "#2e86de" }}>
-                          Mes
-                        </TableCell>
-                        <TableCell align="left" style={{ fontSize: "14px", background: "#2e86de" }} >
-                          FechaPago
-                        </TableCell>
-                        <TableCell align="left" style={{ fontSize: "14px", background: "#2e86de" }} >
-                          Servicio
-                        </TableCell>
-                        <TableCell align="center" style={{ fontSize: "14px" }}>
-                          Acciones
-                        </TableCell>
+                        <TableCell align='center'>Servicio</TableCell>
+                        <TableCell align='center'>Departamento</TableCell>
+                        <TableCell align='center'>Periodo</TableCell>
+                        <TableCell align='center'>CodigoPago</TableCell>
+                        <TableCell align='center'>Monto</TableCell>
+                        <TableCell align='center'>Saldo</TableCell>
+                        <TableCell align='center'>Usuario</TableCell>
+                        <TableCell align='center'>FechaPago</TableCell>
+                        <TableCell align='center'>Estado</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {listaBoleta.slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
-                      )
-                        .map((boleta, index) => (
-                          <TableRow
-                            key={boleta.boletaId}
-                            style={
-                              index % 2
-                                ? { background: "#f5f5f5" }
-                                : { background: "white" }
-                            }
-                          >
-                            <TableCell
-                              size="small"
-                              align="center"
-                              width="3%"
-                              style={
-                                index % 2
-                                  ? { background: "#636e72", color: "white" }
-                                  : { background: "#b2bec3", color: "white" }
-                              }
-                            >
-                              {index + 1}
-                            </TableCell>
-                            <TableCell size="small" align="center" width="9%"  >
-                              {boleta.boletaId}
-                            </TableCell>
-                            <TableCell size="small" align="center" width="9%"  >
-                              {boleta.Departamento}
-                            </TableCell>
-                            <TableCell size="small" align="center" width="9%"  >
-                              {boleta.mes}
-                            </TableCell>
-                            <TableCell size="small" align="center" width="9%"  >
-                              {boleta.fechaPago}
-                            </TableCell>
-                            <TableCell size="small" align="center" width="9%"  >
-                              {boleta.servicioId}
-                            </TableCell>
-                            <TableCell
-                              size="small"
-                              align="center"
-                              width="6%"
-                              // style={
-                              //   visita.fechaSalida === ""
-                              //     ? {
-                              //       color: "red",
-                              //       fontWeight: "bold",
-                              //       fontSize: "12px"
-                              //     }
-                              //     : {
-                              //       color: "green",
-                              //       fontWeight: "bold",
-                              //       fontSize: "12px"
-                              //     }
-                              // }
-                            >
-                              {boleta.estado}
-                            </TableCell>
+                      {listaBoleta.slice(page * rowsPerPage,page * rowsPerPage + rowsPerPage).map((boleta, index) => (
+                          <TableRow key={boleta.boletaId} style={index % 2? { background: "#f5f5f5" } : { background: "white" }}>
+                            <TableCell size="small" align="center"> {boleta.servicio}</TableCell>
+                            <TableCell size="small" align="center">{boleta.departamento}</TableCell>
+                            <TableCell size="small" align="center">{boleta.periodo}</TableCell>
+                            <TableCell size="small" align="center">{boleta.codigoPago}</TableCell>
+                            <TableCell size="small" align="center">{boleta.monto}</TableCell>
+                            <TableCell size="small" align="center">{boleta.saldo}</TableCell>
+                            <TableCell size="small" align="center">{boleta.usuario}</TableCell>
+                            <TableCell size="small" align="center">{boleta.fechaPago}</TableCell>
+                            <TableCell size="small" align="center" width="15%"
+                              style={boleta.estado ==="Activo" ? {color: "green", fontWeight: "bold"} : { color: "red", fontWeight: "bold" }} >{boleta.estado} </TableCell>
                             <TableCell size="small" align="center">
                               <Stack spacing={1} direction="row">
-                                <Button
-                                  //disabled={visita.fechaPago !== "" ? false : true}
-                                  variant="contained"
-                                  //onClick={async () => { setBoleta(boleta); }}  
-                                  >
+                                <Button variant="contained" >
                                   Pagar
+                                </Button>
+                                <Button variant="contained" >
+                                  VerPago
                                 </Button>
                               </Stack>
                             </TableCell>
