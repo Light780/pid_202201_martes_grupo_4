@@ -122,22 +122,22 @@ function Visita() {
   };
 
   //? Obtener los datos de un visitante en específico
-  const peticionUnico = async (visita) => {
-    await consultarUnico(visita.visitaId).then((respuesta) => {
-      if (respuesta.status === 200) {
-        setVisita(respuesta.data);
-      } else {
-        dispatch({
-          type: "OPEN_SNACKBAR",
-          openMensaje: {
-            open: true,
-            mensaje: "Error al consultar al visitante",
-            severity: "error",
-          },
-        });
-      }
-    });
-  };
+  // const peticionUnico = async (visita) => {
+  //   await consultarUnico(visita.visitaId).then((respuesta) => {
+  //     if (respuesta.status === 200) {
+  //       setVisita(respuesta.data);
+  //     } else {
+  //       dispatch({
+  //         type: "OPEN_SNACKBAR",
+  //         openMensaje: {
+  //           open: true,
+  //           mensaje: "Error al consultar al visitante",
+  //           severity: "error",
+  //         },
+  //       });
+  //     }
+  //   });
+  // };
 
   //$ BEGIN: Evento autocompletado del campo DNI
   const autoCompleteChange = (selectedVisita) => {
@@ -401,9 +401,7 @@ function Visita() {
 
                 <Grid item container xs={3} md={2}>
                   <SelectParametro
-                    concepto="ESTADO_SALIO"
-                    error={Boolean(errores?.estadoId)}
-                    errorMessage={errores?.estadoId}
+                    concepto="ESTADO_VISITA"                    
                     name="estado"
                     className={styles.inputMaterial}
                     value={visita.estado}
@@ -687,15 +685,15 @@ function Visita() {
                               style={
                                 visita.fechaSalida === ""
                                   ? {
-                                      color: "red",
-                                      fontWeight: "bold",
-                                      fontSize: "12px",
-                                    }
+                                    color: "red",
+                                    fontWeight: "bold",
+                                    fontSize: "12px",
+                                  }
                                   : {
-                                      color: "green",
-                                      fontWeight: "bold",
-                                      fontSize: "12px",
-                                    }
+                                    color: "green",
+                                    fontWeight: "bold",
+                                    fontSize: "12px",
+                                  }
                               }
                             >
                               {visita.estado}
@@ -704,7 +702,7 @@ function Visita() {
                               <Stack spacing={1} direction="row">
                                 <Button
                                   disabled={
-                                    visita.fechaSalida !== "" ? false : true
+                                    visita.fechaSalida !== ""
                                   }
                                   variant="contained"
                                   onClick={async () => {
@@ -719,7 +717,7 @@ function Visita() {
                                   variant="contained"
                                   color="warning"
                                   disabled={
-                                    visita.fechaSalida === "" ? false : true
+                                    visita.fechaSalida === ""
                                   }
                                   onClick={async () => {
                                     limpiarForm();
