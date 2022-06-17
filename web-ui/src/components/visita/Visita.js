@@ -47,7 +47,7 @@ function Persona() {
 
    const limpiarForm = () => {
       setVisita({
-         visitaId:0,
+         visitaId: 0,
          comentario: ''
       })
       setErrores({})
@@ -148,19 +148,19 @@ function Persona() {
 
    const [errores, setErrores] = useState({})
    const [modalInsertarHoraSalida, setModalInsertarHoraSalida] = useState(false);
-    
+
 
    const clock = () => {
       const date = new Date();
-      const h =  date.toLocaleTimeString();
+      const h = date.toLocaleTimeString();
       setVisita((anterior) => ({
-          ...anterior,
-          horaEntrada: h
+         ...anterior,
+         horaEntrada: h
       }));
-  }
-  
-  const abrirCerrarModalInsertarHoraSalida = () => {
-     setModalInsertarHoraSalida(!modalInsertarHoraSalida);
+   }
+
+   const abrirCerrarModalInsertarHoraSalida = () => {
+      setModalInsertarHoraSalida(!modalInsertarHoraSalida);
    }
 
    useEffect(() => {
@@ -186,7 +186,7 @@ function Persona() {
 
                   <Grid item xs={12} md={12}>
                      <FormLabel class="lblHora">Hora</FormLabel>
-                     <TextField value={Visita.horaEntrada} disabled name="hora" className={styles.inputMaterial} onChange={handleChange}/>
+                     <TextField value={Visita.horaEntrada} disabled name="hora" className={styles.inputMaterial} onChange={handleChange} />
                   </Grid>
 
                   <Grid item xs={12} md={12}>
@@ -244,11 +244,11 @@ function Persona() {
                         </Grid>
                      </Grid>
                      <Grid container spacing={2} justifyContent="center">
-                        <Grid  item xs={6} md={6}>
+                        <Grid item xs={6} md={6}>
                            <Button type="submit" color="primary" component="span" size="medium" onClick={async () => {
-                                             limpiarForm();                                             
-                                             abrirCerrarModalInsertarHoraSalida();
-                        }}></Button>
+                              limpiarForm();
+                              abrirCerrarModalInsertarHoraSalida();
+                           }}></Button>
                         </Grid>
                      </Grid>
                      <TableContainer className={styles.table}>
@@ -257,7 +257,7 @@ function Persona() {
                               <TableRow>
 
                                  <TableCell align='center'>#</TableCell>
-                                 <TableCell align='left'>Nombre</TableCell>                                 
+                                 <TableCell align='left'>Nombre</TableCell>
                                  <TableCell align='center'>Departamento</TableCell>
                                  <TableCell align='center'>Usuario</TableCell>
                                  <TableCell align='center'>Hora de Ingreso</TableCell>
@@ -276,7 +276,7 @@ function Persona() {
                                     <TableCell size="small" align='center' width="15%">{persona.usuario}</TableCell>
                                     <TableCell size="small" align='center' width="15%">{persona.fechaRegistro}</TableCell>
                                     <TableCell size="small" align='center' width="15%"
-                                       style={persona.estado === "Activo" ? { color: "green", fontWeight: "bold" } : { color: "red", fontWeight: "bold" }}>{persona.estado}</TableCell>                                    
+                                       style={persona.estado === "Activo" ? { color: "green", fontWeight: "bold" } : { color: "red", fontWeight: "bold" }}>{persona.estado}</TableCell>
                                  </TableRow>
                               ))}
                               {emptyRows > 0 && (
