@@ -34,6 +34,38 @@ function ListarBoleta() {
           }
         })
     }
+    const handleChange = e => {
+      const { name, value } = e.target
+      setMascota(anterior => ({
+         ...anterior,
+         [name]: value
+      }))
+   }
+   const handleChangeFiltro = e => {
+    const { name, value } = e.target
+    setFiltro(anterior => ({
+       ...anterior,
+       [name]: value
+    }))
+ }
+ const handleCheckFiltro = e => {
+    const { name, value } = e.target
+    setCheckFiltro(anterior => ({
+       ...anterior,
+       [name]: value === 'false'
+    }))
+    if (value === 'true') {
+       setFiltro(anterior => ({
+          ...anterior,
+          [name]: 0
+       }))
+    }else{
+       setFiltro(anterior => ({
+          ...anterior,
+          [name]: name==='filtroEliminado' ? 1 : 0
+       }))
+    }
+ }
     return(
         <React.Fragment>
             <Container component="main" maxWidth={false}>
@@ -104,34 +136,20 @@ function ListarBoleta() {
                            <Table stickyHeader>
                              <TableHead>
                                 <TableRow>
-                                  <TableCell
-                                      align="left"
-                                     style={{ fontSize: "14px", background: "#2e86de" }}
-                                      >
+                                  <TableCell align="left"
+                                     style={{ fontSize: "14px", background: "#2e86de" }} >
                                      Boleta
                                     </TableCell>
-                                    <TableCell
-                                      align="left"
-                                     style={{ fontSize: "14px", background: "#2e86de" }}
-                                      >
+                                    <TableCell align="left" style={{ fontSize: "14px", background: "#2e86de" }} >
                                      Propietario
                                     </TableCell>
-                                    <TableCell
-                                      align="left"
-                                     style={{ fontSize: "14px", background: "#2e86de" }}
-                                      >
+                                    <TableCell align="left"style={{ fontSize: "14px", background: "#2e86de" }}>
                                      Mes
                                     </TableCell>
-                                    <TableCell
-                                      align="left"
-                                     style={{ fontSize: "14px", background: "#2e86de" }}
-                                      >
+                                    <TableCell align="left"style={{ fontSize: "14px", background: "#2e86de" }} >
                                      FechaPago
                                     </TableCell>
-                                    <TableCell
-                                      align="left"
-                                     style={{ fontSize: "14px", background: "#2e86de" }}
-                                      >
+                                    <TableCell align="left"style={{ fontSize: "14px", background: "#2e86de" }} >
                                      Servicio
                                       </TableCell>
                                        <TableCell align="center" style={{ fontSize: "14px" }}>
@@ -139,8 +157,8 @@ function ListarBoleta() {
                                        </TableCell>
                                 </TableRow>
                              </TableHead>
-                                {listaBoleta
-                                .slice(
+                             <TableBody>
+                                {listaBoleta.slice(
                                   page * rowsPerPage,
                                   page * rowsPerPage + rowsPerPage
                                  )
@@ -165,64 +183,19 @@ function ListarBoleta() {
                                >
                                  {index + 1}
                                  </TableCell>
-                                 <TableCell
-                                  size="small"
-                                  align="left"
-                                  width="9%"
-                                  style={
-                                    index % 2
-                                      ? { background: "#2e86de" }
-                                     : { background: "#54a0ff" }
-                                 }
-                               >
+                                 <TableCell size="small" align="center" width="9%"  >
                               {boleta.boletaId}
                                </TableCell>
-                               <TableCell
-                                  size="small"
-                                  align="left"
-                                  width="9%"
-                                  style={
-                                    index % 2
-                                      ? { background: "#2e86de" }
-                                     : { background: "#54a0ff" }
-                                 }
-                               >
+                               <TableCell size="small" align="center" width="9%"  >
                               {boleta.Departamento}
                                </TableCell>
-                               <TableCell
-                                size="small"
-                                 align="center"
-                                 width="9%"
-                                 style={
-                                 index % 2
-                                  ? { background: "#22a6b3" }
-                                  : { background: "#7ed6df" }
-                                 }
-                                 >
-                              {boleta}
+                               <TableCell size="small" align="center" width="9%"  >
+                              {boleta.mes}
                             </TableCell>
-                            <TableCell
-                              size="small"
-                              align="center"
-                              width="9%"
-                              style={
-                                index % 2
-                                  ? { background: "#22a6b3" }
-                                  : { background: "#7ed6df" }
-                              }
-                            >
+                            <TableCell size="small" align="center" width="9%"  >
                               {boleta.fechaPago}
                             </TableCell>
-                            <TableCell
-                              size="small"
-                              align="center"
-                              width="9%"
-                              style={
-                                index % 2
-                                  ? { background: "#22a6b3" }
-                                  : { background: "#7ed6df" }
-                              }
-                            >
+                            <TableCell size="small" align="center" width="9%"  >
                               {boleta.servicioId}
                             </TableCell>
                             <TableCell
@@ -250,10 +223,7 @@ function ListarBoleta() {
                               <Button
                                 disabled= {visita.fechaPago !== "" ? false : true}
                                 variant="contained"                                
-                                onClick={async () => {
-                                  setBoleta(boleta);
-                                }}                                
-                              >
+                                onClick={async () => {setBoleta(boleta);}}  >
                                 Pagar
                               </Button>         
                               </Stack>
@@ -265,7 +235,7 @@ function ListarBoleta() {
                           <TableCell colSpan={6} />
                         </TableRow>
                       )}
-                             <TableBody>
+                             
                              </TableBody>
                            </Table>
                         </TableContainer>
