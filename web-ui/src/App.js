@@ -19,7 +19,7 @@ import ConsultaVisita from './components/visita/ConsultaVisita';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import GenerarBoleta from './components/servicios/GenerarBoleta';
-
+import ConsultaBoleta from './components/servicios/ConsultaBoleta';
 import HistorialIncidencia from './components/incidencias/ListarHistorialIncidencia';
 import RegistrarIncidencia from './components/incidencias/RegistrarIncidencia';
 import ActualizarIncidencia from './components/incidencias/ActualizarIncidencia';
@@ -64,6 +64,7 @@ function App() {
               <Route exact path='/visita/registro' element= {<SecurePath><RegistroVisita/></SecurePath>}/>
               <Route exact path='/visita/consultaVisita' element= {<SecurePath><ConsultaVisita/></SecurePath>}/>
               <Route exact path='/servicio/generarBoletas' element= {<SecurePath><GenerarBoleta/></SecurePath>}/>
+              <Route exact path='/servicio/consultarBoletas' element= {<SecurePath><ConsultaBoleta/></SecurePath>}/>
               <Route exact path='/incidencia/registrarIncidencia' element= {<SecurePath><RegistrarIncidencia/></SecurePath>}/>
               <Route exact path='/incidencia/actualizarIncidencia' element= {<SecurePath><ActualizarIncidencia/></SecurePath>}/>
               <Route exact path='/incidencia/consultarHIncidencia' element= {<SecurePath><HistorialIncidencia/></SecurePath>}/>
