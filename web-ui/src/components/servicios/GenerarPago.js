@@ -7,29 +7,30 @@ import SelectDepartamento from '../utils/SelectDepartamento';
 import SelectParametro from '../utils/SelectParametro';
 import { DatePicker } from '@mui/x-date-pickers';
 
-function GenerarBoleta() {
+function GenerarPago() {
     const styles = useStyles()
     const [{ sesionUsuario }, dispatch] = useStateValue()
+    const [year, setYear] = useState()
     const [errors, setErrors] = useState({})
-    const [boleta, setBoleta] = useState({
-        servicioId: 0,
+    const [pago, setPago] = useState({
+        boletaId: 0,
         departamentoId: 0,
-        anio: null,
+        anio: "",
         monto: 0.00,
         usuarioId: sesionUsuario.usuario.usuarioId
     })
 
     const peticionPost = (e) => {
         e.preventDefault()
-        const formErrors = validarForm(boleta)
+        const formErrors = validarForm(pago)
         if (Object.keys(formErrors).length === 0) {
-            generarBoletas(boleta).then(response => {
+            generarPagos(pago).then(response => {
                 if (response.status === 200) {
                     dispatch({
                         type: 'OPEN_SNACKBAR',
                         openMensaje: {
                             open: true,
-                            mensaje: "Boletas generadas correctamente",
+                            mensaje: "Pagos generadas correctamente",
                             severity: 'success'
                         }
                     })
@@ -39,7 +40,7 @@ function GenerarBoleta() {
                         type: 'OPEN_SNACKBAR',
                         openMensaje: {
                             open: true,
-                            mensaje: "Error al generar Boletas\n Detalles del error : " + Object.values(response.response.data.errors),
+                            mensaje: "Error al generar Pago\n Detalles del error : " + Object.values(response.response.data.errors),
                             severity: 'error'
                         }
                     })
@@ -53,45 +54,42 @@ function GenerarBoleta() {
 
     const handleChange = (e) => {
         const { name, value } = e.target
-        setBoleta(anterior => ({
+        setPago(anterior => ({
             ...anterior,
             [name]: value
         }));
-    }    
+    }
+    const handleDate = (e) => {        
+        setPago(anterior => ({
+            ...anterior,
+            anio: e.getFullYear().toString()
+        }));
+        setYear(e)
+    }
     const limpiarForm = () => {
-        setBoleta({
-            servicioId: 0,
+        setPago({
+            boletaId: 0,
             departamentoId: 0,
-            anio: null,
-            monto: 0.00,
+            anio: "",
             usuarioId: sesionUsuario.usuario.usuarioId
         })
-        setErrors({})        
+        setErrors({})
+        setYear("")
     }
-    const validarForm = (boleta) => {
+    const validarForm = (pago) => {
         const newErrors = {}
-        if (boleta.servicioId === 0) {
-            newErrors.servicioId = 'Debe seleccionar un servicio'
+        if (pago.boletaId === 0) {
+            newErrors.boletaId = 'Debe seleccionar una boleta'
         }
 
-        if (boleta.departamentoId === 0) {
+        if (pago.departamentoId === 0) {
             newErrors.departamentoId = 'Debe seleccionar un departamento'
         }
 
-        if (boleta.monto === "") {
-            newErrors.monto = "El monto es obligatorio"
-        } else if (Number(boleta.monto) <= 0) {
-            newErrors.monto = "El monto debe ser mayor a 0"
-        }
-
-        if (boleta.anio == null) {
+        if (pago.anio === "") {
             newErrors.anio = "El año es obligatorio"
-        }        
-        else if(boleta.anio.getFullYear().toString().length !== 4){
+        } else if (pago.anio.length !== 4) {
             newErrors.anio = "Debe ingresar un año valido"
-        }
-        else if(boleta.anio.getFullYear() <= 1999){
-            newErrors.anio = "El minimo de año aceptable es de 2000 hacia adelante"
         }
         return newErrors;
     }
@@ -104,7 +102,7 @@ function GenerarBoleta() {
                         <Paper className={styles.paperTitle}>
                             <Grid container justifyContent="flex-start">
                                 <Typography component="h5" variant="h5" style={style.crudTitle}>
-                                    Generar Boletas
+                                    Generar Pagos
                                 </Typography>
                             </Grid>
                         </Paper>
@@ -113,18 +111,18 @@ function GenerarBoleta() {
                                 <form className={styles.modalForm}>
                                     <Grid container spacing={2} justifyContent="center">
                                         <Grid item xs={12} md={12}>
-                                            <SelectParametro value={boleta.servicioId}
-                                                label="Servicio"
+                                            <SelectParametro value={pago.BoletaId}
+                                                label="Boleta"
                                                 className={styles.inputMaterial}
                                                 onChange={handleChange}
-                                                name="servicioId"
-                                                concepto="SERVICIO_ID"
-                                                error={Boolean(errors?.servicioId)}
-                                                errorMessage={(errors?.servicioId)}
+                                                name="Id"
+                                                concepto="BOLETA_ID"
+                                                error={Boolean(errors?.boletaId)}
+                                                errorMessage={(errors?.boletaId)}
                                             />
                                         </Grid>
                                         <Grid item xs={12} md={12}>
-                                            <SelectDepartamento value={boleta.departamentoId} error={Boolean(errors?.departamentoId)}
+                                            <SelectDepartamento value={pago.departamentoId} error={Boolean(errors?.departamentoId)}
                                                 errorMessage={(errors?.departamentoId)}
                                                 name="departamentoId" className={styles.inputMaterial}
                                                 onChange={handleChange} />
@@ -135,7 +133,7 @@ function GenerarBoleta() {
                                                 name="monto"
                                                 className={styles.inputMaterial}
                                                 onChange={handleChange}
-                                                value={boleta.monto}
+                                                value={pago.monto}
                                                 error={Boolean(errors?.monto)}
                                                 helperText={(errors?.monto)}
                                             />
@@ -144,18 +142,11 @@ function GenerarBoleta() {
                                             <DatePicker
                                                 views={['year']}
                                                 label="Año"
-                                                value={boleta.anio}
-                                                closeOnSelect={true}
-                                                minDate={new Date("2001-01-01")}
-                                                onChange={(e) => {
-                                                    setBoleta((anterior) => ({
-                                                        ...anterior,
-                                                        anio: e
-                                                    }))
-                                                }}
+                                                value={year}
+                                                onChange={handleDate}
                                                 renderInput={(params) => <TextField {...params}
                                                     name="anio"
-                                                    fullWidth                                                    
+                                                    fullWidth
                                                     error={Boolean(errors?.anio)}
                                                     helperText={(errors?.anio)} />}
                                             />
