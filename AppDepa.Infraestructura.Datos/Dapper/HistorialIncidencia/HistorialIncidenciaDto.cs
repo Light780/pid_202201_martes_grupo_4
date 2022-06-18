@@ -10,7 +10,6 @@ namespace AppDepa.Infraestructura.Datos.Dapper.HistorialIncidencia
     {
         //Datos de la Incidencia
         public int HistorialIncidenciaId { get; set; }
-        public string CodigoIncidencia { get; set; }
         public string Departamento { get; set; }
         public string TipoIncidencia { get; set; }
         public string DescripcionIncidencia { get; set; }

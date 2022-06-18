@@ -27,3 +27,19 @@ export const consultarUnico = (id) => {
         }).catch(e => resolve(e,reject))
     })
 }
+
+export const listarIncidencia = (filtro) => {
+    return new Promise((resolve, reject) => {
+        HttpClient.get(`Incidencia/consulta`, {params: 
+            {
+                departamentoId : filtro.filtroDepartamentoId,
+                tipoIncidenciaId : filtro.filtroTipoIncidenciaId,
+                estadoIncidenciaId : filtro.estadoIncidenciaId,
+                eliminado: filtro.eliminado
+            }
+        }).then(response => {
+            resolve(response)
+        }).catch(e => resolve(e,reject))
+    })
+}
+

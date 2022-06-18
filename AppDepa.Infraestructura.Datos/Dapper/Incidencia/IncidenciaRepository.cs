@@ -15,7 +15,7 @@ namespace AppDepa.Infraestructura.Datos.Dapper.Incidencia
         {
             this.factoryConnection = _factoryConnection;
         }
-        public async Task<IEnumerable<IncidenciaDto>> ListarIncidencia(int departamentoId, int tipoIncidenciaId, int estadoIncidenciaId)
+        public async Task<IEnumerable<IncidenciaDto>> ListarIncidencia(int departamentoId, int tipoIncidenciaId, int estadoIncidenciaId, int eliminado)
         {
             IEnumerable<IncidenciaDto> listado = null;
             string sp = "USP_ListarIncidencias";
@@ -26,11 +26,12 @@ namespace AppDepa.Infraestructura.Datos.Dapper.Incidencia
                 dp.Add("@DepartamentoId", departamentoId, DbType.Int32, ParameterDirection.Input);
                 dp.Add("@TipoIncidenciaId", tipoIncidenciaId, DbType.Int32, ParameterDirection.Input);
                 dp.Add("@EstadoIncidenciaId", estadoIncidenciaId, DbType.Int32, ParameterDirection.Input);
+                dp.Add("@Eliminado", eliminado, DbType.Int32, ParameterDirection.Input);
                 listado = await connection.QueryAsync<IncidenciaDto>(sp, dp, commandType: CommandType.StoredProcedure);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception("Error al consultar Incidencias");
+                throw new Exception("Error al consultar Incidencias: " + ex.Message);
             }
             finally
             {

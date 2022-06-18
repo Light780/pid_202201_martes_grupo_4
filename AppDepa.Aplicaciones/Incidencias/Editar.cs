@@ -11,6 +11,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using AppDepa.Dominio;
+using AppDepa.Aplicaciones.Utils;
 
 namespace AppDepa.Aplicaciones.Incidencias
 {
@@ -24,6 +25,7 @@ namespace AppDepa.Aplicaciones.Incidencias
             public string DescripcionIncidencia { get; set; }
             public int PersonaId { get; set; }
             public DateTime FechaIncidencia { get; set; }
+            public int UsuarioId { get; set; }
         }
 
         public class EjecutaValidator : AbstractValidator<Ejecuta>
@@ -42,10 +44,14 @@ namespace AppDepa.Aplicaciones.Incidencias
         public class Handler : IRequestHandler<Ejecuta>
         {
             private readonly GestionDepartamentosContext context;
-            public Handler(GestionDepartamentosContext _context)
+            private readonly IUtils utils;
+
+            public Handler(GestionDepartamentosContext _context, IUtils _utils)
             {
                 this.context = _context;
+                utils = _utils;
             }
+
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
                 #region "Actualización Incidencia"
@@ -53,8 +59,7 @@ namespace AppDepa.Aplicaciones.Incidencias
                 if (incidencia == null)
                 {
                     throw new ExceptionHandler(HttpStatusCode.NotFound, new { mensaje = "La Incidencia no existe" });
-                }
-                
+                }              
 
                 incidencia.DepartamentoId = request.DepartamentoId;
                 incidencia.TipoIncidenciaId = request.TipoIncidenciaId;
@@ -68,24 +73,27 @@ namespace AppDepa.Aplicaciones.Incidencias
 
                 if (result > 0)
                 {
-                    #region "Actualización Historial Incidencia"
-
-                   var historialIncidencia = await context.HistorialIncidencia.Where(x => x.IncidenciaId == incidencia.IncidenciaId).SingleOrDefaultAsync();
-
-                    historialIncidencia.DepartamentoId = incidencia.DepartamentoId;
-                    historialIncidencia.TipoIncidenciaId = incidencia.TipoIncidenciaId;
-                    historialIncidencia.DescripcionIncidencia = incidencia.DescripcionIncidencia;
-                    historialIncidencia.PersonaId = incidencia.PersonaId;
-                    historialIncidencia.FechaIncidencia = incidencia.FechaIncidencia;                 
-
-                    context.HistorialIncidencia.Update(historialIncidencia);
+                    #region "Registrar Historial Incidencia"
+                    HistorialIncidencia historialIncidencia = new HistorialIncidencia()
+                    {
+                        IncidenciaId = incidencia.IncidenciaId,
+                        DepartamentoId = incidencia.DepartamentoId,
+                        TipoIncidenciaId = incidencia.TipoIncidenciaId,
+                        DescripcionIncidencia = incidencia.DescripcionIncidencia,
+                        EstadoIncidenciaId = incidencia.EstadoIncidenciaId,
+                        FechaIncidencia = incidencia.FechaIncidencia,
+                        FechaRegistro = utils.ObtenerFecha(),
+                        UsuarioId = request.UsuarioId,
+                        PersonaId = incidencia.PersonaId
+                    };
+                    context.HistorialIncidencia.Add(historialIncidencia);
                     result = await context.SaveChangesAsync();
 
                     if (result > 0)
                     {
                         return Unit.Value;
                     }
-                    throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al actualizar Historial Incidencia" });
+                    throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al registrar Historial Incidencia" });
                     #endregion
                 }
                 throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al actualizar la Incidencia" });
