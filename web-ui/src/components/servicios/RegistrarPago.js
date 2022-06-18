@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { TextField, Container, Grid, Paper, Typography, Button } from '@mui/material';
-import { generarBoletas } from '../../actions/BoletaAction';
 import { useStateValue } from '../../context/store';
+import { registrarPago} from '../../actions/PagoAction';
 import useStyles, { style } from '../tools/style';
 import SelectDepartamento from '../utils/SelectDepartamento';
 import SelectParametro from '../utils/SelectParametro';
 import { DatePicker } from '@mui/x-date-pickers';
 
-function GenerarPago() {
+function RegistrarPago() {
     const styles = useStyles()
     const [{ sesionUsuario }, dispatch] = useStateValue()
     const [year, setYear] = useState()
@@ -24,13 +24,13 @@ function GenerarPago() {
         e.preventDefault()
         const formErrors = validarForm(pago)
         if (Object.keys(formErrors).length === 0) {
-            generarPagos(pago).then(response => {
+            registrarPago(pago).then(response => {
                 if (response.status === 200) {
                     dispatch({
                         type: 'OPEN_SNACKBAR',
                         openMensaje: {
                             open: true,
-                            mensaje: "Pagos generadas correctamente",
+                            mensaje: "Pagos registrados correctamente",
                             severity: 'success'
                         }
                     })
@@ -40,7 +40,7 @@ function GenerarPago() {
                         type: 'OPEN_SNACKBAR',
                         openMensaje: {
                             open: true,
-                            mensaje: "Error al generar Pago\n Detalles del error : " + Object.values(response.response.data.errors),
+                            mensaje: "Error al registrar Pago\n Detalles del error : " + Object.values(response.response.data.errors),
                             severity: 'error'
                         }
                     })
