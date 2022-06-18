@@ -15,7 +15,7 @@ namespace AppDepa.Aplicaciones.HistorialIncidencias
     {
         public class ListarHistorial : IRequest<List<HistorialIncidenciaDto>>
         {
-            public int DepartamentoId { get; set; }
+            public int IncidenciaId { get; set; }
         }
 
         public class Handler : IRequestHandler<ListarHistorial, List<HistorialIncidenciaDto>>
@@ -27,7 +27,7 @@ namespace AppDepa.Aplicaciones.HistorialIncidencias
             }
             public async Task<List<HistorialIncidenciaDto>> Handle(ListarHistorial request, CancellationToken cancellationToken)
             {
-                var lista = await _hiService.ListarHistorialIndicencia(request.DepartamentoId);
+                var lista = await _hiService.ListarHistorialIndicencia(request.IncidenciaId);
                 return lista.ToList();
             }
         }

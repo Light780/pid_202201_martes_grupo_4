@@ -23,7 +23,7 @@ namespace AppDepa.Infraestructura.Datos.Dapper.HistorialIncidencia
             {
                 var connection = factoryConnection.GetConnection();
                 var dp = new DynamicParameters();
-                dp.Add("@DepartamentoId", departamentoId, DbType.Int32, ParameterDirection.Input);
+                dp.Add("@IncidenciaId", departamentoId, DbType.Int32, ParameterDirection.Input);
                 listado = await connection.QueryAsync<HistorialIncidenciaDto>(sp, dp, commandType: CommandType.StoredProcedure);
             }
             catch (Exception)
