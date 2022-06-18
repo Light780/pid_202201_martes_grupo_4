@@ -91,6 +91,14 @@ function RegistrarPago() {
         } else if (pago.anio.length !== 4) {
             newErrors.anio = "Debe ingresar un año valido"
         }
+        if (pago.monto === '')
+            newErrors.monto = "El monto es obligatorio "
+        else if (pago.monto.trim().length < 3){
+            newErrors.anio='Debe contener al menos 3 caracteres'
+        }
+        else if (!/^[0-9]+$/.test(pago.anio)){
+            newErrors.anio = 'Debe contener solo numeros '
+        }
         return newErrors;
     }
 
