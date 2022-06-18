@@ -13,8 +13,9 @@ export const generarBoletas = (boleta) => {
 export const listarBoleta = (filtro) =>{
     return new Promise((resolve, reject) =>{
         HttpClient.get('Boleta/consulta', {params:{
-           Departament : filtro.filtroDepartamento,
-           fechaPago   : filtro.filtroFechaPago
+           departamentoId : filtro.filtroDepartamentoId,
+           anio   : filtro.filtroAnio,
+           estadoId: filtro.filtroEstadoId
         }
         }).then(response =>{
             resolve(response)
