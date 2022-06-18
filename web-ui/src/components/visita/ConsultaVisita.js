@@ -15,7 +15,7 @@ import {
   Paper,
   FormLabel,
   Hidden,
-  Stack,
+  Stack
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useStyles, style } from "../tools/style";
@@ -122,22 +122,22 @@ function Visita() {
   };
 
   //? Obtener los datos de un visitante en específico
-  // const peticionUnico = async (visita) => {
-  //   await consultarUnico(visita.visitaId).then((respuesta) => {
-  //     if (respuesta.status === 200) {
-  //       setVisita(respuesta.data);
-  //     } else {
-  //       dispatch({
-  //         type: "OPEN_SNACKBAR",
-  //         openMensaje: {
-  //           open: true,
-  //           mensaje: "Error al consultar al visitante",
-  //           severity: "error",
-  //         },
-  //       });
-  //     }
-  //   });
-  // };
+  const peticionUnico = async (visita) => {
+    await consultarUnico(visita.visitaId).then((respuesta) => {
+      if (respuesta.status === 200) {
+        setVisita(respuesta.data);
+      } else {
+        dispatch({
+          type: "OPEN_SNACKBAR",
+          openMensaje: {
+            open: true,
+            mensaje: "Error al consultar al visitante",
+            severity: "error",
+          },
+        });
+      }
+    });
+  };
 
   //$ BEGIN: Evento autocompletado del campo DNI
   const autoCompleteChange = (selectedVisita) => {
@@ -199,9 +199,9 @@ function Visita() {
           });
         }
       });
-    } else {
+    } else{
       setErrores(formErrors);
-    }
+    }  
   };
   //? END: Evento que registra la salida de un visitante (Formulario Registro Salida)
 
@@ -210,12 +210,9 @@ function Visita() {
     const newErrors = {};
     if (visita.comentario === "" || visita.comentario == null) {
       newErrors.comentario = "El campo es obligatorio";
-    } else if (
-      visita.comentario != null &&
-      visita.comentario.trim().length < 10
-    ) {
+    } else if (visita.comentario != null && visita.comentario.trim().length < 10) {
       newErrors.comentario = "Debe tener mínimo 10 caracteres";
-    }
+    } 
     return newErrors;
   };
   //$ END: Validar campos al registrar Salida (Formulario Registro Salida)
@@ -336,9 +333,7 @@ function Visita() {
         <form className={styles.modalForm}>
           <Grid container spacing={2} justifyContent="center">
             <Grid item xs={12} md={12}>
-              <Typography align="left" variant="h6" component="h2">
-                {visita.comentario}
-              </Typography>
+              <Typography align="left" variant='h6' component='h2'>{visita.comentario}</Typography>
             </Grid>
           </Grid>
           <Grid container spacing={2} justifyContent="center">
@@ -401,7 +396,9 @@ function Visita() {
 
                 <Grid item container xs={3} md={2}>
                   <SelectParametro
-                    concepto="ESTADO_VISITA"                    
+                    concepto="ESTADO_SALIO"
+                    error={Boolean(errores?.estadoId)}
+                    errorMessage={errores?.estadoId}
                     name="estado"
                     className={styles.inputMaterial}
                     value={visita.estado}
@@ -687,12 +684,12 @@ function Visita() {
                                   ? {
                                     color: "red",
                                     fontWeight: "bold",
-                                    fontSize: "12px",
+                                    fontSize:"12px"
                                   }
                                   : {
                                     color: "green",
                                     fontWeight: "bold",
-                                    fontSize: "12px",
+                                    fontSize:"12px"                                    
                                   }
                               }
                             >
@@ -700,33 +697,31 @@ function Visita() {
                             </TableCell>
                             <TableCell size="small" align="center">
                               <Stack spacing={1} direction="row">
-                                <Button
-                                  disabled={
-                                    visita.fechaSalida !== ""
-                                  }
-                                  variant="contained"
-                                  onClick={async () => {
-                                    limpiarForm();
-                                    setVisita(visita);
-                                    abrirCerrarModalVerDetalleVisita();
-                                  }}
-                                >
-                                  Comentario
-                                </Button>
-                                <Button
-                                  variant="contained"
-                                  color="warning"
-                                  disabled={
-                                    visita.fechaSalida === ""
-                                  }
-                                  onClick={async () => {
-                                    limpiarForm();
-                                    setVisita(visita);
-                                    abrirCerrarModalInsertarHoraSalida();
-                                  }}
-                                >
-                                  Salir
-                                </Button>
+                              <Button
+                                disabled= {visita.fechaSalida !== "" ? false : true}
+                                variant="contained"                                
+                                onClick={async () => {
+                                  limpiarForm();
+                                  setVisita(visita);
+                                  abrirCerrarModalVerDetalleVisita();
+                                }}                                
+                              >
+                                Comentario
+                              </Button>
+                              <Button
+                                variant="contained"
+                                color="warning"
+                                disabled={
+                                  visita.fechaSalida === "" ? false : true
+                                }
+                                onClick={async () => {
+                                  limpiarForm();
+                                  setVisita(visita);
+                                  abrirCerrarModalInsertarHoraSalida();
+                                }}
+                              >
+                                Salir
+                              </Button>
                               </Stack>
                             </TableCell>
                           </TableRow>

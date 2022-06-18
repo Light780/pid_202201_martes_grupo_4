@@ -136,6 +136,12 @@ export const LeftMenu = ({ classes, onClick }) => {
                             <i className='material-icons'>timeline</i>
                             <ListItemText classes={{ primary: classes.listItemText }} primary="Consultar Historial Incidencia" />
                         </ListItem>
+                        <ListItem component={Link} button to="/incidencia/consultarIncidencia"
+                        selected={selectedIndex === 10}
+                        onClick={(event) => handleListItemClick(event, 11)}>
+                            <i className='material-icons'>timeline</i>
+                            <ListItemText classes={{ primary: classes.listItemText }} primary="Consultar Incidencia" />
+                        </ListItem>
                     </List>
                 </Collapse>
             </List>

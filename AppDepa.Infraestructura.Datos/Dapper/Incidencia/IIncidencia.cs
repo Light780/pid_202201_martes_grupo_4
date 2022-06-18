@@ -8,6 +8,6 @@ namespace AppDepa.Infraestructura.Datos.Dapper.Incidencia
 {
     public interface IIncidencia
     {
-        public Task<IEnumerable<IncidenciaDto>> ListarIncidencia(int departamentoId, int tipoIncidenciaId, int estadoIncidenciaId);
+        public Task<IEnumerable<IncidenciaDto>> ListarIncidencia(int departamentoId, int tipoIncidenciaId, int estadoIncidenciaId, int eliminado);
     }
 }

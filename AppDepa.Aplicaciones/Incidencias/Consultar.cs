@@ -18,6 +18,7 @@ namespace AppDepa.Aplicaciones.Incidencias
             public int DepartamentoId { get; set; }
             public int TipoIncidenciaId { get; set; }
             public int EstadoIncidenciaId { get; set; }
+            public int Eliminado { get; set; }
         }
 
         public class Handler : IRequestHandler<ListarIncidencias, List<IncidenciaDto>>
@@ -29,7 +30,7 @@ namespace AppDepa.Aplicaciones.Incidencias
             }
             public async Task<List<IncidenciaDto>> Handle(ListarIncidencias request, CancellationToken cancellationToken)
             {
-                var lista = await _IService.ListarIncidencia(request.DepartamentoId, request.TipoIncidenciaId, request.EstadoIncidenciaId);
+                var lista = await _IService.ListarIncidencia(request.DepartamentoId, request.TipoIncidenciaId, request.EstadoIncidenciaId, request.Eliminado);
                 return lista.ToList();
             }
         }
