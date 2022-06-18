@@ -99,6 +99,9 @@ function RegistrarPago() {
         else if (!/^[0-9]+$/.test(pago.anio)){
             newErrors.anio = 'Debe contener solo numeros '
         }
+        else if (pago.monto=''|| Number(monto)<=0){
+            newErrors.monto='Debe ser mayor a 0 '
+        }
         return newErrors;
     }
 
