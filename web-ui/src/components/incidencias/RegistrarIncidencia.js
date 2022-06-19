@@ -164,6 +164,7 @@ function RegistrarIncidencia() {
 
                     <Grid item xs={12} md={12}>
                       <SelectPersona
+                        excluirTipo=""
                         value={incidencia.personaId}
                         label="Informante"
                         className={styles.inputMaterial}

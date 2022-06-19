@@ -34,8 +34,8 @@ export const listarIncidencia = (filtro) => {
             {
                 departamentoId : filtro.filtroDepartamentoId,
                 tipoIncidenciaId : filtro.filtroTipoIncidenciaId,
-                estadoIncidenciaId : filtro.estadoIncidenciaId,
-                eliminado: filtro.eliminado
+                estadoIncidenciaId : filtro.filtroEstadoIncidenciaId,
+                eliminado: filtro.filtroEliminado
             }
         }).then(response => {
             resolve(response)
