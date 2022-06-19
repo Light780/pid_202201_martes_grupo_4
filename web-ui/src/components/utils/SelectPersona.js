@@ -8,7 +8,7 @@ const SelectPersona = ({ name, value, onChange, className, error, errorMessage, 
         listarPersona({
             filtroDepartamentoId:0,
             filtroTipoPersonaId:0,
-            filtroEliminado:0     
+            filtroEliminado:0
         }).then(respuesta => {
             let array = respuesta.data.filter(persona => persona.tipoPersona !== excluirTipo)
             setPersonas(array)

@@ -121,32 +121,14 @@ function Visita() {
     });
   };
 
-  //? Obtener los datos de un visitante en específico
-  const peticionUnico = async (visita) => {
-    await consultarUnico(visita.visitaId).then((respuesta) => {
-      if (respuesta.status === 200) {
-        setVisita(respuesta.data);
-      } else {
-        dispatch({
-          type: "OPEN_SNACKBAR",
-          openMensaje: {
-            open: true,
-            mensaje: "Error al consultar al visitante",
-            severity: "error",
-          },
-        });
-      }
-    });
-  };
-
+  
   //$ BEGIN: Evento autocompletado del campo DNI
-  const autoCompleteChange = (selectedVisita) => {
-    if (selectedVisita != null) {
-      setVisita((anterior) => ({
-        ...anterior,
-        documentoVisitante: selectedVisita.documento,
-      }));
-    }
+  const autoCompleteChange = (selectedVisita) => {    
+    let valor = selectedVisita == null ? '' : selectedVisita.documento
+    setVisita((anterior) => ({
+      ...anterior,
+      documentoVisitante: valor,
+    }));    
   };
   //$ END: Evento autocompletado del campo DNI
 
@@ -386,7 +368,7 @@ function Visita() {
                   <AutoCompletePersona
                     onChange={(event, selectedValue) =>
                       autoCompleteChange(selectedValue)
-                    }
+                    }                  
                     options={listaComboVisita}
                     value={valueAutoComplete}
                     label="Documento"
@@ -396,7 +378,7 @@ function Visita() {
 
                 <Grid item container xs={3} md={2}>
                   <SelectParametro
-                    concepto="ESTADO_SALIO"
+                    concepto="ESTADO_VISITA"
                     error={Boolean(errores?.estadoId)}
                     errorMessage={errores?.estadoId}
                     name="estado"

@@ -65,7 +65,7 @@ function App() {
               <Route exact path='/visita/registro' element= {<SecurePath><RegistroVisita/></SecurePath>}/>
               <Route exact path='/visita/consultaVisita' element= {<SecurePath><ConsultaVisita/></SecurePath>}/>
               <Route exact path='/servicio/generarBoletas' element= {<SecurePath><GenerarBoleta/></SecurePath>}/>
-              <Route exact path='/servicio/consultarBoletas' element= {<SecurePath><ConsultaBoleta/></SecurePath>}/>
+              <Route exact path='/servicio/consultarBoleta' element= {<SecurePath><ConsultaBoleta/></SecurePath>}/>
               <Route exact path='/incidencia/registrarIncidencia' element= {<SecurePath><RegistrarIncidencia/></SecurePath>}/>
               <Route exact path='/incidencia/consultarIncidencia' element= {<SecurePath><Incidencia/></SecurePath>}/>
               <Route exact path='/incidencia/actualizarIncidencia' element= {<SecurePath><ActualizarIncidencia/></SecurePath>}/>

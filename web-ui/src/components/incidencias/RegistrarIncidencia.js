@@ -181,6 +181,7 @@ function RegistrarIncidencia() {
                         value={incidencia.fechaIncidencia}
                         inputFormat="dd/MM/yyyy HH:mm"
                         mask="__/__/____ __:__"
+                        className={styles.inputMaterial}
                         onChange={(e) => {
                           setIncidencia((anterior) => ({
                             ...anterior,

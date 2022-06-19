@@ -8,10 +8,17 @@ const AutoCompletePersona = ({ onChange, className, error=false, errorMessage, l
             fullWidth
             value={value}
             getOptionLabel={(option) => option.documento || ""}
-            onChange={onChange}
+            onChange={onChange}            
             options={options}
             clearOnBlur={false}            
-            renderInput={(params) => <TextField {...params} fullWidth label={label} error={error} helperText={errorMessage} className={className}/>}
+            renderInput={(params) => <TextField 
+                {...params} 
+                fullWidth 
+                label={label} 
+                error={error} 
+                helperText={errorMessage} 
+                className={className}
+                onChange={onChange}/>}
         />
     );
 };

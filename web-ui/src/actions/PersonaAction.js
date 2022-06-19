@@ -14,8 +14,7 @@ export const actualizarPersona = (persona) => {
     return new Promise((resolve,reject) => {
         HttpClient.put('Persona',persona).then(response => {
             resolve(response)
-        }).catch(e => {
-            console.log(e)
+        }).catch(e => {            
             resolve(e,reject)
         })
     })

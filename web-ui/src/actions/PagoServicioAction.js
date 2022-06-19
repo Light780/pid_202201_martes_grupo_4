@@ -1,8 +1,8 @@
 import HttpClient from '../services/HttpClient';
 
-export  const registrarPago = (pago)=>{
+export const registrarPago = (pago)=>{
     return new Promise ((resolve ,reject ) => {
-        HttpClient.post('Pago',pago).then(response => {
+        HttpClient.post('PagoServicio',pago).then(response => {
             resolve (response)
         }).catch (e=> {
             resolve(e,reject)
@@ -10,10 +10,10 @@ export  const registrarPago = (pago)=>{
     })
 }
 
-export const listarPago = (pagos) =>{
+export const listarPagos = (boleta) =>{
     return new Promise((resolve , reject) =>{
-        HttpClient.get('Pago/consulta', {params:{
-            pagosId: pagos,
+        HttpClient.get('PagoServicio', {params:{
+            boletaId: boleta.boletaId,
         }
     }).then(response =>{
         resolve(response)

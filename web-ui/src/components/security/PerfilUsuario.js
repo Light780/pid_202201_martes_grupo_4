@@ -26,8 +26,7 @@ function PerfilUsuario() {
         }))
     }
 
-    useEffect(() => {
-        console.log(sesionUsuario);
+    useEffect(() => {        
         setUsuario(sesionUsuario.usuario);        
         setFotoUrl(blobConverter(sesionUsuario.usuario.fotoPerfil))
     }, [])
@@ -54,9 +53,7 @@ function PerfilUsuario() {
                      }
                  })
              };
-         } catch (error) {
-             console.log(error)
-         }        
+         } catch (error) {}        
        
     }
     const guardarUsuario = e => {
