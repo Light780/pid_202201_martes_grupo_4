@@ -54,6 +54,7 @@ namespace AppDepa.Aplicaciones.Boletas
                     throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "A este Departamento ya se le han generado boletas" });
                 }
                 string anioString = request.Anio.Year.ToString();
+                var fechaActual = utils.ObtenerFecha();
                 List<Boleta> listado = new List<Boleta>();
                 Enumerable.Range(1, 12).ToList().ForEach(x =>
                 {
@@ -67,7 +68,8 @@ namespace AppDepa.Aplicaciones.Boletas
                         Periodo = periodo,
                         Monto = request.Monto,
                         CodigoPago = utils.GenerarCodigoAleatorio(8),
-                        FechaPago = fechaPago
+                        FechaPago = fechaPago,
+                        FechaRegistro = fechaActual
                     });
                 });
                 context.Boleta.AddRange(listado);

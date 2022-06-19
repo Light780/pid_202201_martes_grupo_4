@@ -93,6 +93,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   modalForm: {
     width: "100%",
+    marginTop: "15px"
   },
   iconos: {
     cursor: "pointer",
@@ -135,13 +136,18 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   modalTable: {
-    position: "absolute",
-    width: 1200,
-    [theme.breakpoints.down("md")]: {
+    position: "absolute",    
+    [theme.breakpoints.up("lg")]: {
+      width: 1200,
+    },
+    [theme.breakpoints.down("lg")]: {
       width: 800,
     },
+    [theme.breakpoints.down("md")]: {
+      width: 600,
+    },
     [theme.breakpoints.down("sm")]: {
-      width: 550,
+      width: 350,
     },
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",

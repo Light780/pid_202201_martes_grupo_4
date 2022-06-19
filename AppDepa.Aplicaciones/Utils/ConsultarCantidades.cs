@@ -29,13 +29,15 @@ namespace AppDepa.Aplicaciones.Utils
                 var cantMascotas = await context.Mascota.CountAsync();
                 var cantVisitas = await context.Visita.CountAsync();
                 var cantBoletas = await context.Boleta.CountAsync();
+                var cantIncidencias = await context.Incidencia.CountAsync();
                 return new
                 {
                     cantDepartamentos,
                     cantPersonas,
                     cantMascotas,
                     cantVisitas,
-                    cantBoletas
+                    cantBoletas,
+                    cantIncidencias
                 };
             }
         }

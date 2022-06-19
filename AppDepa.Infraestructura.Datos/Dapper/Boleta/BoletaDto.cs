@@ -18,5 +18,6 @@ namespace AppDepa.Infraestructura.Datos.Dapper.Boleta
         public string Usuario { get; set; }
         public string FechaPago { get; set; }
         public string Estado { get; set; }
+        public string FechaRegistro { get; set; }
     }
 }

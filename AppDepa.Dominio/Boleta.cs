@@ -20,7 +20,7 @@ namespace AppDepa.Dominio
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
         public DateTime FechaPago { get; set; }
-
+        public DateTime FechaRegistro { get; set; }
         public ICollection<PagoServicio> PagoServicios { get; set; }
     }
 }

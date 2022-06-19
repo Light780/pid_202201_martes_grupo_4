@@ -35,7 +35,7 @@ namespace AppDepa.Aplicaciones.PagoServicios
                     .NotEmpty().WithMessage("El nro de operacion es obligatorio")
                     .Length(1, 10).WithMessage("El nro de operacion debe tener entre 1 y 10 caracteres");
                 RuleFor(x => x.PersonaId).GreaterThan(0).WithMessage("La persona que realiza el pago es obligatoria");
-                RuleFor(x => x.BoletaId).GreaterThan(0).WithMessage("La boleta obligatorio");
+                RuleFor(x => x.BoletaId).GreaterThan(0).WithMessage("La boleta es obligatoria");
                 RuleFor(x => x.Monto)
                     .GreaterThan(0).WithMessage("El monto debe ser mayor a 0")
                     .NotEmpty().WithMessage("El monto es obligatorio");
@@ -45,17 +45,19 @@ namespace AppDepa.Aplicaciones.PagoServicios
         public class Handler : IRequestHandler<Ejecuta>
         {
             private readonly GestionDepartamentosContext _context;
+            private readonly IUtils _utils;
 
-            public Handler(GestionDepartamentosContext context)
+            public Handler(GestionDepartamentosContext context, IUtils utils)
             {
                 this._context = context;
+                this._utils = utils;
             }
 
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
                 var boleta = await _context.Boleta.Where(x => x.BoletaId == request.BoletaId).FirstOrDefaultAsync();
 
-                var pagado = boleta.PagoServicios.Sum(x => x.Monto);
+                var pagado = boleta.PagoServicios?.Sum(x => x.Monto) ?? 0;
 
                 var restante = boleta.Monto - pagado;
 
@@ -71,7 +73,8 @@ namespace AppDepa.Aplicaciones.PagoServicios
                     FechaPago = request.FechaPago,
                     UsuarioId = request.UsuarioId,
                     Monto = request.Monto,
-                    PersonaId = request.PersonaId
+                    PersonaId = request.PersonaId,
+                    FechaRegistro = _utils.ObtenerFecha()
                 };
 
                 _context.PagoServicio.Add(pagoServicio);

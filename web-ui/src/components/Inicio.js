@@ -1,5 +1,6 @@
 import { Apartment, EmojiPeople, Person, Pets, Receipt } from '@mui/icons-material';
-import { Container, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import React, { useEffect, useState } from 'react';
 import { consultarCantidades } from '../actions/UtilsAction';
 import { useStateValue } from '../context/store';
@@ -77,7 +78,16 @@ const Inicio = () => {
                         texto={dashboard.cantBoletas}
                         color="skyblue"
                         fontColor="white" 
-                        link = "/servicio/consultarBoletas"/>
+                        link = "/servicio/consultarBoleta"/>
+                </Grid>
+                <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+                    <Cards
+                        icono={<ReportProblemIcon className={styles.iconCard} />}
+                        titulo="Incidencias"
+                        texto={dashboard.cantIncidencias}
+                        color="darkorange"
+                        fontColor="white" 
+                        link = "/incidencia/consultarIncidencia"/>
                 </Grid>
             </Grid>
         </div>
