@@ -38,13 +38,10 @@ function Incidencia() {
   const [{ sesionUsuario }, dispatch] = useStateValue();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  const [pageHistorial, setPageHistorial] = useState(0);
-  const [rowsPerPageHistorial, setRowsPerPageHistorial] = useState(5);
-
   const [listaHistorialIncidencia, setListaHistorial] = useState([]);
   const [listaIncidencia, setListaIncidencia] = useState([]);
   const [modalEditar, setModalEditar] = useState(false);
+  const [modalAtender, setModalAtender] = useState(false);
   const [modalHistorialIncidencia, setModalHistorialIncidencia] =
     useState(false);
   const [errors, setErrors] = useState({});
@@ -57,8 +54,8 @@ function Incidencia() {
     descripcionIncidencia: "",
     personaId: 0,
     fechaIncidencia: "",
-    /*estadoIncidenciaId: 0,*/
-    usuarioId: sesionUsuario.usuario.usuarioId
+    estadoIncidenciaId: 2,
+    usuarioId: sesionUsuario.usuario.usuarioId,
   });
 
   const handleChangeFiltro = (e) => {
@@ -73,14 +70,14 @@ function Incidencia() {
     filtroDepartamentoId: 0,
     filtroTipoIncidenciaId: 0,
     filtroEstadoIncidenciaId: 0,
-    filtroEliminado: 0,
+    filtroEliminado: 0
   });
 
   const [checkFiltro, setCheckFiltro] = useState({
     filtroDepartamentoId: false,
     filtroTipoIncidenciaId: false,
     filtroEstadoIncidenciaId: false,
-    filtroEliminado: false,
+    filtroEliminado: false
   });
 
   const abrirCerrarModalEditar = () => {
@@ -89,6 +86,10 @@ function Incidencia() {
 
   const abrirCerrarModalHistorialIncidencia = () => {
     setModalHistorialIncidencia(!modalHistorialIncidencia);
+  };
+
+  const abrirCerrarModalAtender = () => {
+    setModalAtender(!modalAtender);
   };
 
   const handleCheckFiltro = (e) => {
@@ -117,7 +118,6 @@ function Incidencia() {
     rowsPerPage -
     Math.min(rowsPerPage, listaIncidencia.length - page * rowsPerPage);
 
-
   const peticionGet = () => {
     listarIncidencia(filtro).then((respuesta) => {
       if (respuesta.status === 200) {
@@ -136,9 +136,8 @@ function Incidencia() {
   };
 
   const peticionPut = (e) => {
-
     e.preventDefault();
-    incidencia.usuarioId = sesionUsuario.usuario.usuarioId
+    incidencia.usuarioId = sesionUsuario.usuario.usuarioId;
     const formErrors = validarForm(incidencia);
     if (Object.keys(formErrors).length === 0) {
       actualizarIncidencia(incidencia).then((response) => {
@@ -152,6 +151,7 @@ function Incidencia() {
             },
           });
           limpiarForm();
+          peticionGet();
         } else {
           dispatch({
             type: "OPEN_SNACKBAR",
@@ -246,7 +246,7 @@ function Incidencia() {
       personaId: 0,
       fechaIncidencia: "",
       /* estadoIncidenciaId: 0,*/
-      usuarioId: sesionUsuario.usuario.usuarioId
+      usuarioId: sesionUsuario.usuario.usuarioId,
     });
   };
 
@@ -280,19 +280,11 @@ function Incidencia() {
     <div className={styles.modal}>
       <Container component="main" maxWidth="md" justifyContentContent="center">
         <Typography className={styles.modalTitle} component="h1" variant="h5">
-          Editar Incidencia
+          Editar Incidencia: {incidencia.codigoIncidencia}
         </Typography>
         <form className={styles.modalForm}>
           <Grid container spacing={2} justifyContent="center">
-            <Grid item xs={12} md={12}>
-              <TextField
-                name="incidenciaId"
-                className={styles.inputMaterial}
-                label="incidenciaId"
-                onChange={handleChange}
-                value={incidencia.incidenciaId}
-              ></TextField>
-            </Grid>
+
             <Grid item xd={12} md={12}>
               <SelectDepartamento
                 value={incidencia.departamentoId}
@@ -334,6 +326,7 @@ function Incidencia() {
 
             <Grid item xs={12} md={12}>
               <SelectPersona
+                excluirTipo=""
                 value={incidencia.personaId}
                 label="Informante"
                 className={styles.inputMaterial}
@@ -377,7 +370,10 @@ function Incidencia() {
                 size="large"
                 color="primary"
                 style={style.submit}
-                onClick={peticionPut}
+                onClick={(e) => {
+                  peticionPut(e);
+                  abrirCerrarModalEditar();
+                }}
               >
                 Guardar
               </Button>
@@ -391,6 +387,115 @@ function Incidencia() {
                 color="secondary"
                 style={style.submit}
                 onClick={abrirCerrarModalEditar}
+              >
+                Cancelar
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </Container>
+    </div>
+  );
+
+  const bodyRegistrarAtencion = (
+    <div className={styles.modal}>
+      <Container component="main" maxWidth="md" justifyContentContent="center">
+        <Typography className={styles.modalTitle} component="h1" variant="h5">
+          Atender incidencia: {incidencia.incidenciaId}
+        </Typography>
+        <form className={styles.modalForm}>
+          <Grid
+            container
+            spacing={2}
+            justifyContent="center"
+            Style="margin-top:1px;"
+          >
+            <Grid item xs={12} md={12}>
+              <TextField
+                disabled
+                name="codigoIncidencia"
+                className={styles.inputMaterial}
+                label="Codigo"
+                onChange={handleChange}
+                value={incidencia.codigoIncidencia}
+              ></TextField>
+            </Grid>
+            <Grid item xd={12} md={12}>
+              <SelectDepartamento
+                disabled
+                value={incidencia.departamentoId}
+                label="Departamento"
+                className={styles.inputMaterial}
+                onChange={handleChange}
+                name="departamentoId"
+                required={false}
+              />
+            </Grid>
+
+            <Grid item xs={12} md={12}>
+              <SelectParametro
+                disabled
+                value={incidencia.tipoIncidenciaId}
+                label="Tipo Incidencia"
+                className={styles.inputMaterial}
+                onChange={handleChange}
+                name="tipoIncidenciaId"
+                concepto="TIPO_INCIDENCIA_ID"
+              />
+            </Grid>
+
+            <Grid item xs={12} md={12}>
+              <TextField
+                disabled
+                fullWidth
+                multiline
+                label="Descripción"
+                name="descripcionIncidencia"
+                className={styles.inputMaterial}
+                onChange={handleChange}
+                value={incidencia.descripcionIncidencia}
+                helperText={errors?.descripcionIncidencia}
+              />
+            </Grid>
+
+            <Grid item xs={12} md={12}>
+              <SelectParametro
+                value={incidencia.estadoIncidenciaId}
+                label="Estado incidencia"
+                className={styles.inputMaterial}
+                onChange={handleChange}
+                name="estadoIncidenciaId"
+                concepto="ESTADO_INCIDENCIA_ID"
+              />
+            </Grid>
+          </Grid>
+          <Grid container spacing={2} justifyContent="center">
+            <Grid item xs={6} md={6}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                size="large"
+                color="primary"
+                style={style.submit}
+                onClick={(e) => {
+                  setIncidencia(incidencia)
+                  peticionPut(e);
+                  abrirCerrarModalAtender();
+                }}
+              >
+                Registrar
+              </Button>
+            </Grid>
+            <Grid item xs={6} md={6}>
+              <Button
+                type="button"
+                fullWidth
+                variant="contained"
+                size="large"
+                color="secondary"
+                style={style.submit}
+                onClick={abrirCerrarModalAtender}
               >
                 Cancelar
               </Button>
@@ -417,7 +522,7 @@ function Incidencia() {
             <TableContainer
               className={styles.table}
               sx={{
-                height: 350
+                height: 350,
               }}
               Style="margin-bottom: 10px;"
             >
@@ -447,7 +552,7 @@ function Incidencia() {
                         }
                       >
                         <TableCell size="small" align="center">
-                          {historialIncidencia.historialIncidenciaId}
+                          {index + 1}
                         </TableCell>
                         <TableCell size="small" align="center">
                           {historialIncidencia.departamento}
@@ -566,7 +671,7 @@ function Incidencia() {
                 <Grid item container xs={3} md={2}>
                   <SelectParametro
                     concepto="ESTADO_INCIDENCIA_ID"
-                    name="estadoIncidenciaId"
+                    name="filtroEstadoIncidenciaId"
                     className={styles.inputMaterial}
                     value={filtro.filtroEstadoIncidenciaId}
                     label="Estado"
@@ -655,6 +760,7 @@ function Incidencia() {
                           >
                             {incidencia.estadoIncidencia}
                           </TableCell>
+
                           <TableCell size="small" align="center">
                             {incidencia.fechaIncidencia}
                           </TableCell>
@@ -669,18 +775,16 @@ function Incidencia() {
                             <Stack spacing={1} direction="row">
                               <Button
                                 disabled={
-                                  incidencia.estadoIncidenciaId !== 1
-                                    ? false
-                                    : true
+                                  incidencia.estadoIncidencia !== "No atendido"
                                 }
                                 variant="contained"
-                                onClick={async () => {
-                                  // limpiarForm();
-                                  // setVisita(visita);
-                                  // abrirCerrarModalVerDetalleVisita();
+                                onClick={async (e) => {
+                                  limpiarForm();
+                                  await peticionUnico(incidencia);
+                                  abrirCerrarModalAtender();
                                 }}
                               >
-                                Atender
+                                GESTIONAR
                               </Button>
                               <Button
                                 variant="contained"
@@ -688,7 +792,7 @@ function Incidencia() {
                                 onClick={async () => {
                                   // setVisita(visita);
                                   limpiarForm();
-                                  await peticionUnico(incidencia);
+                                  setIncidencia(incidencia);
                                   await peticionGetHistorial(incidencia);
                                   abrirCerrarModalHistorialIncidencia();
                                 }}
@@ -712,16 +816,7 @@ function Incidencia() {
                               >
                                 <Edit />
                               </IconButton>
-                              <IconButton
-                                color="default"
-                                component="span"
-                                size="medium"
-                                onClick={() => {
-                                  // limpiarForm(); setPersona(persona); abrirCerrarModalDetalle()
-                                }}
-                              >
-                                <Info />
-                              </IconButton>
+
                               <IconButton
                                 color="secondary"
                                 component="span"
@@ -780,6 +875,17 @@ function Incidencia() {
         }}
       >
         {bodyHistorialIncidencia}
+      </Modal>
+
+      <Modal
+        open={modalAtender}
+        onClose={(event, reason) => {
+          if (reason !== "backdropClick") {
+            abrirCerrarModalAtender();
+          }
+        }}
+      >
+        {bodyRegistrarAtencion}
       </Modal>
     </React.Fragment>
   );
