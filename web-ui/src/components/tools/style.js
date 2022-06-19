@@ -114,7 +114,7 @@ export const useStyles = makeStyles((theme) => ({
     paddingLeft: 10,
     paddingRight: 10,
   },
-  table: {
+  table: {    
     maxHeight: 650,
     [theme.breakpoints.down("xs")]: {
       maxHeight: 500,

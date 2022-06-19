@@ -19,7 +19,7 @@ import {
   Stack,
   FormControlLabel,
 } from "@mui/material";
-import { Edit, Delete, Info, CheckCircle } from "@mui/icons-material";
+import { Edit, Delete} from "@mui/icons-material";
 import { useStyles, style } from "../tools/style";
 import {
   listarIncidencia,

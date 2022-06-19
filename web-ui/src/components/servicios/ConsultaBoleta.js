@@ -48,7 +48,7 @@ function ConsultaBoleta() {
   }
   const validarForm = (pagoServicio) => {
     const newErrors = {}
-    if (pagoServicio.nroOperacion.length == 0) {
+    if (pagoServicio.nroOperacion.length === 0) {
       newErrors.nroOperacion = 'El nro de operacion es obligatorio'
     } else if (pagoServicio.nroOperacion.length > 10) {
       newErrors.nroOperacion = 'El nro de operacion debe tener como máximo 10 caracteres'
@@ -469,8 +469,7 @@ function ConsultaBoleta() {
                       name="filtroEstadoId" />
                   </Grid>
                 </Grid>
-              </Grid>
-              <Paper className={styles.paperBody} style={{ marginTop: "25px" }}>
+              </Grid>              
                 <TableContainer className={styles.table}>
                   <Table stickyHeader>
                     <TableHead>
@@ -540,8 +539,7 @@ function ConsultaBoleta() {
 
                     </TableBody>
                   </Table>
-                </TableContainer>
-              </Paper>
+                </TableContainer>              
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
