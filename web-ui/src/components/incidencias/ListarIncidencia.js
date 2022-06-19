@@ -33,7 +33,7 @@ import { DatePicker } from "@mui/x-date-pickers";
 import SelectPersona from "../utils/SelectPersona";
 import { listarHistorialIncidencia } from "../../actions/HistorialIncidenciaAction";
 
-function Incidencia() {
+function ListarIncidencia() {
   const styles = useStyles();
   const [{ sesionUsuario }, dispatch] = useStateValue();
   const [page, setPage] = useState(0);
@@ -891,4 +891,4 @@ function Incidencia() {
   );
 }
 
-export default Incidencia;
+export default ListarIncidencia;

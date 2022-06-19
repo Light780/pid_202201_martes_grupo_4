@@ -20,8 +20,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import GenerarBoleta from './components/servicios/GenerarBoleta';
 import ConsultaBoleta from './components/servicios/ConsultaBoleta';
-import HistorialIncidencia from './components/incidencias/ListarHistorialIncidencia';
-import Incidencia from './components/incidencias/ListarIncidencia';
+import RegistrarIncidencia from './components/incidencias/RegistrarIncidencia';
+import ListarIncidencia from './components/incidencias/ListarIncidencia';
 
 function App() {
   const [{ sesionUsuario, openSnackBar }, dispatch] = useStateValue()
@@ -65,7 +65,7 @@ function App() {
               <Route exact path='/servicio/generarBoletas' element= {<SecurePath><GenerarBoleta/></SecurePath>}/>
               <Route exact path='/servicio/consultarBoleta' element= {<SecurePath><ConsultaBoleta/></SecurePath>}/>
               <Route exact path='/incidencia/registrarIncidencia' element= {<SecurePath><RegistrarIncidencia/></SecurePath>}/>
-              <Route exact path='/incidencia/consultarIncidencia' element= {<SecurePath><Incidencia/></SecurePath>}/>              
+              <Route exact path='/incidencia/consultarIncidencia' element= {<SecurePath><ListarIncidencia/></SecurePath>}/>              
             </Routes>
           </Grid>
           </LocalizationProvider>
