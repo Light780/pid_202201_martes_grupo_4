@@ -23,7 +23,7 @@ namespace AppDepa.Infraestructura.Datos.Dapper.Boleta
             {
                 var connection = factoryConnection.GetConnection();
                 var dp = new DynamicParameters();
-                dp.Add("@Anio", anio ?? "", DbType.String, ParameterDirection.Input, 4);
+                dp.Add("@Anio", anio == "1" ? "" : anio, DbType.String, ParameterDirection.Input, 4);
                 dp.Add("@DepartamentoId", departamentoId, DbType.Int32, ParameterDirection.Input);
                 dp.Add("@EstadoId", estadoId, DbType.Int32, ParameterDirection.Input);
                 listado = await connection.QueryAsync<BoletaDto>(sp, dp, commandType: CommandType.StoredProcedure);
