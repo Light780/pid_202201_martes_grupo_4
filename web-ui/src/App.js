@@ -21,8 +21,6 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import GenerarBoleta from './components/servicios/GenerarBoleta';
 import ConsultaBoleta from './components/servicios/ConsultaBoleta';
 import HistorialIncidencia from './components/incidencias/ListarHistorialIncidencia';
-import RegistrarIncidencia from './components/incidencias/RegistrarIncidencia';
-import ActualizarIncidencia from './components/incidencias/ActualizarIncidencia';
 import Incidencia from './components/incidencias/ListarIncidencia';
 
 function App() {
@@ -67,9 +65,7 @@ function App() {
               <Route exact path='/servicio/generarBoletas' element= {<SecurePath><GenerarBoleta/></SecurePath>}/>
               <Route exact path='/servicio/consultarBoleta' element= {<SecurePath><ConsultaBoleta/></SecurePath>}/>
               <Route exact path='/incidencia/registrarIncidencia' element= {<SecurePath><RegistrarIncidencia/></SecurePath>}/>
-              <Route exact path='/incidencia/consultarIncidencia' element= {<SecurePath><Incidencia/></SecurePath>}/>
-              <Route exact path='/incidencia/actualizarIncidencia' element= {<SecurePath><ActualizarIncidencia/></SecurePath>}/>
-              <Route exact path='/incidencia/consultarHIncidencia' element= {<SecurePath><HistorialIncidencia/></SecurePath>}/>
+              <Route exact path='/incidencia/consultarIncidencia' element= {<SecurePath><Incidencia/></SecurePath>}/>              
             </Routes>
           </Grid>
           </LocalizationProvider>
