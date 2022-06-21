@@ -477,8 +477,8 @@ function ConsultaBoleta() {
                         <TableCell align='center'>Departamento</TableCell>
                         <TableCell align='center'>Servicio</TableCell>
                         <TableCell align='center'>Periodo</TableCell>
-                        <TableCell align='center'>CodigoPago</TableCell>
-                        <TableCell align='center'>FechaPago</TableCell>
+                        <TableCell align='center'>Codigo de Pago</TableCell>
+                        <TableCell align='center'>Fecha de Pago</TableCell>
                         <TableCell align='center'>Usuario</TableCell>
                         <TableCell align='center'>Monto</TableCell>
                         <TableCell align='center'>Saldo</TableCell>
