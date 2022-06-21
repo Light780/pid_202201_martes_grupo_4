@@ -1,4 +1,5 @@
 ﻿using AppDepa.Aplicaciones.Exceptions;
+using AppDepa.Dominio;
 using AppDepa.Infraestructura.Datos.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AppDepa.Aplicaciones.Incidencias
 {
-    public  class Eliminar
+    public class Eliminar
     {
         public class Ejecuta : IRequest
         {
@@ -35,11 +36,29 @@ namespace AppDepa.Aplicaciones.Incidencias
                 var result = await context.SaveChangesAsync();
                 if (result > 0)
                 {
-                    return Unit.Value;
+                    HistorialIncidencia historialIncidencia = new HistorialIncidencia()
+                    {
+                        IncidenciaId = incidencia.IncidenciaId,
+                        DepartamentoId = incidencia.DepartamentoId,
+                        TipoIncidenciaId = incidencia.TipoIncidenciaId,
+                        DescripcionIncidencia = incidencia.DescripcionIncidencia,
+                        EstadoIncidenciaId = incidencia.EstadoIncidenciaId,
+                        FechaIncidencia = incidencia.FechaIncidencia,
+                        FechaRegistro = incidencia.FechaRegistro,
+                        UsuarioId = incidencia.UsuarioId,
+                        PersonaId = incidencia.PersonaId
+                    };
+                    context.HistorialIncidencia.Add(historialIncidencia);
+                    result = await context.SaveChangesAsync();
+
+                    if (result > 0)
+                    {
+                        return Unit.Value;
+                    }
+                    throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al registrar Historial Incidencia" });
                 }
                 throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "Error al eliminar la Incidencia" });
             }
         }
     }
 }
-    

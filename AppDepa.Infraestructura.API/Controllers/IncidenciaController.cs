@@ -23,7 +23,7 @@ namespace AppDepa.Infraestructura.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Incidencia>> ObtenerPersona(int id)
+        public async Task<ActionResult<Incidencia>> ObtenerIncidencia(int id)
         {
             return await mediator.Send(new ConsultarUnico.Ejecuta() { IncidenciaId = id });
         }
@@ -32,6 +32,11 @@ namespace AppDepa.Infraestructura.API.Controllers
         public async Task<ActionResult<List<IncidenciaDto>>> ListarIncidencias([FromQuery] Consultar.ListarIncidencias data)
         {
             return await mediator.Send(data);
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Unit>> EliminarIncidencia(int id)
+        {
+            return await mediator.Send(new Eliminar.Ejecuta() { IncidenciaId = id });
         }
     }
 }
