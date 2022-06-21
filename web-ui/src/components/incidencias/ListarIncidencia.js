@@ -32,6 +32,7 @@ import { useStateValue } from "../../context/store";
 import { DatePicker } from "@mui/x-date-pickers";
 import SelectPersona from "../utils/SelectPersona";
 import { listarHistorialIncidencia } from "../../actions/HistorialIncidenciaAction";
+import { borrarIncidencia} from "../../actions/IncidenciaAction";
 
 function ListarIncidencia() {
   const styles = useStyles();
@@ -79,6 +80,9 @@ function ListarIncidencia() {
     filtroEstadoIncidenciaId: false,
     filtroEliminado: false
   });
+
+   
+   const [modalEliminar, setModalEliminar] = useState(false);
 
   const abrirCerrarModalEditar = () => {
     setModalEditar(!modalEditar);
@@ -187,6 +191,38 @@ function ListarIncidencia() {
     });
   };
 
+  const peticionDelete = e => {
+    e.preventDefault()
+    borrarIncidencia(incidencia.incidenciaId).then(respuesta => {
+       let mensaje;
+       if (respuesta.status === 200) {
+          mensaje = "Incidencia "+ (incidencia.eliminado ? "activada" : "eliminada") +" correctamente"
+          dispatch({
+             type: 'OPEN_SNACKBAR',
+             openMensaje: {
+                open: true,
+                mensaje: mensaje,
+                severity: 'success'
+             }
+          })
+          abrirCerrarModalEliminar()
+          limpiarForm()
+          peticionGet()
+       } else {
+          mensaje = "Error al "+ (incidencia.eliminado ? "activar" : "eliminar") + " la incidencia"
+          dispatch({
+             type: 'OPEN_SNACKBAR',
+             openMensaje: {
+                open: true,
+                mensaje: mensaje,
+                severity: 'error'
+             }
+          })
+       }
+    })
+
+ }
+
   const peticionGetHistorial = async (incidencia) => {
     await listarHistorialIncidencia(incidencia.incidenciaId).then(
       (respuesta) => {
@@ -249,6 +285,11 @@ function ListarIncidencia() {
       usuarioId: sesionUsuario.usuario.usuarioId,
     });
   };
+
+ 
+ const abrirCerrarModalEliminar = () => {
+    setModalEliminar(!modalEliminar);
+ }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -342,7 +383,7 @@ function ListarIncidencia() {
                 label="Fecha incidencia"
                 value={incidencia.fechaIncidencia}
                 inputFormat="dd/MM/yyyy HH:mm"
-                mask="__/__/____ __:__"
+                mask="_//_ _:_"
                 onChange={(e) => {
                   setIncidencia((anterior) => ({
                     ...anterior,
@@ -505,6 +546,27 @@ function ListarIncidencia() {
       </Container>
     </div>
   );
+
+  const bodyEliminar = (
+    <div className={styles.modal}>
+       <Container component="main" maxWidth="md" justifyContent="center">
+          <Typography className={styles.modalTitle} component="h1" variant="h5" align="center">Estás seguro de {incidencia.eliminado ? "activar" : "eliminar"} la incidencia</Typography>
+          <Typography className={styles.modalTitle} component="h1" variant="h5" align="center"><b>{incidencia.incidenciaId}</b></Typography>
+          <Grid container spacing={2} justifyContent="center">
+             <Grid item xs={6} md={6}>
+                <Button fullWidth variant="contained" size="large" style={style.submit} 
+                color={incidencia.eliminado ? "success" : "secondary"} onClick={peticionDelete}>Si</Button>
+             </Grid>
+             <Grid item xs={6} md={6}>
+                <Button fullWidth variant="contained" size="large" 
+                color={incidencia.eliminado ? "secondary" : "primary"}
+                style={style.submit} onClick={abrirCerrarModalEliminar}>No</Button>
+             </Grid>
+          </Grid>
+       </Container>
+    </div>
+
+ )
 
   const bodyHistorialIncidencia = (
     <div className={styles.modalTable}>
