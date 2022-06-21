@@ -47,6 +47,6 @@ export const borrarIncidencia = (id) => {
     return new Promise ((resolve,reject) =>{
         HttpClient.delete(`Incidencia/${id}`).then(response =>{
             resolve(response)
-        }).catch(e=> resolve ((r,reject)))
+        }).catch(e=> resolve ((e,reject)))
     })
 }
