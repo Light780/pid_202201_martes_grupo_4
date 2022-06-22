@@ -92,7 +92,7 @@ function RegistrarIncidencia() {
     }
 
     if (incidencia.descripcionIncidencia === "") {
-      newErrors.descripcionIncidencia = "El descripción de la incidencia es obligatoria.";
+      newErrors.descripcionIncidencia = "La descripción de la incidencia es obligatoria.";
     }else if(incidencia.descripcionIncidencia.length < 10){
       newErrors.descripcionIncidencia = "La descripción debe tener al menos 10 caracteres.";
     }
