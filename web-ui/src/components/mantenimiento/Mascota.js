@@ -55,7 +55,7 @@ function Mascota() {
                type: 'OPEN_SNACKBAR',
                openMensaje: {
                   open: true,
-                  mensaje: 'Error al listar Mascotas',
+                  mensaje: 'Error al listar mascotas',
                   severity: 'error'
                }
             })
@@ -95,7 +95,7 @@ function Mascota() {
                   type: 'OPEN_SNACKBAR',
                   openMensaje: {
                      open: true,
-                     mensaje: "Error al guardar la Mascota\n Detalles del error : " + Object.values(respuesta.response.data.errors),
+                     mensaje: "Error al guardar la mascota\n Detalles del error : " + Object.values(respuesta.response.data.errors),
                      severity: 'error'
                   }
                })
@@ -191,7 +191,7 @@ function Mascota() {
          newErrors.nombreMascota = 'El campo es obligatorio'
       }
       else if (mascota.nombreMascota.trim().length < 3) {
-         newErrors.nombreMascota = 'Debe tener almenos 3 caracteres'
+         newErrors.nombreMascota = 'Debe tener al menos 3 caracteres'
       }
       else if (!/^[A-Za-z ]+$/.test(mascota.nombreMascota)) {
          newErrors.nombreMascota = 'Debe contener solo letras'

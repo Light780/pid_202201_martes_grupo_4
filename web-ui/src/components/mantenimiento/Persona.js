@@ -221,7 +221,7 @@ function Persona() {
         mensaje =
           "Error al " +
           (persona.eliminado ? "activar" : "eliminar") +
-          " la Persona";
+          " la persona";
         dispatch({
           type: "OPEN_SNACKBAR",
           openMensaje: {
@@ -264,7 +264,7 @@ function Persona() {
     if (persona.nombreCompleto === "") {
       newErrors.nombreCompleto = "El campo es obligatorio";
     } else if (persona.nombreCompleto.trim().length < 3) {
-      newErrors.nombreCompleto = "Debe tener almenos 3 caracteres";
+      newErrors.nombreCompleto = "Debe tener al menos 3 caracteres";
     } else if (!/^[A-Za-z ]+$/.test(persona.nombreCompleto)) {
       newErrors.nombreCompleto = "Debe contener solo letras";
     }
@@ -324,7 +324,7 @@ function Persona() {
         persona.correo
       )
     ) {
-      newErrors.correo = "Debe ser un correo valido";
+      newErrors.correo = "Debe ser un correo válido";
     }
 
     if (persona.departamentoId <= 0) {
@@ -407,7 +407,7 @@ function Persona() {
                 error={Boolean(errores?.telefono)}
                 helperText={errores?.telefono}
                 className={styles.inputMaterial}
-                label="Telefono"
+                label="Teléfono"
                 onChange={handleChange}
                 value={persona.telefono}
               />
@@ -548,7 +548,7 @@ function Persona() {
                 helperText={errores?.telefono}
                 name="telefono"
                 className={styles.inputMaterial}
-                label="Telefono"
+                label="Teléfono"
                 onChange={handleChange}
                 value={persona && persona.telefono}
               ></TextField>
@@ -651,7 +651,7 @@ function Persona() {
           align="center"
         >
           Estás seguro de {persona.eliminado ? "activar" : "eliminar"} la
-          Persona
+          persona
         </Typography>
         <Typography
           className={styles.modalTitle}
@@ -733,7 +733,7 @@ function Persona() {
             </Grid>
             <Grid item xs={6} md={6}>
               <Typography align="center" variant="h6" component="h2">
-                Telefono
+                Teléfono
               </Typography>
             </Grid>
             <Grid item xs={6} md={6}>

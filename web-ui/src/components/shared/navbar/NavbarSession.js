@@ -47,12 +47,12 @@ function NavbarSession() {
                 <IconButton color="inherit" onClick={openCloseLeftMenu}>
                     <i className="material-icons">menu</i>
                 </IconButton>
-                <Typography variant="h6">Gestion de Departamentos</Typography>
+                <Typography variant="h6">Gestión de Departamentos</Typography>
                 <div className={classes.grow}></div>
 
                 <div className={classes.seccionDesktop}>
                     <Button color="inherit" onClick={closeSession}>
-                        Salir Sesion
+                        Cerrar Sesión
                     </Button>
                     <Button color="inherit" onClick={openCloseRightMenu}>
                         {sesionUsuario ? sesionUsuario.usuario.nombreCompleto : ""}

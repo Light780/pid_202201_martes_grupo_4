@@ -203,7 +203,7 @@ function Usuario() {
 
  const bodyEliminar = (
     <div className={styles.modal}>
-       <p>Estas seguro que deseas eliminar el usuario seleccionado<b>{usuario && usuario.usuarioId}</b></p>
+       <p>Estás seguro que deseas eliminar el usuario seleccionado<b>{usuario && usuario.usuarioId}</b></p>
        <Grid container spacing={2} justifyContent="center">
           <Grid item xs={6} md={6}>
              <Button color="secondary" onClick={peticionDelete}>Si</Button>

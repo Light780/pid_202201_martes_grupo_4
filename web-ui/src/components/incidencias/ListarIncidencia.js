@@ -261,7 +261,7 @@ function ListarIncidencia() {
 
     if (incidencia.descripcionIncidencia === "") {
       newErrors.descripcionIncidencia =
-        "El descripción de la incidencia es obligatoria.";
+        "La descripción de la incidencia es obligatoria.";
     } else if (incidencia.descripcionIncidencia.length < 10) {
       newErrors.descripcionIncidencia =
         "La descripción debe tener al menos 10 caracteres.";
@@ -778,10 +778,10 @@ function ListarIncidencia() {
                 <Table stickyHeader>
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Codigo</TableCell>
+                      <TableCell align="center">Código</TableCell>
                       <TableCell align="center">Departamento</TableCell>
                       <TableCell align="center">Tipo</TableCell>
-                      <TableCell align="center">Descripcion</TableCell>
+                      <TableCell align="center">Descripción</TableCell>
                       <TableCell align="center">Informante</TableCell>
                       <TableCell align="center">Estado</TableCell>
                       <TableCell align="center">Fecha Incidencia</TableCell>
