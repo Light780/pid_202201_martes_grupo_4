@@ -21,8 +21,7 @@ import React, { useState, useEffect } from "react";
 import { useStyles, style } from "../tools/style";
 import {
   listarVisita,
-  registrarSalida,
-  consultarUnico,
+  registrarSalida
 } from "../../actions/VisitaAction";
 import { useStateValue } from "../../context/store";
 import AutoCompletePersona from "../utils/AutoCompletePersona";
