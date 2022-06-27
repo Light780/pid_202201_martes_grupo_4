@@ -20,16 +20,10 @@ namespace AppDepa.Infraestructura.API.Controllers
         {
             return await mediator.Send(data);
         }
-        [HttpPost("registrarSalida")]
+        [HttpPut("registrarSalida")]
         public async Task<ActionResult<Unit>> RegistrarSalida([FromBody] RegistrarSalida.Ejecuta data)
         {
             return await mediator.Send(data);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Visita>> ObtenerVisita(int id)
-        {
-            return await mediator.Send(new ConsultarUnico.Ejecuta() { VisitaId = id });
         }
     }
 }

@@ -15,6 +15,7 @@ namespace AppDepa.Infraestructura.Datos.Dapper.Incidencia
         public string DescripcionIncidencia { get; set; }
         public string EstadoIncidencia { get; set; }
         public string FechaIncidencia { get; set; }
+        public bool Eliminado { get; set; }
         //Usuario
         public string UsuarioRegistro { get; set; }
         public string FechaRegistro { get; set; }

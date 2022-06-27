@@ -19,7 +19,7 @@ import {
   Stack,
   FormControlLabel,
 } from "@mui/material";
-import { Edit, Delete, Info, CheckCircle } from "@mui/icons-material";
+import { Edit, Delete, CheckCircle } from "@mui/icons-material";
 import { useStyles, style } from "../tools/style";
 import {
   listarIncidencia,
@@ -32,6 +32,7 @@ import { useStateValue } from "../../context/store";
 import { DatePicker } from "@mui/x-date-pickers";
 import SelectPersona from "../utils/SelectPersona";
 import { listarHistorialIncidencia } from "../../actions/HistorialIncidenciaAction";
+import { borrarIncidencia } from "../../actions/IncidenciaAction";
 
 function ListarIncidencia() {
   const styles = useStyles();
@@ -41,6 +42,7 @@ function ListarIncidencia() {
   const [listaHistorialIncidencia, setListaHistorial] = useState([]);
   const [listaIncidencia, setListaIncidencia] = useState([]);
   const [modalEditar, setModalEditar] = useState(false);
+  const [modalEliminar, setModalEliminar] = useState(false);
   const [modalAtender, setModalAtender] = useState(false);
   const [modalHistorialIncidencia, setModalHistorialIncidencia] =
     useState(false);
@@ -92,6 +94,10 @@ function ListarIncidencia() {
     setModalAtender(!modalAtender);
   };
 
+  const abrirCerrarModalEliminar = () => {
+    setModalEliminar(!modalEliminar);
+  }
+
   const handleCheckFiltro = (e) => {
     const { name, value } = e.target;
     setCheckFiltro((anterior) => ({
@@ -103,6 +109,11 @@ function ListarIncidencia() {
         ...anterior,
         [name]: 0,
       }));
+    } else {
+      setFiltro(anterior => ({
+        ...anterior,
+        [name]: name === 'filtroEliminado' ? 1 : 0
+      }))
     }
   };
 
@@ -187,6 +198,38 @@ function ListarIncidencia() {
     });
   };
 
+  const peticionDelete = e => {
+    e.preventDefault()
+    borrarIncidencia(incidencia.incidenciaId).then(respuesta => {
+      let mensaje;
+      if (respuesta.status === 200) {
+        mensaje = "Incidencia " + (incidencia.eliminado ? "activada" : "eliminada") + " correctamente"
+        dispatch({
+          type: 'OPEN_SNACKBAR',
+          openMensaje: {
+            open: true,
+            mensaje: mensaje,
+            severity: 'success'
+          }
+        })
+        abrirCerrarModalEliminar()
+        limpiarForm()
+        peticionGet()
+      } else {
+        mensaje = "Error al " + (incidencia.eliminado ? "activar" : "eliminar") + " la incidencia"
+        dispatch({
+          type: 'OPEN_SNACKBAR',
+          openMensaje: {
+            open: true,
+            mensaje: mensaje,
+            severity: 'error'
+          }
+        })
+      }
+    })
+
+  }
+
   const peticionGetHistorial = async (incidencia) => {
     await listarHistorialIncidencia(incidencia.incidenciaId).then(
       (respuesta) => {
@@ -218,7 +261,7 @@ function ListarIncidencia() {
 
     if (incidencia.descripcionIncidencia === "") {
       newErrors.descripcionIncidencia =
-        "El descripción de la incidencia es obligatoria.";
+        "La descripción de la incidencia es obligatoria.";
     } else if (incidencia.descripcionIncidencia.length < 10) {
       newErrors.descripcionIncidencia =
         "La descripción debe tener al menos 10 caracteres.";
@@ -342,7 +385,7 @@ function ListarIncidencia() {
                 label="Fecha incidencia"
                 value={incidencia.fechaIncidencia}
                 inputFormat="dd/MM/yyyy HH:mm"
-                mask="__/__/____ __:__"
+                mask="_//_ _:_"
                 onChange={(e) => {
                   setIncidencia((anterior) => ({
                     ...anterior,
@@ -505,6 +548,27 @@ function ListarIncidencia() {
       </Container>
     </div>
   );
+
+  const bodyEliminar = (
+    <div className={styles.modal}>
+      <Container component="main" maxWidth="md" justifyContent="center">
+        <Typography className={styles.modalTitle} component="h1" variant="h5" align="center">Estás seguro de {incidencia.eliminado ? "activar" : "eliminar"} la incidencia</Typography>
+        <Typography className={styles.modalTitle} component="h1" variant="h5" align="center"><b>{incidencia.codigoIncidencia}</b></Typography>
+        <Grid container spacing={2} justifyContent="center">
+          <Grid item xs={6} md={6}>
+            <Button fullWidth variant="contained" size="large" style={style.submit}
+              color={incidencia.eliminado ? "success" : "secondary"} onClick={peticionDelete}>Si</Button>
+          </Grid>
+          <Grid item xs={6} md={6}>
+            <Button fullWidth variant="contained" size="large"
+              color={incidencia.eliminado ? "secondary" : "primary"}
+              style={style.submit} onClick={abrirCerrarModalEliminar}>No</Button>
+          </Grid>
+        </Grid>
+      </Container>
+    </div>
+
+  )
 
   const bodyHistorialIncidencia = (
     <div className={styles.modalTable}>
@@ -669,14 +733,28 @@ function ListarIncidencia() {
                 </Grid>
 
                 <Grid item container xs={3} md={2}>
-                  <SelectParametro
-                    concepto="ESTADO_INCIDENCIA_ID"
-                    name="filtroEstadoIncidenciaId"
-                    className={styles.inputMaterial}
-                    value={filtro.filtroEstadoIncidenciaId}
-                    label="Estado"
-                    onChange={handleChangeFiltro}
-                  />
+                  <Grid item xs={10} md={10}>
+                    <SelectParametro
+                      concepto="ESTADO_INCIDENCIA_ID"
+                      name="filtroEstadoIncidenciaId"
+                      className={styles.inputMaterial}
+                      disabled={!checkFiltro.filtroEstadoIncidenciaId}
+                      value={filtro.filtroEstadoIncidenciaId}
+                      label="Estado"
+                      onChange={handleChangeFiltro}
+                    />
+                  </Grid>
+                  <Grid item xs={2} md={2}>
+                    <Checkbox
+                      checked={checkFiltro.filtroEstadoIncidenciaId}
+                      className={styles.inputMaterial}
+                      style={style.checkFiltro}
+                      onChange={handleCheckFiltro}
+                      color="primary"
+                      value={checkFiltro.filtroEstadoIncidenciaId}
+                      name="filtroEstadoIncidenciaId"
+                    />
+                  </Grid>
                 </Grid>
 
                 <Grid item container xs={3} md={2}>
@@ -700,10 +778,10 @@ function ListarIncidencia() {
                 <Table stickyHeader>
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Codigo</TableCell>
+                      <TableCell align="center">Código</TableCell>
                       <TableCell align="center">Departamento</TableCell>
                       <TableCell align="center">Tipo</TableCell>
-                      <TableCell align="center">Descripcion</TableCell>
+                      <TableCell align="center">Descripción</TableCell>
                       <TableCell align="center">Informante</TableCell>
                       <TableCell align="center">Estado</TableCell>
                       <TableCell align="center">Fecha Incidencia</TableCell>
@@ -818,16 +896,15 @@ function ListarIncidencia() {
                               </IconButton>
 
                               <IconButton
-                                color="secondary"
+                                color={incidencia.eliminado ? "success" : "secondary"}
                                 component="span"
                                 size="medium"
                                 onClick={() => {
-                                  // limpiarForm();
-                                  // setPersona(persona);
-                                  // abrirCerrarModalEliminar()
+                                  setIncidencia(incidencia);
+                                  abrirCerrarModalEliminar()
                                 }}
                               >
-                                <Delete />
+                                {incidencia.eliminado ? <CheckCircle /> : <Delete />}
                               </IconButton>
                             </Stack>
                           </TableCell>
@@ -886,6 +963,16 @@ function ListarIncidencia() {
         }}
       >
         {bodyRegistrarAtencion}
+      </Modal>
+      <Modal
+        open={modalEliminar}
+        onClose={(event, reason) => {
+          if (reason !== "backdropClick") {
+            abrirCerrarModalEliminar();
+          }
+        }}
+      >
+        {bodyEliminar}
       </Modal>
     </React.Fragment>
   );

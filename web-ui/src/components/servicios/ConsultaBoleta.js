@@ -48,12 +48,12 @@ function ConsultaBoleta() {
   }
   const validarForm = (pagoServicio) => {
     const newErrors = {}
-    if (pagoServicio.nroOperacion.length == 0) {
+    if (pagoServicio.nroOperacion.length === 0) {
       newErrors.nroOperacion = 'El nro de operacion es obligatorio'
     } else if (pagoServicio.nroOperacion.length > 10) {
-      newErrors.nroOperacion = 'El nro de operacion debe tener como máximo 10 caracteres'
+      newErrors.nroOperacion = 'El nro de operación debe tener como máximo 10 caracteres'
     } else if (isNaN(pagoServicio.nroOperacion)) {
-      newErrors.nroOperacion = 'El nro de operacion debe ser numérico'
+      newErrors.nroOperacion = 'El nro de operación debe ser numérico'
     }
 
     if (pagoServicio.fechaPago == null) {
@@ -469,17 +469,16 @@ function ConsultaBoleta() {
                       name="filtroEstadoId" />
                   </Grid>
                 </Grid>
-              </Grid>
-              <Paper className={styles.paperBody} style={{ marginTop: "25px" }}>
+              </Grid>              
                 <TableContainer className={styles.table}>
                   <Table stickyHeader>
                     <TableHead>
                       <TableRow>
                         <TableCell align='center'>Departamento</TableCell>
                         <TableCell align='center'>Servicio</TableCell>
-                        <TableCell align='center'>Periodo</TableCell>
-                        <TableCell align='center'>CodigoPago</TableCell>
-                        <TableCell align='center'>FechaPago</TableCell>
+                        <TableCell align='center'>Período</TableCell>
+                        <TableCell align='center'>Código de Pago</TableCell>
+                        <TableCell align='center'>Fecha de Pago</TableCell>
                         <TableCell align='center'>Usuario</TableCell>
                         <TableCell align='center'>Monto</TableCell>
                         <TableCell align='center'>Saldo</TableCell>
@@ -540,8 +539,7 @@ function ConsultaBoleta() {
 
                     </TableBody>
                   </Table>
-                </TableContainer>
-              </Paper>
+                </TableContainer>              
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"

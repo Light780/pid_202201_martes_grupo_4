@@ -24,12 +24,23 @@ namespace AppDepa.Aplicaciones.Utils
 
             public async Task<object> Handle(Dashboard request, CancellationToken cancellationToken)
             {
+                var queryDepartamento = from d in context.Departamento
+                                        orderby d.NroDepartamento
+                                        select new
+                                        {
+                                            departamentoId = d.DepartamentoId,
+                                            nroDepartamento = d.NroDepartamento,
+                                            cantPersonas = d.Personas.Count,
+                                            cantIncidencias = d.Incidencias.Count,
+                                            cantMascotas = d.Mascotas.Count
+                                        };
                 var cantDepartamentos = await context.Departamento.CountAsync();
                 var cantPersonas = await context.Persona.CountAsync();
                 var cantMascotas = await context.Mascota.CountAsync();
                 var cantVisitas = await context.Visita.CountAsync();
                 var cantBoletas = await context.Boleta.CountAsync();
                 var cantIncidencias = await context.Incidencia.CountAsync();
+                var listaCantDep = await queryDepartamento.ToListAsync();
                 return new
                 {
                     cantDepartamentos,
@@ -37,7 +48,8 @@ namespace AppDepa.Aplicaciones.Utils
                     cantMascotas,
                     cantVisitas,
                     cantBoletas,
-                    cantIncidencias
+                    cantIncidencias,
+                    listaCantDep
                 };
             }
         }

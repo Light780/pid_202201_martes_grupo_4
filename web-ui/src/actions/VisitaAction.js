@@ -24,16 +24,8 @@ export const registrarVisita = (visita) => {
 
 export const registrarSalida = (visita) => {
     return new Promise((resolve, reject) => {
-        HttpClient.post('Visita/registrarSalida',visita).then(response => {
+        HttpClient.put('Visita/registrarSalida',visita).then(response => {
             resolve(response)
         }).catch(e => resolve(e,reject));
-    })
-}
-
-export const consultarUnico = (id) => {
-    return new Promise((resolve,reject) => {
-        HttpClient.get(`Visita/${id}`).then(response => {
-            resolve(response)
-        }).catch(e => resolve(e,reject))
     })
 }

@@ -49,7 +49,7 @@ function Login(){
                 <form style={style.form}>
                     <TextField variant="outlined" value={usuario.email} onChange={ingresarValores} label="Ingrese email" name="email" fullWidth margin="normal"/>
                     <TextField type="password"variant="outlined" value={usuario.password} onChange={ingresarValores} label="Ingrese contraseña" name="password" fullWidth margin="normal"/>
-                    <Button type="submit" fullWidth variant="contained" color="primary" style={style.submit} onClick={loginClick}>Iniciar Sesion</Button>
+                    <Button type="submit" fullWidth variant="contained" color="primary" style={style.submit} onClick={loginClick}>Iniciar Sesión</Button>
                 </form>
             </div>
         </Container>

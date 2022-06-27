@@ -64,7 +64,7 @@ function PerfilUsuario() {
                     type: 'OPEN_SNACKBAR',
                     openMensaje: {
                         open: true,
-                        mensaje: "Se guardo exitosamente la informacion del usuario",
+                        mensaje: "Se guardó exitosamente la información del usuario",
                         severity: 'success'
                     }
                 })
@@ -114,10 +114,10 @@ function PerfilUsuario() {
                                 buttonText="Seleccione una imagen de perfil"
                                 onChange={subirFoto}
                                 fileSizeError="El archivo es muy grande"
-                                fileTypeError='La extension del archivo no es soportada'
+                                fileTypeError='La extensión del archivo no es soportada'
                                 imgExtension={[".jpg", ".gif", ".png", ".jpeg"]}
                                 maxFileSize={2242880}
-                                label='Tamaño maximo del archivo: 2mb, formatos: jpg|gif|png|jpeg'
+                                label='Tamaño máximo del archivo: 2mb, formatos: jpg|gif|png|jpeg'
                             />
                         </Grid>
                     </Grid>

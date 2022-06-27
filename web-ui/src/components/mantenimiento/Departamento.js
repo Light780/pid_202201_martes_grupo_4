@@ -324,7 +324,7 @@ function Departamento() {
                   <Grid item xs={12} md={2}>
                      <FormControlLabel
                         control={<Checkbox checked={departamento.indBalcon} value={departamento.indBalcon} onChange={handleCheck} color='primary' name="indBalcon" />}
-                        label="Balcon" />
+                        label="Balcón" />
                   </Grid>
                   <Grid item xs={12} md={2}>
                      <FormControlLabel
@@ -396,7 +396,7 @@ function Departamento() {
                   <Grid item xs={12} md={2}>
                      <FormControlLabel
                         control={<Checkbox checked={departamento.indBalcon} onChange={handleCheck} value={departamento.indBalcon} color='primary' name="indBalcon" />}
-                        label="Balcon" />
+                        label="Balcón" />
                   </Grid>
                   <Grid item xs={12} md={2}>
                      <FormControlLabel
@@ -472,7 +472,7 @@ function Departamento() {
                      <Typography align="center" variant='h6' component='h2'>{departamento.tipoDepa}</Typography>
                   </Grid>
                   <Grid item xs={6} md={6}>
-                     <Typography align="center" variant='h6' component='h2'>Area</Typography>
+                     <Typography align="center" variant='h6' component='h2'>Área</Typography>
                   </Grid>
                   <Grid item xs={6} md={6}>
                      <Typography align="center" variant='h6' component='h2'>{departamento.tamano}m2</Typography>
@@ -490,7 +490,7 @@ function Departamento() {
                      <Typography align="center" variant='h6' component='h2'>{departamento.indCocina ? 'Si' : 'No'}</Typography>
                   </Grid>
                   <Grid item xs={6} md={6}>
-                     <Typography align="center" variant='h6' component='h2'>Balcon</Typography>
+                     <Typography align="center" variant='h6' component='h2'>Balcón</Typography>
                   </Grid>
                   <Grid item xs={6} md={6}>
                      <Typography align="center" variant='h6' component='h2'>{departamento.indBalcon ? 'Si' : 'No'}</Typography>
@@ -583,7 +583,7 @@ function Departamento() {
                                  <TableCell align='center'>Tipo Depart.</TableCell>
                                  <Hidden mdDown>
                                     <TableCell align='center'>N° de Habitaciones</TableCell>
-                                    <TableCell align='center'>Area</TableCell>
+                                    <TableCell align='center'>Área</TableCell>
                                  </Hidden>
                                  <TableCell align='center'>Usuario</TableCell>
                                  <TableCell align='center'>Fecha Registro</TableCell>

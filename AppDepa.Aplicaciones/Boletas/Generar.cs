@@ -48,10 +48,10 @@ namespace AppDepa.Aplicaciones.Boletas
             }
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var generado = await context.Boleta.Where(x => x.Periodo.Substring(0, 4).Equals(request.Anio) && x.DepartamentoId == request.DepartamentoId).AnyAsync();
+                var generado = await context.Boleta.Where(x => x.Periodo.Substring(0, 4).Equals(request.Anio.Year.ToString()) && x.DepartamentoId == request.DepartamentoId).AnyAsync();
                 if (generado)
                 {
-                    throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "A este Departamento ya se le han generado boletas" });
+                    throw new ExceptionHandler(HttpStatusCode.BadRequest, new { mensaje = "A este Departamento ya se le han generado boletas en el año" });
                 }
                 string anioString = request.Anio.Year.ToString();
                 var fechaActual = utils.ObtenerFecha();
